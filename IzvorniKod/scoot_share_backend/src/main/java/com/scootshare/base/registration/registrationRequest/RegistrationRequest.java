@@ -23,17 +23,13 @@ public class RegistrationRequest {
 
 
     // update constructors for files!
-    private RegistrationRequest(String firstName, String lastName, String nickname, String password, Long cardNumber, String email) {
+    public RegistrationRequest(String firstName, String lastName, String nickname, String password, Long cardNumber, String email) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.nickname = nickname;
         this.password = password;
         this.cardNumber = cardNumber;
         this.email = email;
-    }
-
-    public static RegistrationRequest of(String firstName, String lastName, String nickname, String password, Long cardNumber, String email) {
-        return new RegistrationRequest(firstName, lastName, nickname, password, cardNumber, email); // update to add files
     }
 
     public Long getId() {
