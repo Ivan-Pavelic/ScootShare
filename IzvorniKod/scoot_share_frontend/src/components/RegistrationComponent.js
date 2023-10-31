@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { BsFillPersonFill, BsCreditCard2BackFill } from "react-icons/bs";
 import {AiOutlineMail, AiOutlineIdcard, AiFillFileText} from "react-icons/ai";
 import {RiLockPasswordLine} from "react-icons/ri"
-import NavigationComponent from './NavigationComponent';
 import { useNavigate } from 'react-router-dom';
 
 const RegistrationComponent = () => {
@@ -190,7 +189,6 @@ const RegistrationComponent = () => {
 
     return (
         <>
-            <NavigationComponent displayRegisterButton={false}/>
             <div className='flex-row mx-auto justify-center w-2/5 my-20 rounded-lg shadow-lg'>
                 <div className='bg-blue-500 h-2 rounded-lg'></div>
                 <div className='mb-10 flex justify-center align-center mt-8'>

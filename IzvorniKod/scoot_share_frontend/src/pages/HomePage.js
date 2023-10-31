@@ -1,5 +1,5 @@
 import React from 'react';
-import NavigationComponent from './NavigationComponent';
+import NavigationComponent from '../components/NavigationComponent';
 
 const HomePage = () => {
     return (
