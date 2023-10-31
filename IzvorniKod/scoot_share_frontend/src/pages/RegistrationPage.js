@@ -5,7 +5,7 @@ import RegistrationComponent from '../components/RegistrationComponent';
 const RegistrationPage = () => {
     return (
         <>
-            <NavigationComponent displayRegisterButton={false}/>
+            <NavigationComponent displayRegisterButton={false}  displayLoginButton={true}/>
             <RegistrationComponent />
         </>
     );
