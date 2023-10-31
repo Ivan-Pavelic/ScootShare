@@ -4,7 +4,8 @@ import NavigationComponent from '../components/NavigationComponent';
 const HomePage = () => {
     return (
         <>
-            <NavigationComponent displayRegisterButton={true}/>   
+            <NavigationComponent displayRegisterButton={true} displayLoginButton={true}/>   
+           
         </>
     );
 };
