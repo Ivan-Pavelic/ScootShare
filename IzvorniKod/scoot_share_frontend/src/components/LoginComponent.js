@@ -1,13 +1,16 @@
 import React, { useState } from 'react';
 import {AiOutlineMail} from "react-icons/ai";
 import {RiLockPasswordLine} from "react-icons/ri"
+import { useNavigate } from 'react-router-dom';
 
 
-const LoginComponent = () => {
+const LoginComponent = (props) => {
+    const {setIsLoggedIn} = {...props};
     const [user, setUser] = useState({
         "email": "",
         "password":""
     });
+    const navigate = useNavigate();
 
     function handleInputChange(attribute, value) {
         let newUser = {...user};
@@ -15,7 +18,9 @@ const LoginComponent = () => {
         setUser(newUser);
     }
     function loginUser() {
-       
+        localStorage.setItem("isLoggedIn", true);
+        setIsLoggedIn(true);
+        navigate("/");
     }
 
     function isValidEmail(email) {

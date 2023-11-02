@@ -1,14 +1,16 @@
 import React from 'react';
 import NavigationComponent from '../components/NavigationComponent';
-import RentalComponent from '../components/RentalComponent';
+import RentalComponent from "../components//RentalComponent";
 
-const RegistrationPage = () => {
+const RentalPage = (props) => {
+    const {setIsLoggedIn} = {...props};
+
     return (
         <>
-            <NavigationComponent displayRegisterButton={false}  displayLoginButton={false}/>
-            <RentalComponent />
+            <NavigationComponent displayLogoutButton={true} displayRegisterButton={false} displayLoginButton={false} setIsLoggedIn={setIsLoggedIn} displayRentScooterButton={false}/>   
+            <RentalComponent />   
         </>
     );
 };
 
-export default RegistrationPage;
+export default RentalPage;

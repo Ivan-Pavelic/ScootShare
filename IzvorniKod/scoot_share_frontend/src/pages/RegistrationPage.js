@@ -2,10 +2,11 @@ import React from 'react';
 import NavigationComponent from '../components/NavigationComponent';
 import RegistrationComponent from '../components/RegistrationComponent';
 
-const RegistrationPage = () => {
+const RegistrationPage = (props) => {
+    const {isLoggedIn, setIsLoggedIn} = {...props};
     return (
         <>
-            <NavigationComponent displayRegisterButton={false}  displayLoginButton={true}/>
+            <NavigationComponent displayLogoutButton={isLoggedIn} displayRegisterButton={false}  displayLoginButton={!isLoggedIn} setIsLoggedIn={setIsLoggedIn}/>
             <RegistrationComponent />
         </>
     );

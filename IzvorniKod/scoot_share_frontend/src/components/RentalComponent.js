@@ -25,7 +25,7 @@ const RentalComponent = () => {
 
     return (
       <>
-      <div className="flex justify-center items-center h-screen">
+      <div className="flex justify-center items-center mt-16">
       <div className="bg-white p-8 rounded-lg shadow-lg w-96">
         <h1 className="text-2xl font-semibold mb-4">Postavite svoj romobil za iznajmljivanje</h1>
 

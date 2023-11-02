@@ -1,11 +1,13 @@
 import React from 'react';
 import NavigationComponent from '../components/NavigationComponent';
+import AdComponent from '../components/AdComponent';
 
-const HomePage = () => {
+const HomePage = (props) => {
+    const {isLoggedIn, setIsLoggedIn} = {...props};
     return (
         <>
-            <NavigationComponent displayRegisterButton={true} displayLoginButton={true}/>   
-           
+            <NavigationComponent displayLogoutButton={isLoggedIn} displayRegisterButton={!isLoggedIn} displayLoginButton={!isLoggedIn} setIsLoggedIn={setIsLoggedIn}/>   
+            <AdComponent isLoggedIn={isLoggedIn}/>
         </>
     );
 };

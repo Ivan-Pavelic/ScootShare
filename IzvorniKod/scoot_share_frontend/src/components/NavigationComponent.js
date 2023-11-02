@@ -1,16 +1,25 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 const NavigationComponent = (props) => {
     const navigate = useNavigate()
-    const {displayRegisterButton} = {...props}
-    const {displayLoginButton} = {...props}
-
+    const {displayRegisterButton, displayLoginButton, setIsLoggedIn, displayLogoutButton, displayRentScooterButton} = {...props};
+    
     function register() {
         navigate("/register")
     }
     function login() {
         navigate("/login")
+    }
+
+    function logout() {
+        localStorage.setItem("isLoggedIn", false);
+        setIsLoggedIn(false);
+        navigate("/");
+    }
+
+    function rentScooter() {
+        navigate("/rent-scooter");
     }
 
     return (
@@ -21,6 +30,10 @@ const NavigationComponent = (props) => {
             <div className='flex space-x-4'>
                 { displayRegisterButton && <button className='text-white bg-cyan-600 rounded-3xl py-3 px-8' onClick={register}>Registracija</button> }
                 { displayLoginButton && <button className='text-white bg-cyan-600 rounded-3xl py-3 px-8' onClick={login}>Prijava</button> }
+                { displayRentScooterButton === undefined ? 
+                    displayLogoutButton && <button className='text-white bg-teal-400 rounded-3xl py-3 px-8' onClick={rentScooter}>Iznajmi Romobil</button>
+                    : <></>}
+                { displayLogoutButton && <button className='text-white bg-red-500 rounded-3xl py-3 px-8' onClick={logout}>Odjava</button> }
             </div>
         </div>
     );
