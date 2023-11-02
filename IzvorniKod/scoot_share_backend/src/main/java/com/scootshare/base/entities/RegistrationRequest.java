@@ -2,6 +2,7 @@ package com.scootshare.base.entities;
 
 
 import jakarta.persistence.*;
+import org.springframework.web.multipart.MultipartFile;
 
 @Entity
 @Table
@@ -17,12 +18,11 @@ public class RegistrationRequest {
     private Long cardNumber;
     private String email;
 
-    // add files!
+    private String idCardUUID;
+    private String certificateOfNoCriminalRecordUUIF;
 
     protected RegistrationRequest() {}
 
-
-    // update constructors for files!
     public RegistrationRequest(String firstName, String lastName, String nickname, String password, Long cardNumber, String email) {
         this.firstName = firstName;
         this.lastName = lastName;
@@ -60,5 +60,47 @@ public class RegistrationRequest {
         return email;
     }
 
-    // add file getters!
+    public String getIdCardUUID() {
+        return idCardUUID;
+    }
+
+    public String getCertificateOfNoCriminalRecordUUID() {
+        return certificateOfNoCriminalRecordUUIF;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public void setCardNumber(Long cardNumber) {
+        this.cardNumber = cardNumber;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setIdCardUUID(String idCardUUID) {
+        this.idCardUUID = idCardUUID;
+    }
+
+    public void setCertificateOfNoCriminalRecordUUID(String certificateOfNoCriminalRecordUUID) {
+        this.certificateOfNoCriminalRecordUUIF = certificateOfNoCriminalRecordUUID;
+    }
 }
