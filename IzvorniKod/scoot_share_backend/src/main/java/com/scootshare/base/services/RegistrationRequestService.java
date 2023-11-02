@@ -1,5 +1,7 @@
-package com.scootshare.base.registration.registrationRequest;
+package com.scootshare.base.services;
 
+import com.scootshare.base.entities.RegistrationRequest;
+import com.scootshare.base.repositories.RegistrationRequestRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

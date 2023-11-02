@@ -1,4 +1,4 @@
-package com.scootshare.base.homepage;
+package com.scootshare.base.controllers;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;

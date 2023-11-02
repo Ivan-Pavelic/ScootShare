@@ -1,7 +1,7 @@
-package com.scootshare.base.registration;
+package com.scootshare.base.controllers;
 
-import com.scootshare.base.registration.registrationRequest.RegistrationRequest;
-import com.scootshare.base.registration.registrationRequest.RegistrationRequestService;
+import com.scootshare.base.entities.RegistrationRequest;
+import com.scootshare.base.services.RegistrationRequestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;

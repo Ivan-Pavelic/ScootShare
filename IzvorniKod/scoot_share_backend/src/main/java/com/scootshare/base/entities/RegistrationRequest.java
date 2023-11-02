@@ -1,4 +1,4 @@
-package com.scootshare.base.registration.registrationRequest;
+package com.scootshare.base.entities;
 
 
 import jakarta.persistence.*;
