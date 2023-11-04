@@ -2,11 +2,11 @@ import React from 'react';
 import NavigationComponent from '../components/NavigationComponent';
 
 const UserProfilePage = (props) => {
-    const {setIsLoggedIn} = {...props};
+    const {jwtIsValid, setJwt} = {...props};
 
     return (
         <>
-            <NavigationComponent displayLogoutButton={true} displayRegisterButton={false} displayLoginButton={false} setIsLoggedIn={setIsLoggedIn}/>   
+            <NavigationComponent displayLogoutButton={true} displayRegisterButton={false} displayLoginButton={false} setJwt={setJwt}/>   
         </>
     );
 };

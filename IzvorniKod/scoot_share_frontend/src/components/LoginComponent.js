@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 
 
 const LoginComponent = (props) => {
-    const {setIsLoggedIn} = {...props};
+    const {setJwt} = {...props};
     const [user, setUser] = useState({
         "email": "",
         "password":""
@@ -18,9 +18,28 @@ const LoginComponent = (props) => {
         setUser(newUser);
     }
     function loginUser() {
-        localStorage.setItem("isLoggedIn", true);
-        setIsLoggedIn(true);
-        navigate("/");
+        fetch("api/auth/authenticate", {
+            headers: {
+              "Content-Type": "application/json"
+            },
+            method: "POST",
+            body: JSON.stringify(user)
+          })
+          .then((response) => {
+            if (response.ok) {
+              return response.json()
+            }
+          })
+          .then((data) => {
+            if (data == undefined) {
+                // display error
+            }
+            else {
+                setJwt(data.token)
+                navigate("/")
+            }
+            
+          })
     }
 
     function isValidEmail(email) {

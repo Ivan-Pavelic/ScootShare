@@ -4,7 +4,8 @@ import {AiOutlineMail, AiOutlineIdcard, AiFillFileText} from "react-icons/ai";
 import {RiLockPasswordLine} from "react-icons/ri"
 import { useNavigate } from 'react-router-dom';
 
-const RegistrationComponent = () => {
+const RegistrationComponent = (props) => {
+    const {setJwt} = {...props};
     const [user, setUser] = useState({
         "firstName": "",
         "lastName": "",
@@ -26,6 +27,7 @@ const RegistrationComponent = () => {
                     value += " ";
                 }
                 else {
+
                     value = value.substr(0, value.length - 1)
                 }
             }
@@ -46,13 +48,22 @@ const RegistrationComponent = () => {
     }
 
     function handleFileInputChange(event, attribute) {
-        let newUser = {...user};
-        newUser[attribute] = event.target.files[0];
-        setUser(newUser);
+        const reader = new FileReader();
+        if (event.target.files[0])  {
+            reader.readAsDataURL(event.target.files[0]);
+            reader.onload = (event) => {
+                let newUser = {...user};
+                newUser[attribute] = event.target.result;
+                console.log(event.target.result);
+                setUser(newUser);
+            }
+        }
     }
 
     function registerUser() {
+        let hasError = false;
         if (user.firstName === "") {
+            hasError = true;
             const error = document.querySelector(".first-name-error");
             error.classList.remove("hidden");
             error.classList.add("flex");
@@ -63,6 +74,7 @@ const RegistrationComponent = () => {
             error.classList.remove("flex");
         }
         if (user.lastName === "") {
+            hasError = true;
             const error = document.querySelector(".last-name-error");
             error.classList.remove("hidden");
             error.classList.add("flex");
@@ -73,6 +85,7 @@ const RegistrationComponent = () => {
             error.classList.remove("flex");
         }
         if (user.nickname === "") {
+            hasError = true;
             const error = document.querySelector(".nickname-error");
             error.classList.remove("hidden");
             error.classList.add("flex");
@@ -83,6 +96,7 @@ const RegistrationComponent = () => {
             error.classList.remove("flex");
         }
         if (!isValidCreditCardNumber(user.cardNumber)) {
+            hasError = true;
             const error = document.querySelector(".card-error");
             error.classList.remove("hidden");
             error.classList.add("flex");
@@ -93,6 +107,7 @@ const RegistrationComponent = () => {
             error.classList.remove("flex");
         }
         if (!isValidEmail(user.email)) {
+            hasError = true;
             const error = document.querySelector(".email-error");
             error.classList.remove("hidden");
             error.classList.add("flex");
@@ -103,6 +118,7 @@ const RegistrationComponent = () => {
             error.classList.remove("flex");
         }
         if (user.idCard == null) {
+            hasError = true;
             const error = document.querySelector(".id-card-error");
             error.classList.remove("hidden");
             error.classList.add("flex");
@@ -113,6 +129,7 @@ const RegistrationComponent = () => {
             error.classList.remove("flex");
         }
         if (user.idCard == null) {
+            hasError = true;
             const error = document.querySelector(".criminal-record-error");
             error.classList.remove("hidden");
             error.classList.add("flex");
@@ -123,6 +140,7 @@ const RegistrationComponent = () => {
             error.classList.remove("flex");
         }
         if (user.password == null || user.password.length < 8) {
+            hasError = true;
             const error = document.querySelector(".password-error");
             error.classList.remove("hidden");
             error.classList.add("flex");
@@ -133,6 +151,7 @@ const RegistrationComponent = () => {
             error.classList.remove("flex");
         }
         if (user.password !== user.repeat_password) {
+            hasError = true;
             const error = document.querySelector(".repeat-password-error");
             error.classList.remove("hidden");
             error.classList.add("flex");
@@ -143,6 +162,33 @@ const RegistrationComponent = () => {
             error.classList.remove("flex");
         }
         console.log(user);
+        if (!hasError) {
+            const formData = new FormData();
+            formData.append("idCard", user.idCard);
+            formData.append("criminalRecord", user.certificateOfNoCriminalRecord);
+            const {firstName, lastName, nickname, cardNumber, email, password} = {...user};
+            const newUser = {firstName, lastName, nickname, cardNumber, email, password};
+            formData.append("user", JSON.stringify(newUser));
+             formData.append("file", "file")
+             const fetchData = {
+                headers: {
+                    Authorization: `Bearer `
+                },
+                method: "POST",
+                body: formData
+            };
+
+            fetch("api/auth/register", fetchData)
+                .then((response) => {
+                    if (response.ok) {
+                        return response.json()
+                    }
+                })
+                .then((data) => {
+                    setJwt(data.token);
+                    navigate("/");
+                })
+        }
     }
 
     function isValidCreditCardNumber(cardNumber) {

@@ -4,19 +4,19 @@ import LoginComponent from '../components/LoginComponent';
 import { useNavigate } from 'react-router-dom';
 
 const LoginPage = (props) => {
-    const {isLoggedIn, setIsLoggedIn} = {...props};
+    const {jwtIsValid, setJwt} = {...props};
     const navigate = useNavigate();
 
     useEffect(() => {
-        if (isLoggedIn) {
+        if (jwtIsValid) {
             navigate("/");
         }
     }, []);
 
     return (
         <>
-            <NavigationComponent displayLoginButton={false} displayLogoutButton={false} displayRegisterButton={true} setIsLoggedIn={setIsLoggedIn}/>
-            <LoginComponent setIsLoggedIn={setIsLoggedIn}/>
+            <NavigationComponent displayLoginButton={false} displayLogoutButton={false} displayRegisterButton={true} setJwt={setJwt}/>
+            <LoginComponent setJwt={setJwt}/>
         </>
     )
 };

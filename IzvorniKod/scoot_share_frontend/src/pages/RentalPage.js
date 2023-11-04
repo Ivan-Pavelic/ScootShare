@@ -3,11 +3,11 @@ import NavigationComponent from '../components/NavigationComponent';
 import RentalComponent from "../components//RentalComponent";
 
 const RentalPage = (props) => {
-    const {setIsLoggedIn} = {...props};
+    const {jwtIsValid, setJwt} = {...props};
 
     return (
         <>
-            <NavigationComponent displayLogoutButton={true} displayRegisterButton={false} displayLoginButton={false} setIsLoggedIn={setIsLoggedIn} displayRentScooterButton={false}/>   
+            <NavigationComponent displayLogoutButton={true} displayRegisterButton={false} displayLoginButton={false} setJwt={setJwt} displayRentScooterButton={false}/>   
             <RentalComponent />   
         </>
     );

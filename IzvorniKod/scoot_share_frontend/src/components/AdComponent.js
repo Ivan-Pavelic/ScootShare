@@ -2,11 +2,11 @@ import React, { useEffect, useState } from 'react';
 import { Navigate } from 'react-router-dom';
 
 const AdComponent = (props) => {
-  const {isLoggedIn} = {...props};
+  const {jwtIsValid} = {...props};
 
   useEffect(() => {
     const button = document.querySelector(".btn-reserve");
-    if (!isLoggedIn) {
+    if (!jwtIsValid) {
       button.classList.add("pointer-events-none");
       button.classList.add("bg-blue-200");
       button.classList.remove("bg-blue-500");
@@ -16,7 +16,7 @@ const AdComponent = (props) => {
       button.classList.remove("bg-blue-200");
       button.classList.add("bg-blue-500");
      }
-  }, [isLoggedIn]);
+  }, [jwtIsValid]);
 
   function reserveScooter(event) {
     console.log("here");

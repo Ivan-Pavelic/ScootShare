@@ -3,11 +3,11 @@ import NavigationComponent from '../components/NavigationComponent';
 import RegistrationComponent from '../components/RegistrationComponent';
 
 const RegistrationPage = (props) => {
-    const {isLoggedIn, setIsLoggedIn} = {...props};
+    const {jwtIsValid, setJwt} = {...props};
     return (
         <>
-            <NavigationComponent displayLogoutButton={isLoggedIn} displayRegisterButton={false}  displayLoginButton={!isLoggedIn} setIsLoggedIn={setIsLoggedIn}/>
-            <RegistrationComponent />
+            <NavigationComponent displayLogoutButton={jwtIsValid} displayRegisterButton={false}  displayLoginButton={!jwtIsValid} setJwt={setJwt}/>
+            <RegistrationComponent setJwt={setJwt}/>
         </>
     );
 };

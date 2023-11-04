@@ -8,53 +8,74 @@ import PrivateRoute from './components/PrivateRoute';
 import UserProfilePage from './pages/UserProfilePage';
 import AdminDashboardPage from './pages/AdminDashboardPage';
 import RentalPage from './pages/RentalPage';
+import { jwtDecode } from 'jwt-decode';
+import Cookies from 'universal-cookie';
 
 function App() {
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
-    const [loggStateChanged, setLogStateChanged] = useState(false);
-    const [userRole, setUserRole] = useState("ROLE_ADMIN"); // can be unregistered, client (renter), admin
+    const cookies = new Cookies();
+    const [jwt, setJwt] = useState(cookies.get("jwt") !== undefined ? cookies.get("jwt") : "");
+    const [jwtIsValid, setJwtIsValid] = useState(false);
+    const [loading, setLoading] = useState(false);
 
+    // check if token is valid
     useEffect(() => {
-      setLogStateChanged(false);
-      const value = localStorage.getItem("isLoggedIn");
-      if (value !== null) {
-        if (value === "false") {
-          setIsLoggedIn(false);
-        }
-        else {
-          setIsLoggedIn(true);
-        }
-        setLogStateChanged(true);
+      if (jwt !== "") {
+        fetch(`api/auth/validate?token=${jwt}`, {
+          headers: {
+            "Authorization": `Bearer ${jwt}`,
+            "Content-Type": "application/json"
+          },
+          method: "GET",
+        })
+        .then((response) => {
+          if (response.ok) {
+            return response.json()
+          }
+        })
+        .then((data) => {
+          setJwtIsValid(data);
+          if (data) {
+            const decoded = jwtDecode(jwt);
+            cookies.set("jwt", jwt, {
+              expires: new Date(decoded.exp * 1000)
+            })
+          }
+          else {
+            cookies.remove("jwt");
+            setJwt("");
+          }
+          setLoading(true);
+        })
       }
-    }, []);
+      else {
+        setJwtIsValid(false);
+        setLoading(true);
+      }
+    })
 
   return (
-    
-      loggStateChanged ? 
-        <BrowserRouter>
+        loading && <BrowserRouter>
         <Routes>
-          <Route path='/' element={<HomePage isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn}/>} />
-          <Route path="/register" element={<RegistrationPage isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />}/> 
-          <Route path="/login" element={<LoginPage isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn}/>}/> 
+          <Route path='/' element={<HomePage jwtIsValid={jwtIsValid} setJwt={setJwt} />} />
+          <Route path="/register" element={<RegistrationPage jwtIsValid={jwtIsValid} setJwt={setJwt} />}/> 
+          <Route path="/login" element={<LoginPage jwtIsValid={jwtIsValid} setJwt={setJwt}/>}/> 
           <Route path="/profile" element={
-            <PrivateRoute isLoggedIn={isLoggedIn} requiresAdminRole={false} requiresClinetRole={true} role={userRole}>
-              <UserProfilePage setIsLoggedIn={setIsLoggedIn} />
+            <PrivateRoute jwt={jwt} jwtIsValid={jwtIsValid} clientRole={true} adminRole={false} >
+              <UserProfilePage jwtIsValid={jwtIsValid} setJwt={setJwt}/>
             </PrivateRoute>
           }/>
           <Route path="/rent-scooter" element={
-            <PrivateRoute isLoggedIn={isLoggedIn} requiresAdminRole={false} requiresClinetRole={true} role={userRole}>
-              <RentalPage setIsLoggedIn={setIsLoggedIn} />
+            <PrivateRoute jwt={jwt} jwtIsValid={jwtIsValid} clientRole={true} adminRole={false}>
+              <RentalPage jwtIsValid={jwtIsValid} setJwt={setJwt}/>
             </PrivateRoute>
           }/>
           <Route path='/admin' element={
-            <PrivateRoute isLoggedIn={isLoggedIn} requiresAdminRole={true} role={userRole}>
-              <AdminDashboardPage setIsLoggedIn={setIsLoggedIn}/>
+            <PrivateRoute jwt={jwt} jwtIsValid={jwtIsValid} clientRole={false} adminRole={true}>
+              <AdminDashboardPage/>
             </PrivateRoute>
           } />
         </Routes>
-      </BrowserRouter> : 
-      <></>
-    
+      </BrowserRouter>
   );
 }
 

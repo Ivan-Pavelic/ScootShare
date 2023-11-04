@@ -1,9 +1,10 @@
 import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import Cookies from 'universal-cookie';
 
 const NavigationComponent = (props) => {
     const navigate = useNavigate()
-    const {displayRegisterButton, displayLoginButton, setIsLoggedIn, displayLogoutButton, displayRentScooterButton} = {...props};
+    const {displayRegisterButton, displayLoginButton, setJwt, displayLogoutButton, displayRentScooterButton} = {...props};
     
     function register() {
         navigate("/register")
@@ -13,8 +14,9 @@ const NavigationComponent = (props) => {
     }
 
     function logout() {
-        localStorage.setItem("isLoggedIn", false);
-        setIsLoggedIn(false);
+        setJwt("");
+        const cookies = new Cookies();
+        cookies.remove("jwt");
         navigate("/");
     }
 
