@@ -1,11 +1,8 @@
 package com.scootshare.base.controllers;
 
-import com.scootshare.base.entities.FileDB;
-import com.scootshare.base.entities.RegistrationRequest;
-import com.scootshare.base.services.FileDBService;
+import com.scootshare.base.entities.User;
 import com.scootshare.base.services.RegistrationRequestService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -15,12 +12,10 @@ import java.io.IOException;
 public class RegistrationController {
 
     private final RegistrationRequestService registrationRequestService;
-    private final FileDBService fileDBService;
 
     @Autowired
-    public RegistrationController(RegistrationRequestService registrationRequestService, FileDBService fileDBService) {
+    public RegistrationController(RegistrationRequestService registrationRequestService) {
         this.registrationRequestService = registrationRequestService;
-        this.fileDBService = fileDBService;
     }
 
     @GetMapping("/register")
@@ -30,15 +25,16 @@ public class RegistrationController {
     }
 
     @PostMapping("/register")
-    public boolean processRegistrationRequest(@RequestBody RegistrationRequest registrationRequest,
-                                              @RequestParam("idCard") MultipartFile idCard,
-                                              @RequestParam("certificateOfNoCriminalRecord") MultipartFile certificateOfNoCriminalRecord) throws IOException {
-        if(registrationRequestService.alreadyExists(registrationRequest)) {
+    public boolean processRegistrationRequest(@RequestBody User user
+                                              //@RequestParam("idCard") MultipartFile idCard,
+                                              //@RequestParam("certificateOfNoCriminalRecord") MultipartFile certificateOfNoCriminalRecord
+    ) throws IOException {
+        if(registrationRequestService.alreadyExists(user)) {
             return false;
         }
-        String idCardUUID = fileDBService.store(idCard).getId();
-        String certificateUUID = fileDBService.store(certificateOfNoCriminalRecord).getId();
-        registrationRequestService.store(registrationRequest, idCardUUID, certificateUUID);
+        //String idCardUUID = fileDBService.store(idCard).getId();
+        //String certificateUUID = fileDBService.store(certificateOfNoCriminalRecord).getId();
+        registrationRequestService.store(user, null, null);
         return true;
     }
 }

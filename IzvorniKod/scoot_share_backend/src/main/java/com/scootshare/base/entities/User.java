@@ -2,11 +2,16 @@ package com.scootshare.base.entities;
 
 
 import jakarta.persistence.*;
-import org.springframework.web.multipart.MultipartFile;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
-@Entity
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
+
+@Entity(name="users")
 @Table
-public class RegistrationRequest {
+public class User implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
@@ -18,12 +23,15 @@ public class RegistrationRequest {
     private Long cardNumber;
     private String email;
 
-    private String idCardUUID;
-    private String certificateOfNoCriminalRecordUUIF;
+    private byte[] idCard;
+    private byte[] certificateOfNoCriminalRecord;
 
-    protected RegistrationRequest() {}
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "user", cascade = CascadeType.ALL)
+    private Set<Authority> authorities = new HashSet<>();
 
-    public RegistrationRequest(String firstName, String lastName, String nickname, String password, Long cardNumber, String email) {
+    protected User() {}
+
+    public User(String firstName, String lastName, String nickname, String password, Long cardNumber, String email) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.nickname = nickname;
@@ -48,8 +56,38 @@ public class RegistrationRequest {
         return nickname;
     }
 
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return authorities;
+    }
+
     public String getPassword() {
         return password;
+    }
+
+    @Override
+    public String getUsername() {
+        return email;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
     }
 
     public Long getCardNumber() {
@@ -60,12 +98,12 @@ public class RegistrationRequest {
         return email;
     }
 
-    public String getIdCardUUID() {
-        return idCardUUID;
+    public byte[] getIdCard() {
+        return idCard;
     }
 
-    public String getCertificateOfNoCriminalRecordUUID() {
-        return certificateOfNoCriminalRecordUUIF;
+    public byte[] getCertificateOfNoCriminalRecord() {
+        return certificateOfNoCriminalRecord;
     }
 
     public void setId(Long id) {
@@ -96,11 +134,11 @@ public class RegistrationRequest {
         this.email = email;
     }
 
-    public void setIdCardUUID(String idCardUUID) {
-        this.idCardUUID = idCardUUID;
+    public void setIdCard(byte[] idCard) {
+        this.idCard = idCard;
     }
 
-    public void setCertificateOfNoCriminalRecordUUID(String certificateOfNoCriminalRecordUUID) {
-        this.certificateOfNoCriminalRecordUUIF = certificateOfNoCriminalRecordUUID;
+    public void setCertificateOfNoCriminalRecord(byte[] certificateOfNoCriminalRecord) {
+        this.certificateOfNoCriminalRecord = certificateOfNoCriminalRecord;
     }
 }
