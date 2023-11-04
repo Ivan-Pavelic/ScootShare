@@ -1,7 +1,11 @@
-package com.scootshare.base.registration.registrationRequest;
+package com.scootshare.base.services;
 
+import com.scootshare.base.entities.FileDB;
+import com.scootshare.base.entities.RegistrationRequest;
+import com.scootshare.base.repositories.RegistrationRequestRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.Optional;
@@ -26,7 +30,13 @@ public class RegistrationRequestService {
      * @param registrationRequest New entry
      * @return <code>true</code> if the entry was added, <code>false</code> otherwise
      */
-    public boolean processNewRequest(RegistrationRequest registrationRequest) {
+    public RegistrationRequest store(RegistrationRequest registrationRequest, String idCardUUID, String certificateOfNoCriminalRecordUUID) {
+        registrationRequest.setIdCardUUID(idCardUUID);
+        registrationRequest.setCertificateOfNoCriminalRecordUUID(certificateOfNoCriminalRecordUUID);
+        return registrationRequestRepository.save(registrationRequest);
+    }
+
+    public boolean alreadyExists(RegistrationRequest registrationRequest) {
         Optional<RegistrationRequest> registrationRequestByEmail =
                 registrationRequestRepository.findRegistrationRequestByEmail(registrationRequest.getEmail());
         Optional<RegistrationRequest> registrationRequestByNickname =
@@ -35,16 +45,15 @@ public class RegistrationRequestService {
         // change to indicate which part combination is already taken
         // HTTP codes?
         if(registrationRequestByEmail.isPresent() && registrationRequestByNickname.isPresent()) {
-            return false;
+            return true;
         }
         else if(registrationRequestByEmail.isPresent()) {
-            return false;
+            return true;
         }
         else if(registrationRequestByNickname.isPresent()) {
-            return false;
+            return true;
         }
 
-        registrationRequestRepository.save(registrationRequest);
-        return true;
+        return false;
     }
 }
