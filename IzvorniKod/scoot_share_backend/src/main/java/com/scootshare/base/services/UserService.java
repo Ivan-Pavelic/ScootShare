@@ -1,25 +1,23 @@
 package com.scootshare.base.services;
 
 import com.scootshare.base.entities.User;
-import com.scootshare.base.repositories.RegistrationRequestRepository;
+import com.scootshare.base.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Optional;
 
 @Service
-public class RegistrationRequestService {
+public class UserService {
 
-    private final RegistrationRequestRepository registrationRequestRepository;
+    private final UserRepository userRepository;
 
     @Autowired
-    public RegistrationRequestService(RegistrationRequestRepository registrationRequestRepository) {
-        this.registrationRequestRepository = registrationRequestRepository;
+    public UserService(UserRepository userRepository) {
+        this.userRepository = userRepository;
     }
-
-    public List<User> getAllRegistrationRequests() {
-        return registrationRequestRepository.findAll();
+    public User findByEmail(String email) {
+        return userRepository.findByEmail(email).orElseThrow();
     }
 
     /**
@@ -28,17 +26,16 @@ public class RegistrationRequestService {
      * @param user New entry
      * @return <code>true</code> if the entry was added, <code>false</code> otherwise
      */
-    public User store(User user, byte[] idCardUUID, byte[] certificateOfNoCriminalRecord) {
-        user.setIdCard(idCardUUID);
-        user.setCertificateOfNoCriminalRecord(certificateOfNoCriminalRecord);
-        return registrationRequestRepository.save(user);
+    public User store(User user) {
+        user.addAuthority("ROLE_CLIENT");
+        return userRepository.save(user);
     }
 
     public boolean alreadyExists(User user) {
         Optional<User> registrationRequestByEmail =
-                registrationRequestRepository.findRegistrationRequestByEmail(user.getEmail());
+                userRepository.findByEmail(user.getEmail());
         Optional<User> registrationRequestByNickname =
-                registrationRequestRepository.findRegistrationRequestByNickname(user.getNickname());
+                userRepository.findUserByNickname(user.getNickname());
 
         // change to indicate which part combination is already taken
         // HTTP codes?
@@ -54,4 +51,5 @@ public class RegistrationRequestService {
 
         return false;
     }
+
 }

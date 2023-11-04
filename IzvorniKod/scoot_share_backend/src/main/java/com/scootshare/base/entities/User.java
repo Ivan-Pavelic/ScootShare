@@ -23,7 +23,7 @@ public class User implements UserDetails {
     private Long cardNumber;
     private String email;
 
-    private byte[] idCard;
+    private byte[] card;
     private byte[] certificateOfNoCriminalRecord;
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "user", cascade = CascadeType.ALL)
@@ -31,13 +31,17 @@ public class User implements UserDetails {
 
     protected User() {}
 
-    public User(String firstName, String lastName, String nickname, String password, Long cardNumber, String email) {
+    public User(String firstName, String lastName, String nickname, String password, Long cardNumber,
+                String email, byte[] card, byte[] criminalRecord) {
+        super();
         this.firstName = firstName;
         this.lastName = lastName;
         this.nickname = nickname;
         this.password = password;
         this.cardNumber = cardNumber;
         this.email = email;
+        this.card = card;
+        this.certificateOfNoCriminalRecord = criminalRecord;
     }
 
     public Long getId() {
@@ -98,8 +102,8 @@ public class User implements UserDetails {
         return email;
     }
 
-    public byte[] getIdCard() {
-        return idCard;
+    public byte[] getCard() {
+        return card;
     }
 
     public byte[] getCertificateOfNoCriminalRecord() {
@@ -134,11 +138,18 @@ public class User implements UserDetails {
         this.email = email;
     }
 
-    public void setIdCard(byte[] idCard) {
-        this.idCard = idCard;
+    public void setCard(byte[] idCard) {
+        this.card = idCard;
     }
 
     public void setCertificateOfNoCriminalRecord(byte[] certificateOfNoCriminalRecord) {
         this.certificateOfNoCriminalRecord = certificateOfNoCriminalRecord;
+    }
+
+    public void addAuthority(String authority) {
+        Authority newAuthority = new Authority();
+        newAuthority.setAuthority(authority);
+        newAuthority.setUser(this);
+        authorities.add(newAuthority);
     }
 }
