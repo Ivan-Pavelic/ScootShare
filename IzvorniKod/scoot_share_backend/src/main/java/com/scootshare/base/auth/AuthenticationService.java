@@ -10,6 +10,8 @@ import org.springframework.stereotype.Service;
 
 import lombok.RequiredArgsConstructor;
 
+import java.util.Objects;
+
 @Service
 @RequiredArgsConstructor
 public class AuthenticationService {
@@ -20,6 +22,7 @@ public class AuthenticationService {
     private final AuthenticationManager authenticationManager;
 
     public AuthenticationResponse register(RegisterRequest request, String idCard, String criminalRecord) {
+
         User user = new User(
                 request.getFirstName(),
                 request.getLastName(),
@@ -27,8 +30,8 @@ public class AuthenticationService {
                 passwordEncoder.encode(request.getPassword()),
                 request.getCardNumber(),
                 request.getEmail(),
-                idCard.getBytes(),
-                criminalRecord.getBytes());
+                Objects.equals(idCard, "x") ?null:idCard.getBytes(),
+                Objects.equals(criminalRecord, "x")?null: criminalRecord.getBytes());
         userService.store(user);
         var jwtToken = jwtService.generateToken(user);
         return AuthenticationResponse.builder()
