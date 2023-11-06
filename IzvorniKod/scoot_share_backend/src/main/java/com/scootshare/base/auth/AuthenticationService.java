@@ -30,8 +30,8 @@ public class AuthenticationService {
                 passwordEncoder.encode(request.getPassword()),
                 request.getCardNumber(),
                 request.getEmail(),
-                Objects.equals(idCard, "x") ?null:idCard.getBytes(),
-                Objects.equals(criminalRecord, "x")?null: criminalRecord.getBytes());
+                idCard.getBytes(),
+                criminalRecord.getBytes());
         userService.store(user);
         var jwtToken = jwtService.generateToken(user);
         return AuthenticationResponse.builder()

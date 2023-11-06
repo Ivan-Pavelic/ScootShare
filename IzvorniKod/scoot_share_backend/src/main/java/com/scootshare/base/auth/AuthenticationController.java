@@ -27,7 +27,7 @@ public class AuthenticationController {
 
     @PostMapping(value = "/register", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
     public ResponseEntity<?> register(@RequestParam("user") String user,
-                                      @RequestParam(name="idCard", defaultValue = "x") String idCard, @RequestParam(name="criminalRecord", defaultValue = "x") String criminalRecord
+                                      @RequestParam(name="idCard") String idCard, @RequestParam(name="criminalRecord") String criminalRecord
     ) {
         ObjectMapper objectMapper = new ObjectMapper();
         try {
