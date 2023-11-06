@@ -46,11 +46,7 @@ public class UserService {
         else if(registrationRequestByEmail.isPresent()) {
             return true;
         }
-        else if(registrationRequestByNickname.isPresent()) {
-            return true;
-        }
-
-        return false;
+        else return registrationRequestByNickname.isPresent();
     }
     public List<User> getAllUsers(){
         return userRepository.findAll();
@@ -58,5 +54,8 @@ public class UserService {
 
     public void deleteById(long id){
         userRepository.deleteById(id);
+    }
+    public boolean existsUser(long id){
+        return userRepository.existsById(id);
     }
 }
