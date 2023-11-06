@@ -21,6 +21,7 @@ public class User implements UserDetails {
     private String nickname;
     private String password;
     private String cardNumber;
+    @Column(unique = true)
     private String email;
 
     private byte[] card;

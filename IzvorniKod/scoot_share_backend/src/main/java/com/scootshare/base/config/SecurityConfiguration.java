@@ -28,8 +28,10 @@ public class SecurityConfiguration {
                         auth
                                 .requestMatchers("/api/auth/**")
                                 .permitAll()
+                                .requestMatchers("/api/admin/**")
+                                .hasAuthority("ROLE_ADMIN")
                                 .anyRequest()
-                                .authenticated())
+                                .permitAll())
                 .sessionManagement((sessionManagement) ->
                         sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authenticationProvider(authenticationProvider)
