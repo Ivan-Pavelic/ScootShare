@@ -16,5 +16,5 @@ public class RegisterRequest {
     private String nickname;
     private String email;
     private String password;
-    private Long cardNumber;
+    private String cardNumber;
 }

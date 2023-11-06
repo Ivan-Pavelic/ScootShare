@@ -20,7 +20,7 @@ public class User implements UserDetails {
     private String lastName;
     private String nickname;
     private String password;
-    private Long cardNumber;
+    private String cardNumber;
     private String email;
 
     private byte[] card;
@@ -31,7 +31,7 @@ public class User implements UserDetails {
 
     protected User() {}
 
-    public User(String firstName, String lastName, String nickname, String password, Long cardNumber,
+    public User(String firstName, String lastName, String nickname, String password, String cardNumber,
                 String email, byte[] card, byte[] criminalRecord) {
         super();
         this.firstName = firstName;
@@ -94,7 +94,7 @@ public class User implements UserDetails {
         return true;
     }
 
-    public Long getCardNumber() {
+    public String getCardNumber() {
         return cardNumber;
     }
 
@@ -130,7 +130,7 @@ public class User implements UserDetails {
         this.password = password;
     }
 
-    public void setCardNumber(Long cardNumber) {
+    public void setCardNumber(String cardNumber) {
         this.cardNumber = cardNumber;
     }
 
