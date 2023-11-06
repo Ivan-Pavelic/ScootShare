@@ -18,7 +18,7 @@ const LoginComponent = (props) => {
         setUser(newUser);
     }
     function loginUser() {
-        fetch("api/auth/authenticate", {
+        fetch("/api/auth/authenticate", {
             headers: {
               "Content-Type": "application/json"
             },
