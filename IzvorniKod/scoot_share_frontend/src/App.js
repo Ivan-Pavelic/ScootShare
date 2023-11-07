@@ -16,6 +16,7 @@ function App() {
     const [jwt, setJwt] = useState(cookies.get("jwt") !== undefined ? cookies.get("jwt") : "");
     const [jwtIsValid, setJwtIsValid] = useState(false);
     const [loading, setLoading] = useState(false);
+    const [authroity, setAuthority] = useState();
 
     // check if token is valid
     useEffect(() => {
@@ -56,7 +57,7 @@ function App() {
   return (
         loading && <BrowserRouter>
         <Routes>
-          <Route path='/' element={<HomePage jwtIsValid={jwtIsValid} setJwt={setJwt} />} />
+          <Route path='/' element={<HomePage jwt={jwt} jwtIsValid={jwtIsValid} setJwt={setJwt} />} />
           <Route path="/register" element={<RegistrationPage jwtIsValid={jwtIsValid} setJwt={setJwt} />}/> 
           <Route path="/login" element={<LoginPage jwtIsValid={jwtIsValid} setJwt={setJwt}/>}/> 
           <Route path="/profile" element={

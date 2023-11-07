@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import Cookies from 'universal-cookie';
 
 const NavigationComponent = (props) => {
+    const {authority} = {...props};
     const navigate = useNavigate()
     const {displayRegisterButton, displayLoginButton, setJwt, displayLogoutButton, displayRentScooterButton} = {...props};
     
@@ -17,6 +18,7 @@ const NavigationComponent = (props) => {
         setJwt("");
         const cookies = new Cookies();
         cookies.remove("jwt");
+        window.location.reload();
         navigate("/");
     }
 
@@ -30,12 +32,22 @@ const NavigationComponent = (props) => {
                 <p className='text-4xl text-white font-bold'>ScootShare</p>
             </div>
             <div className='flex space-x-4'>
-                { displayRegisterButton && <button className='text-white bg-cyan-600 rounded-3xl py-3 px-8' onClick={register}>Registracija</button> }
-                { displayLoginButton && <button className='text-white bg-cyan-600 rounded-3xl py-3 px-8' onClick={login}>Prijava</button> }
-                { displayRentScooterButton === undefined ? 
-                    displayLogoutButton && <button className='text-white bg-teal-400 rounded-3xl py-3 px-8' onClick={rentScooter}>Iznajmi Romobil</button>
-                    : <></>}
-                { displayLogoutButton && <button className='text-white bg-red-500 rounded-3xl py-3 px-8' onClick={logout}>Odjava</button> }
+                {
+                    authority === "ROLE_PENDING_REGISTRATION" ? 
+                    <div className='flex items-center gap-8'>
+                        <p className='text-2xl text-white'>Vaš račun je u izradi</p> 
+                        {displayLogoutButton && <button className='text-white bg-red-500 rounded-3xl py-3 px-8' onClick={logout}>Odjava</button>} 
+                    </div>
+                    :
+                    <>
+                        {displayRegisterButton && <button className='text-white bg-cyan-600 rounded-3xl py-3 px-8' onClick={register}>Registracija</button>} 
+                        {displayLoginButton && <button className='text-white bg-cyan-600 rounded-3xl py-3 px-8' onClick={login}>Prijava</button>} 
+                        {displayRentScooterButton === undefined ? 
+                            displayLogoutButton && <button className='text-white bg-teal-400 rounded-3xl py-3 px-8' onClick={rentScooter}>Iznajmi Romobil</button>
+                            : <></>}
+                        {displayLogoutButton && <button className='text-white bg-red-500 rounded-3xl py-3 px-8' onClick={logout}>Odjava</button>} 
+                    </>
+                }
             </div>
         </div>
     );

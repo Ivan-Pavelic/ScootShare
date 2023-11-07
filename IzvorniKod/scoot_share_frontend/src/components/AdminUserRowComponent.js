@@ -3,7 +3,9 @@ import { useEffect } from 'react';
 import { useState } from 'react';
 
 const AdminUserRowComponent = (props) => {
-    const {jwt, firstName, lastName, nickname, idCard, certificateOfNoCriminalRecord, email} = {...props};
+    const {jwt, authority, firstName, lastName, nickname, idCard, certificateOfNoCriminalRecord, email} = {...props};
+
+    console.log(authority);
 
     function donwloadIdCard() {
         
@@ -39,6 +41,19 @@ const AdminUserRowComponent = (props) => {
         })
     }
 
+    function updateRoleToClient() {
+        fetch(`api/admin/acceptUser/${email}`, {
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${jwt}`,
+            },
+            method: "PUT"
+        })
+        .then((response) => {
+            window.location.reload();
+        })
+    }
+
     return (
         <tr className="bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-600">
             <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
@@ -63,6 +78,18 @@ const AdminUserRowComponent = (props) => {
                 onClick={downloadCriminalRecord}>
                     Potvrda o nekažnjavanju
                 </label>
+            </td>
+            <td className="px-6 py-4">
+                {authority === "ROLE_PENDING_REGISTRATION" ?
+                    <label className='focus:outline-none cursor-pointer text-red-500'
+                        onClick={updateRoleToClient}>
+                        Potvrdi
+                    </label>
+                    :
+                    <label className='focus:outline-none cursor-pointer text-green-500'>
+                        Potvrđeno
+                    </label>
+                }
             </td>
             <td className="px-6 py-4">
                 <a href="#" className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
