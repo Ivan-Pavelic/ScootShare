@@ -1,8 +1,29 @@
 import React, { useState } from 'react';
+import { useEffect } from 'react';
+import AdminUserRowComponent from './AdminUserRowComponent';
 
-const AdminUserListComponent = () => {
+const AdminUserListComponent = (props) => {
+    const {jwt} = {...props};
 
     const [file, setFile] = useState("");
+    const [users, setUsers] = useState(null);
+
+    useEffect(() => {
+        fetch("api/admin/getAllUsers", {
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${jwt}`
+            }
+        })
+        .then((response) => {
+            if (response.ok) {
+                return response.json();
+            }
+        })
+        .then((users) => {
+            setUsers(users);
+        })
+    }, []);
 
     return (
     <div className='mx-auto w-3/5 mt-16'>    
@@ -48,41 +69,11 @@ const AdminUserListComponent = () => {
                     </tr>
                 </thead>
                 <tbody>     
-                    <tr className="bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-600">
-                        <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                            Marko
-                        </th>
-                        <td className="px-6 py-4">
-                            Perić
-                        </td>
-                        <td className="px-6 py-4">
-                            Markec
-                        </td>
-                        <td className="px-6 py-4">
-                            markoperic@gmail.com
-                        </td>
-                        <td className="px-6 py-4">
-                            <label className='focus:outline-none cursor-pointer'>
-                                Osobna Iskaznica
-                                <input className='hidden'
-                                    type="file"
-                                    accept='image/*'
-                                    defaultValue={file}/>
-                            </label>
-                        </td>
-                        <td className="px-6 py-4">
-                            <label className='focus:outline-none cursor-pointer'>
-                                Potvrda o nekažnjavanju
-                                <input className='hidden'
-                                    type="file"
-                                    accept='image/*'
-                                    defaultValue={file}/>
-                            </label>
-                        </td>
-                        <td className="px-6 py-4">
-                            <a href="#" className="font-medium text-blue-600 dark:text-blue-500 hover:underline">Izbriši</a>
-                        </td>
-                    </tr>
+                    {users && users.map((user) => {
+                        return (
+                            <AdminUserRowComponent jwt={jwt} key={user.email} email={user.email} firstName={user.firstName} lastName={user.lastName} nickname={user.nickname} idCard={user.idCard} certificateOfNoCriminalRecord={user.certificateOfNoCriminalRecord} />
+                        );
+                    })}
                 </tbody>
             </table>
         </div>

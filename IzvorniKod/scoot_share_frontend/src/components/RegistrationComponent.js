@@ -54,7 +54,6 @@ const RegistrationComponent = (props) => {
             reader.onload = (event) => {
                 let newUser = {...user};
                 newUser[attribute] = event.target.result;
-                console.log(event.target.result);
                 setUser(newUser);
             }
         }
@@ -161,7 +160,6 @@ const RegistrationComponent = (props) => {
             error.classList.add("hidden");
             error.classList.remove("flex");
         }
-        console.log(user);
         if (!hasError) {
             const formData = new FormData();
             formData.append("idCard", user.idCard);
@@ -186,6 +184,7 @@ const RegistrationComponent = (props) => {
                 })
                 .then((data) => {
                     setJwt(data.token);
+                    console.log(data);
                     navigate("/");
                 })
         }

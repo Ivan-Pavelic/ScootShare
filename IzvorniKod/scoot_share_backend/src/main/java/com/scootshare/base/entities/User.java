@@ -24,8 +24,8 @@ public class User implements UserDetails {
     @Column(unique = true)
     private String email;
 
-    private byte[] card;
-    private byte[] certificateOfNoCriminalRecord;
+    private String idCard;
+    private String certificateOfNoCriminalRecord;
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "user", cascade = CascadeType.ALL)
     private Set<Authority> authorities = new HashSet<>();
@@ -33,7 +33,7 @@ public class User implements UserDetails {
     protected User() {}
 
     public User(String firstName, String lastName, String nickname, String password, String cardNumber,
-                String email, byte[] card, byte[] criminalRecord) {
+                String email, String idCard, String criminalRecord) {
         super();
         this.firstName = firstName;
         this.lastName = lastName;
@@ -41,7 +41,7 @@ public class User implements UserDetails {
         this.password = password;
         this.cardNumber = cardNumber;
         this.email = email;
-        this.card = card;
+        this.idCard = idCard;
         this.certificateOfNoCriminalRecord = criminalRecord;
     }
 
@@ -103,11 +103,11 @@ public class User implements UserDetails {
         return email;
     }
 
-    public byte[] getCard() {
-        return card;
+    public String getIdCard() {
+        return idCard;
     }
 
-    public byte[] getCertificateOfNoCriminalRecord() {
+    public String getCertificateOfNoCriminalRecord() {
         return certificateOfNoCriminalRecord;
     }
 
@@ -139,11 +139,11 @@ public class User implements UserDetails {
         this.email = email;
     }
 
-    public void setCard(byte[] idCard) {
-        this.card = idCard;
+    public void setCard(String idCard) {
+        this.idCard = idCard;
     }
 
-    public void setCertificateOfNoCriminalRecord(byte[] certificateOfNoCriminalRecord) {
+    public void setCertificateOfNoCriminalRecord(String certificateOfNoCriminalRecord) {
         this.certificateOfNoCriminalRecord = certificateOfNoCriminalRecord;
     }
 
@@ -153,4 +153,5 @@ public class User implements UserDetails {
         newAuthority.setUser(this);
         authorities.add(newAuthority);
     }
+    
 }

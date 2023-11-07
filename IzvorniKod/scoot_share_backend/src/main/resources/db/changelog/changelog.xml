@@ -15,9 +15,9 @@
             <column name="email" type="VARCHAR(255)">
                 <constraints unique="true" />
             </column>
-            <column name="card" type="BYTEA"> <!-- BYTEA is for byte arrays (BLOBs) -->
+            <column name="id_card" type="MEDIUMTEXT">
 	        </column>
-	        <column name="certificate_of_no_criminal_record" type="BYTEA"> <!-- BYTEA is for byte arrays (BLOBs) -->
+	        <column name="certificate_of_no_criminal_record" type="MEDIUMTEXT"> 
 	        </column>
         </createTable>
     </changeSet>

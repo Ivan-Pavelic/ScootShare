@@ -2,6 +2,9 @@ package com.scootshare.base.services;
 
 import com.scootshare.base.entities.User;
 import com.scootshare.base.repositories.UserRepository;
+
+import jakarta.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -55,7 +58,13 @@ public class UserService {
     public void deleteById(long id){
         userRepository.deleteById(id);
     }
+    
     public boolean existsUser(long id){
         return userRepository.existsById(id);
     }
+    
+    @Transactional
+	public void deleteByEmail(String email) {
+		userRepository.deleteByEmail(email);
+	}
 }

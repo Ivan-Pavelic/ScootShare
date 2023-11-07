@@ -71,7 +71,7 @@ function App() {
           }/>
           <Route path='/admin' element={
             <PrivateRoute jwt={jwt} jwtIsValid={jwtIsValid} clientRole={false} adminRole={true}>
-              <AdminDashboardPage/>
+              <AdminDashboardPage jwt={jwt} setJwt={setJwt}/>
             </PrivateRoute>
           } />
         </Routes>
