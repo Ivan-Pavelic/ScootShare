@@ -9,8 +9,8 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
-@Entity(name="users")
-@Table
+@Entity
+@Table(name="users")
 public class User implements UserDetails {
 
     @Id
@@ -152,6 +152,10 @@ public class User implements UserDetails {
         newAuthority.setAuthority(authority);
         newAuthority.setUser(this);
         authorities.add(newAuthority);
+    }
+
+    public void removeAuthority(String authority) {
+        authorities.removeIf(auth -> auth.getAuthority().equals(authority));
     }
     
 }

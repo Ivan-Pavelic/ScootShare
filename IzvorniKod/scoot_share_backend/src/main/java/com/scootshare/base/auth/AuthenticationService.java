@@ -32,6 +32,7 @@ public class AuthenticationService {
                 request.getEmail(),
                 idCard,
                 criminalRecord);
+        user.addAuthority("ROLE_PENDING_REGISTRATION");
         userService.store(user);
         var jwtToken = jwtService.generateToken(user);
         return AuthenticationResponse.builder()

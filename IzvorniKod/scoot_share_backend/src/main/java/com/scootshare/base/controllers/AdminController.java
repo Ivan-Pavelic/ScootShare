@@ -40,4 +40,12 @@ public class AdminController {
     public void deleteUser(@PathVariable String email) {
     	userService.deleteByEmail(email);
     }
+
+	@PutMapping("/acceptUser/{email}")
+	public void acceptUser(@PathVariable String email) {
+		User user = userService.findByEmail(email);
+		user.addAuthority("ROLE_REGISTERED");
+		user.removeAuthority("ROLE_PENDING_REGISTRATION");
+		userService.store(user);
+	}
 }
