@@ -605,30 +605,41 @@
 
 				\subsubsection{Dijagrami obrazaca uporabe}
 				
-					\begin{figure}[t]
+				
+					\begin{figure}[H]
 						\centering
 						\includegraphics[width=0.8\textwidth]{slike/Funkcionalnost_klijent_korisnik.png}
 						\caption{Dijagram obrasca uporabe, funkcionalnost korisnika i klijenta}
+						\label{fig:your_label}
 					\end{figure}
 					
-					\begin{figure}[t]
+					\begin{figure}[H]
 						\centering
 						\includegraphics[width=0.8\textwidth]{slike/IznajmljivacUnajmitelj.png}
 						\caption{Dijagram obrasca uporabe, funkcionalnost Klijenta, iznajmljivača i unajmitelja}
+						\label{fig:your_label}
 					\end{figure}
 					
-					\begin{figure}[t]
+					\begin{figure}[H]
 						\centering
 						\includegraphics[width=0.8\textwidth]{slike/AdminUC.png}
 						\caption{Dijagram obrasca uporabe, funkcionalnost administratora}
+						\label{fig:your_label}
 					\end{figure}		
 				
 			\subsection{Sekvencijski dijagrami}
+			
+				\noindent \textbf{Obrazac uporabe UC15 – Pregled prijave}
 				
-				\textbf{\textit{dio 1. revizije}}\\
-				
-				\textit{Nacrtati sekvencijske dijagrame koji modeliraju najvažnije dijelove sustava (max. 4 dijagrama). Ukoliko postoji nedoumica oko odabira, razjasniti s asistentom. Uz svaki dijagram napisati detaljni opis dijagrama.}
+				\noindent Administrator dobiva obavijest da je iznajmljivača podnio prijavu na zamjenu slika koju je izvršio klijent. Administrator pregledava izmijenjene slike i odlučuje hoće li se zamjena slika izvršiti ili ne. Administratorova odluka dolazi kao obavijest iznajmljivaču i korisniku. Ako je prijava potvrđena nema promjena u bazi, a u slučaju da nije, slike romobila se vraćaju na one prije izmjene.
 				\eject
+				
+				\begin{figure}[H]
+					\centering
+					\includegraphics[width=0.8\textwidth]{slike/UC15_Pregled_prijave.png}
+					\caption{Sekvencijski dijagram za UC15}
+					\label{fig:your_label}
+				\end{figure}
 	
 		\section{Ostali zahtjevi}
 		
