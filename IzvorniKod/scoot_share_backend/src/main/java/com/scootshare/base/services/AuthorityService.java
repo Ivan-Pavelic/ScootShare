@@ -3,7 +3,6 @@ package com.scootshare.base.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.scootshare.base.entities.User;
 import com.scootshare.base.repositories.AuthorityRepository;
 
 import jakarta.transaction.Transactional;

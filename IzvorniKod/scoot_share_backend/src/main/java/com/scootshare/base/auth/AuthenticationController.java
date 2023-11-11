@@ -1,6 +1,5 @@
 package com.scootshare.base.auth;
 
-import com.scootshare.base.auth.AuthenticationService;
 import com.scootshare.base.config.JwtService;
 import com.scootshare.base.entities.User;
 import org.springframework.http.MediaType;
@@ -45,7 +44,7 @@ public class AuthenticationController {
     }
 
     @GetMapping("/validate")
-    public ResponseEntity<?> validateToken(@RequestParam String token, @AuthenticationPrincipal User user) {
+    public ResponseEntity<?> validateToken(@RequestParam String token	) {
         boolean validToken = jwtService.isTokenExpired(token);
         return ResponseEntity.ok(!validToken);
     }
