@@ -84,8 +84,7 @@
 					} %definicija širine tablice, širine stupaca, poravnanje i broja redaka naslova tablice
 					\hline \SetCell[c=3]{c}{\textbf{Scooter}}	 \\ \hline[3pt]
 					\SetCell{LightGreen}scooterID & INT	&  	Jedinstveni identifikator romobila 	\\ \hline
-					\SetCell{LightBlue}ownerID & INT	&  	Jedinstveni identifikator korisnika  \\ \hline 
-					imageIds	& INT &  Identifikatori fotografija romobila 	\\ \hline 
+					\SetCell{LightBlue}ownerID & INT	&  	Jedinstveni identifikator iznajmljivača romobila  \\ \hline 
 				\end{longtblr}
 				
 				\textbf{Listing} Ovaj entitet pohranjuje informacije o oglasu za iznajmljivanje romobila. Sadrži atribute: jedinstveni identifikator oglasa, jedinstveni identifikator romobila, lokaciju romobila, lokaciju povratka romobila, vrijeme povratka romobila, cijenu najma po prijeđenom kilometru, iznos novčane kazne u slučaju ne vraćanja romobila na vrijeme te status oglasa. U vezi je Many-To-One s entitetom Scooter preko identifikatora romobila.
@@ -103,7 +102,7 @@
 					\SetCell{LightBlue}scooterID & INT	&  	Jedinstveni identifikator romobila  \\ \hline 
 					location & VARCHAR &  Lokacija romobila	\\ \hline 
 					returnLocation & VARCHAR &  Lokacija za povratak romobila	\\ \hline 
-					returnByTime & VARCHAR &  Vrijeme do kada romobil mora biti vraćen  \\ \hline
+					returnByTime & DATETIME &  Vrijeme do kada romobil mora biti vraćen  \\ \hline
 					pricePerKilometer & VARCHAR & Cijena iznajmljivanja po kilometru  \\ \hline
 					lateReturnPenalty & VARCHAR & Iznos zakasnine kod vraćanja romobila  \\ \hline
 					status & VARCHAR & Status oglasa (aktivno, završeno) \\ \hline
@@ -125,10 +124,10 @@
 					\SetCell{LightBlue}userToID & INT	&  	Jedinstveni identifikator primatelja  \\ \hline 
 					\SetCell{LightBlue}listingID & INT	&  	Jedinstveni identifikator oglasa  \\ \hline
 					message & VARCHAR & Poruka korisniku o dostupnosti romobila  \\ \hline
-					sentAt & VARCHAR & vrijeme slanja poruke  \\ \hline
+					sentAt & DATETIME & vrijeme slanja poruke  \\ \hline
 				\end{longtblr}
 				
-				\textbf{ImageChangeRequest} Ovaj entitet pohranjuje zahtjeve korisnika za promjenu slike romobila kojeg su unajmili. Sadrži atribute: Jedinstveni identifikator najma romobila, jedinstveni identifikator slike, opis zamjene slike. U vezi je One-To-One sa ScooterImages te Many-To-One sa Rental entitetom.
+				\textbf{ImageChangeRequest} Ovaj entitet pohranjuje zahtjeve korisnika za promjenu slike romobila kojeg su unajmili. Sadrži atribute: Jedinstveni identifikator najma romobila, novu sliku romobila, identifikator najma i identifikator trenutne fotografije koju želimo zamijeniti. U vezi je One-To-One sa ScooterImages te Many-To-One sa Rental entitetom.
 				
 				\begin{longtblr}[
 					label=none,
@@ -141,6 +140,7 @@
 					\hline \SetCell[c=3]{c}{\textbf{ImageChangeRequest}}	 \\ \hline[3pt]
 					\SetCell{LightGreen}imageChange RequestID & INT	&  	Jedinstveni identifikator zahtjeva za promjenu slike romobila	\\ \hline
 					replacementImage & MEDIUMTEXT & Slika stanja romobila kojom želimo zamijeniti postojeću  \\ \hline
+					Message & VARCHAR & Razlog zamijene slike romobila  \\ \hline
 					\SetCell{LightBlue}rentalID & INT	&  	Jedinstveni identifikator najma romobila \\ \hline
 					\SetCell{LightBlue}imageID & INT	&  	Jedinstveni identifikator fotografije romobila  \\ \hline
 				\end{longtblr}
@@ -159,8 +159,8 @@
 					\SetCell{LightGreen}rentalID & INT	&  	Jedinstveni identifikator najma romobila	\\ \hline
 					\SetCell{LightBlue}userID & INT	&  	Jedinstveni identifikator korisnika  \\ \hline
 					\SetCell{LightBlue}listingID & INT	&  	Jedinstveni identifikator oglasa  \\ \hline
-					rentalTimeStart & VARCHAR & Početno vrijeme najma romobila  \\ \hline
-					rentalTimeEnd & VARCHAR & Završno vrijeme najma romobila  \\ \hline
+					rentalTimeStart & DATETIME & Početno vrijeme najma romobila  \\ \hline
+					rentalTimeEnd & DATETIME & Završno vrijeme najma romobila  \\ \hline
 				\end{longtblr}
 				
 				\textbf{Rating} entitet sadrži sve bitne informacije o ukupnoj ocjeni romobila. Sadrži atribute: Identifikator ocjene, identifikator najma romobila, ocjenu romobila, komentar nakon vožnje te vrijeme postavljanja ocjene. U vezi je One-To-One sa entitetom Rental preko identifikatora najma romobila.
@@ -178,7 +178,7 @@
 					\SetCell{LightBlue}rentalID & INT	&  	Jedinstveni identifikator najma romobila	\\ \hline
 					grade & VARCHAR & Ocjena vožnje romobilom  \\ \hline
 					comment & VARCHAR & Komentar nakon vožnje romobilom  \\ \hline
-					ratingTime & VARCHAR & Vrijeme ocjenjivanja vožnje \\ \hline
+					ratingTime & DATETIME & Vrijeme ocjenjivanja vožnje \\ \hline
 				\end{longtblr}
 				
 				\textbf{Transaction} Ovaj entitet pohranjuje informacije o jednoj transakciji. Sadrži atribute: identifikator transakcije, identifikator najma, broj prijeđenih kilometara, ukupnu cijenu najma. U vezi je One-To-One s entitetom Rental.
@@ -196,7 +196,7 @@
 					\SetCell{LightBlue}rentalID & INT	&  	Jedinstveni identifikator najma romobila	\\ \hline
 					totalPrice & VARCHAR & Ukupna cijena najma romobila  \\ \hline
 					kilometersPassed & VARCHAR & Kilometri prijeđeni romobilom  \\ \hline
-					timeOfTransaction & VARCHAR &  Vrijeme transakcije  \\ \hline
+					timeOfTransaction & DATETIME &  Vrijeme transakcije  \\ \hline
 				\end{longtblr}
 				
 				\textbf{ScooterImages} entitet sadrži fotografije vezane za romobil koji se iznajmljuje. Sadrži atribute: identifikator fotografije, identifikator romobila te samu sliku romobila. U vezi je Many-To-One sa entitetom Scooter preko identifikatora romobila.
