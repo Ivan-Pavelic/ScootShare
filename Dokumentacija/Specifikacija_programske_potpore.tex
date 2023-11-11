@@ -640,6 +640,30 @@
 					\caption{Sekvencijski dijagram za UC15}
 					\label{fig:your_label}
 				\end{figure}
+				
+				\noindent \textbf{Obrazac uporabe UC12 – Iznajmljivanje romobila}
+				
+				\noindent Klijent inicira zahtjev za pregled dostupnih oglasa kako bi odabrao željeni romobil. Poslužitelj potom pristupa trenutnim oglasima iz baze podataka i prikazuje ih klijentu. Nakon odabira oglasa, poslužitelj povlači sve relevantne podatke o odabranom romobilu i predstavlja ih klijentu. Korisnik ima mogućnost provjeriti usklađenost prikazanih fotografija romobila s njegovim stvarnim stanjem. Kada klijent donese odluku, šalje zahtjev za iznajmljivanje romobila iznajmljivaču. Iznajmljivač ima opciju prihvatiti ili odbiti zahtjev klijenta. U slučaju prihvata, poslužitelj prosljeđuje relevantne podatke o rezervaciji romobila bazi podataka.
+				\eject
+				
+				\begin{figure}[H]
+					\centering
+					\includegraphics[width=0.8\textwidth]{slike/sd_uc12.png}
+					\caption{Sekvencijski dijagram za UC12}
+					\label{fig:your_label}
+				\end{figure}
+				
+				\noindent \textbf{Obrazac uporabe UC16 – Ocjenjivanje klijenta}
+				
+				\noindent Iznajmljivač odabire klijenta kojemu onda on dodjeljuje ocjenu i komentar. Ukoliko nisu popunjena oba polja za ocjenu i komentar, aplikacija iznajmljivaču šalje poruku da nisu uneseni svi podaci te mo daje opciju ponovnog unosa. Tu poruku iznajmljivač dobiva za svaku takvu nepotpunu objavu. Iznajmljivač može tada odustati od objave ili nadopuniti. Ocjena i komentar su nakon toga vidljivi na profilu klijenata.
+				\eject
+				
+				\begin{figure}[H]
+					\centering
+					\includegraphics[width=0.8\textwidth]{slike/sd_uc12.png}
+					\caption{Sekvencijski dijagram za UC12}
+					\label{fig:your_label}
+				\end{figure}
 	
 		\section{Ostali zahtjevi}
 		

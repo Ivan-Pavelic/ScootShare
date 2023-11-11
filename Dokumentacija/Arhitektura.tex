@@ -17,9 +17,21 @@
 				
 		\section{Baza podataka}
 			
-			\textbf{\textit{dio 1. revizije}}\\
+			\noindent Za potrebe našeg sustava koristiti ćemo relacijsku bazu podataka koja svojom strukturom olakšava modeliranje stvarnog svijeta. Gradivna jedinka baze je relacija, odnosno tablica koja je definirana svojim imenom i skupom atributa. Zadaća baze podataka je brza i jednostavna pohrana, izmjena i dohvat podataka za daljnju obradu.
+			Baza podataka ove aplikacije sastoji se od sljedećih entiteta:
 			
-		\textit{Potrebno je opisati koju vrstu i implementaciju baze podataka ste odabrali, glavne komponente od kojih se sastoji i slično.}
+			\begin{packed_item} 
+				\item User
+				\item Authority
+				\item Scooter
+				\item Listing
+				\item RentalRequest
+				\item ImageChangeRequest
+				\item Rental
+				\item Rating
+				\item Transaction
+			\end{packed_item}
+				
 		
 			\subsection{Opis tablica}
 			
@@ -32,15 +44,147 @@
 					entry=none
 					]{
 						width = \textwidth,
-						colspec={|X[6,l]|X[6, l]|X[20, l]|}, 
+						colspec={|X[10,l]|X[8, l]|X[20, l]|}, 
 						rowhead = 1,
 					} %definicija širine tablice, širine stupaca, poravnanje i broja redaka naslova tablice
-					\hline \SetCell[c=3]{c}{\textbf{korisnik - ime tablice}}	 \\ \hline[3pt]
-					\SetCell{LightGreen}IDKorisnik & INT	&  	Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod  	\\ \hline
-					korisnickoIme	& VARCHAR &   	\\ \hline 
-					email & VARCHAR &   \\ \hline 
-					ime & VARCHAR	&  		\\ \hline 
-					\SetCell{LightBlue} primjer	& VARCHAR &   	\\ \hline 
+					\hline \SetCell[c=3]{c}{\textbf{User}}	 \\ \hline[3pt]
+					\SetCell{LightGreen}userID & INT	&  	Jedinstveni identifikator korisnika  	\\ \hline
+					firstName	& VARCHAR &  Ime korisnika 	\\ \hline 
+					lastName & VARCHAR &  Prezime korisnika  \\ \hline 
+					Nickname & VARCHAR	&  Nadimak korisnika  \\ \hline
+					password & VARCHAR &  Hash lozinke  \\ \hline
+					CardNumber & VARCHAR &   Broj kreditne kartice   \\ \hline
+					email & VARCHAR &   Email adresa korisnika   \\ \hline
+					idCard & MEDIUMTEXT &  Kopija osobne iskaznice  \\ \hline
+					CertificateOfNo CriminalRecord & MEDIUMTEXT & Potvrda o nekažnjavanju korisnika  \\ \hline
+				\end{longtblr}
+				
+				\begin{longtblr}[
+					label=none,
+					entry=none
+					]{
+						width = \textwidth,
+						colspec={|X[10,l]|X[8, l]|X[20, l]|}, 
+						rowhead = 1,
+					} %definicija širine tablice, širine stupaca, poravnanje i broja redaka naslova tablice
+					\hline \SetCell[c=3]{c}{\textbf{Authority}}	 \\ \hline[3pt]
+					\SetCell{LightGreen}authorityID & INT	&  	Jedinstveni identifikator autorizacije 	\\ \hline
+					\SetCell{LightBlue}UserID & INT	&  	Jedinstveni identifikator korisnika  \\ \hline 
+					authority	& VARCHAR &  Autorizacija 	\\ \hline 
+				\end{longtblr}
+				
+				\begin{longtblr}[
+					label=none,
+					entry=none
+					]{
+						width = \textwidth,
+						colspec={|X[10,l]|X[8, l]|X[20, l]|}, 
+						rowhead = 1,
+					} %definicija širine tablice, širine stupaca, poravnanje i broja redaka naslova tablice
+					\hline \SetCell[c=3]{c}{\textbf{Scooter}}	 \\ \hline[3pt]
+					\SetCell{LightGreen}scooterID & INT	&  	Jedinstveni identifikator romobila 	\\ \hline
+					\SetCell{LightBlue}ownerID & INT	&  	Jedinstveni identifikator korisnika  \\ \hline 
+					imageIds	& INT &  Identifikatori fotografija romobila 	\\ \hline 
+					images	& MEDIUMTEXT &  Fotografije romobila 	\\ \hline 
+				\end{longtblr}
+				
+				\begin{longtblr}[
+					label=none,
+					entry=none
+					]{
+						width = \textwidth,
+						colspec={|X[10,l]|X[8, l]|X[20, l]|}, 
+						rowhead = 1,
+					} %definicija širine tablice, širine stupaca, poravnanje i broja redaka naslova tablice
+					\hline \SetCell[c=3]{c}{\textbf{Listing}}	 \\ \hline[3pt]
+					\SetCell{LightGreen}listingID & INT	&  	Jedinstveni identifikator oglasa	\\ \hline
+					\SetCell{LightBlue}scooterID & INT	&  	Jedinstveni identifikator romobila  \\ \hline 
+					location & VARCHAR &  Lokacija romobila	\\ \hline 
+					returnLocation & VARCHAR &  Lokacija za povratak romobila	\\ \hline 
+					returnByTime & VARCHAR &  Vrijeme do kada romobil mora biti vraćen  \\ \hline
+					pricePerKilometer & VARCHAR & Cijena iznajmljivanja po kilometru  \\ \hline
+					lateReturnPenalty & VARCHAR & Iznos zakasnine kod vraćanja romobila  \\ \hline
+					status & VARCHAR & Status oglasa (aktivno, završeno) \\ \hline
+				\end{longtblr}
+				
+				\begin{longtblr}[
+					label=none,
+					entry=none
+					]{
+						width = \textwidth,
+						colspec={|X[10,l]|X[8, l]|X[20, l]|}, 
+						rowhead = 1,
+					} %definicija širine tablice, širine stupaca, poravnanje i broja redaka naslova tablice
+					\hline \SetCell[c=3]{c}{\textbf{RentalRequest}}	 \\ \hline[3pt]
+					\SetCell{LightGreen}rentalRequestID & INT	&  	Jedinstveni identifikator zahtjeva	\\ \hline
+					\SetCell{LightBlue}userID & INT	&  	Jedinstveni identifikator korisnika  \\ \hline
+					\SetCell{LightBlue}listingID & INT	&  	Jedinstveni identifikator korisnika  \\ \hline
+					message & VARCHAR & Poruka korisniku o dostupnosti romobila  \\ \hline
+					sentAt & VARCHAR & Primatelj kome je poruka poslana  \\ \hline
+				\end{longtblr}
+				
+				\begin{longtblr}[
+					label=none,
+					entry=none
+					]{
+						width = \textwidth,
+						colspec={|X[10,l]|X[8, l]|X[20, l]|}, 
+						rowhead = 1,
+					} %definicija širine tablice, širine stupaca, poravnanje i broja redaka naslova tablice
+					\hline \SetCell[c=3]{c}{\textbf{ImageChangeRequest}}	 \\ \hline[3pt]
+					\SetCell{LightGreen}imageChange RequestID & INT	&  	Jedinstveni identifikator zahtjeva za promjenu slike romobila	\\ \hline
+					replacementImage & MEDIUMTEXT & Slika stanja romobila kojom želimo zamijeniti postojeću  \\ \hline
+					\SetCell{LightBlue}userID & INT	&  	Jedinstveni identifikator korisnika  \\ \hline
+					\SetCell{LightBlue}scooterID & INT	&  	Jedinstveni identifikator romobila  \\ \hline
+				\end{longtblr}
+				
+				\begin{longtblr}[
+					label=none,
+					entry=none
+					]{
+						width = \textwidth,
+						colspec={|X[10,l]|X[8, l]|X[20, l]|}, 
+						rowhead = 1,
+					} %definicija širine tablice, širine stupaca, poravnanje i broja redaka naslova tablice
+					\hline \SetCell[c=3]{c}{\textbf{Rental}}	 \\ \hline[3pt]
+					\SetCell{LightGreen}rentalID & INT	&  	Jedinstveni identifikator najma romobila	\\ \hline
+					\SetCell{LightBlue}userID & INT	&  	Jedinstveni identifikator korisnika  \\ \hline
+					\SetCell{LightBlue}scooterID & INT	&  	Jedinstveni identifikator romobila  \\ \hline
+					status & VARCHAR & Trenutni status najma romobila  \\ \hline
+					rentalTimeStart & VARCHAR & Početno vrijeme najma romobila  \\ \hline
+					rentalTimeEnd & VARCHAR & Završno vrijeme najma romobila  \\ \hline
+				\end{longtblr}
+				
+				\begin{longtblr}[
+					label=none,
+					entry=none
+					]{
+						width = \textwidth,
+						colspec={|X[10,l]|X[8, l]|X[20, l]|}, 
+						rowhead = 1,
+					} %definicija širine tablice, širine stupaca, poravnanje i broja redaka naslova tablice
+					\hline \SetCell[c=3]{c}{\textbf{Rating}}	 \\ \hline[3pt]
+					\SetCell{LightGreen}ratingID & INT	&  	Jedinstveni identifikator ocjene	\\ \hline
+					\SetCell{LightBlue}rentalID & INT	&  	Jedinstveni identifikator najma romobila	\\ \hline
+					grade & VARCHAR & Ocjena vožnje romobilom  \\ \hline
+					comment & VARCHAR & Komentar nakon vožnje romobilom  \\ \hline
+					ratingTime & VARCHAR & Vrijeme ocjenjivanja vožnje \\ \hline
+				\end{longtblr}
+				
+				\begin{longtblr}[
+					label=none,
+					entry=none
+					]{
+						width = \textwidth,
+						colspec={|X[10,l]|X[8, l]|X[20, l]|}, 
+						rowhead = 1,
+					} %definicija širine tablice, širine stupaca, poravnanje i broja redaka naslova tablice
+					\hline \SetCell[c=3]{c}{\textbf{Transaction}}	 \\ \hline[3pt]
+					\SetCell{LightGreen}transactionID & INT	&  	Jedinstveni identifikator transakcije	\\ \hline
+					\SetCell{LightBlue}rentalID & INT	&  	Jedinstveni identifikator najma romobila	\\ \hline
+					kilometersPassed & VARCHAR & Kilometri prijeđeni romobilom  \\ \hline
+					timeOfTransaction & VARCHAR &  Vrijeme transakcije  \\ \hline
+					status & VARCHAR & Staus transakcije \\ \hline
 				\end{longtblr}
 				
 				
