@@ -56,7 +56,7 @@
 					CertificateOfNo CriminalRecord & MEDIUMTEXT & Potvrda o nekažnjavanju korisnika  \\ \hline 
 				\end{longtblr}
 				
-				\textbf{Authority} Ovaj entitet pohranjuje informacije o ovlastima korisnika. Sadrži atribute: Jedinstveni identifikator autorizacije, identifikator korisnika kojemu ovlast pripada i naziv ovlasti. U vezi je One-To-Many s entitetom User preko atributa jedinstvenog identifikatora korisnika.
+				\textbf{Authority} ovaj entitet pohranjuje informacije o ovlastima korisnika. Sadrži atribute: Jedinstveni identifikator autorizacije, identifikator korisnika kojemu ovlast pripada i naziv ovlasti. U vezi je One-To-Many s entitetom User preko atributa jedinstvenog identifikatora korisnika.
 				
 				\begin{longtblr}[
 					label=none,
@@ -87,7 +87,7 @@
 					\SetCell{LightBlue}ownerID & INT	&  	Jedinstveni identifikator iznajmljivača romobila  \\ \hline 
 				\end{longtblr}
 				
-				\textbf{Listing} Ovaj entitet pohranjuje informacije o oglasu za iznajmljivanje romobila. Sadrži atribute: jedinstveni identifikator oglasa, jedinstveni identifikator romobila, lokaciju romobila, lokaciju povratka romobila, vrijeme povratka romobila, cijenu najma po prijeđenom kilometru, iznos novčane kazne u slučaju ne vraćanja romobila na vrijeme te status oglasa. U vezi je Many-To-One s entitetom Scooter preko identifikatora romobila.
+				\textbf{Listing} ovaj entitet pohranjuje informacije o oglasu za iznajmljivanje romobila. Sadrži atribute: jedinstveni identifikator oglasa, jedinstveni identifikator romobila, lokaciju romobila, lokaciju povratka romobila, vrijeme povratka romobila, cijenu najma po prijeđenom kilometru, iznos novčane kazne u slučaju ne vraćanja romobila na vrijeme te status oglasa. U vezi je Many-To-One s entitetom Scooter preko identifikatora romobila.
 				
 				\begin{longtblr}[
 					label=none,
