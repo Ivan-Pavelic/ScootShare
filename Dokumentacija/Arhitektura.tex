@@ -1,19 +1,17 @@
 \chapter{Arhitektura i dizajn sustava}
 		
-		\textbf{\textit{dio 1. revizije}}\\
-
-		\textit{ Potrebno je opisati stil arhitekture te identificirati: podsustave, preslikavanje na radnu platformu, spremišta podataka, mrežne protokole, globalni upravljački tok i sklopovsko-programske zahtjeve. Po točkama razraditi i popratiti odgovarajućim skicama:}
-	\begin{itemize}
-		\item 	\textit{izbor arhitekture temeljem principa oblikovanja pokazanih na predavanjima (objasniti zašto ste baš odabrali takvu arhitekturu)}
-		\item 	\textit{organizaciju sustava s najviše razine apstrakcije (npr. klijent-poslužitelj, baza podataka, datotečni sustav, grafičko sučelje)}
-		\item 	\textit{organizaciju aplikacije (npr. slojevi frontend i backend, MVC arhitektura) }		
-	\end{itemize}
-
-	
+		\indent Odabrali smo arhitekturu klijent-poslužitelj zbog njezine skalabilnosti i jasne podjele odgovornosti između klijentskog i poslužiteljskog dijela sustava. Ova arhitektura pruža učinkovitu komunikaciju između korisničkog sučelja i servera. \\
 		
-
+		\indent Sustav je organiziran kao \textit{\underbar{klijent-poslužitelj}}, pri čemu klijent sadržava korisničko sučelje i logiku za interakciju s korisnikom. S druge strane, poslužitelj obrađuje zahtjeve klijenata, pristupa bazi podataka i upravlja poslovnim logikama. \\
 		
-
+		\indent \textit{\underbar{Aplikacija}} je strukturirana na slojevima, gdje frontend koristi React tehnologiju, koja obuhvaća korisničko sučelje i logiku za prikaz podataka korisnicima. Backend, s druge strane, koristi kombinaciju Java, JavaScript i Spring Boot tehnologija, obrađuje poslovnu logiku, upravlja pristupom bazi podataka i komunicira s klijentima. Ova struktura temelji se na \textit{\underbar{Model-View-Controller (MVC)}} arhitekturi, gdje model predstavlja podatke i poslovnu logiku, view je odgovoran za prikazivanje podataka, a controller upravlja korisničkim zahtjevima. \\
+		
+		\indent \textit{\underbar{Klijent}} radi na različitim uređajima, uključujući računala, pametne telefone i tablete, putem web preglednika. Poslužitelj je smješten u lokalnom data centru s potrebnim resursima za podršku poslužiteljskoj logici i bazi podataka. Baza podataka djeluje kao centralno spremište za pohranu podataka, s pristupom koji je kontroliran od strane poslužitelja. \\
+		
+		\indent Klijent inicira zahtjeve i prikazuje podatke korisnicima, dok poslužitelj obrađuje zahtjeve, upravlja poslovnim logikama te komunicira s bazom podataka. \\
+		\indent Za komunikaciju između klijenta i poslužitelja koristimo HTTP/HTTPS, osiguravajući time sigurnu razmjenu podataka. Za pouzdan prijenos podataka između različitih komponenti sustava koristi se TCP/IP \\
+		
+		\indent \textit{\underbar{Razvojna okolina}} uključuje korištenje Eclipse i Visual Studio Code za razvoj aplikacije, pružajući programerima učinkovite alate za pisanje, testiranje i održavanje koda tijekom razvojnog ciklusa. \\
 				
 		\section{Baza podataka}
 			
@@ -36,7 +34,7 @@
 			\subsection{Opis tablica}
 			
 
-				\textit{Svaku tablicu je potrebno opisati po zadanom predlošku. Lijevo se nalazi točno ime varijable u bazi podataka, u sredini se nalazi tip podataka, a desno se nalazi opis varijable. Svjetlozelenom bojom označite primarni ključ. Svjetlo plavom označite strani ključ}
+				\noindent User
 				
 				
 				\begin{longtblr}[
@@ -50,14 +48,16 @@
 					\hline \SetCell[c=3]{c}{\textbf{User}}	 \\ \hline[3pt]
 					\SetCell{LightGreen}userID & INT	&  	Jedinstveni identifikator korisnika  	\\ \hline
 					firstName	& VARCHAR &  Ime korisnika 	\\ \hline 
-					lastName & VARCHAR &  Prezime korisnika  \\ \hline 
-					Nickname & VARCHAR	&  Nadimak korisnika  \\ \hline
+					lastName & VARCHAR &  Prezime korisnika  \\ \hline
 					password & VARCHAR &  Hash lozinke  \\ \hline
 					CardNumber & VARCHAR &   Broj kreditne kartice   \\ \hline
 					email & VARCHAR &   Email adresa korisnika   \\ \hline
 					idCard & MEDIUMTEXT &  Kopija osobne iskaznice  \\ \hline
 					CertificateOfNo CriminalRecord & MEDIUMTEXT & Potvrda o nekažnjavanju korisnika  \\ \hline
+					\SetCell{LightBlue}authorities & INT & Identifikator autorizacije  \\ \hline 
 				\end{longtblr}
+				
+				\noindent Authority
 				
 				\begin{longtblr}[
 					label=none,
@@ -69,9 +69,11 @@
 					} %definicija širine tablice, širine stupaca, poravnanje i broja redaka naslova tablice
 					\hline \SetCell[c=3]{c}{\textbf{Authority}}	 \\ \hline[3pt]
 					\SetCell{LightGreen}authorityID & INT	&  	Jedinstveni identifikator autorizacije 	\\ \hline
-					\SetCell{LightBlue}UserID & INT	&  	Jedinstveni identifikator korisnika  \\ \hline 
+					\SetCell{LightBlue}userID & INT	&  	Jedinstveni identifikator korisnika  \\ \hline 
 					authority	& VARCHAR &  Autorizacija 	\\ \hline 
 				\end{longtblr}
+				
+				\noindent Scooter
 				
 				\begin{longtblr}[
 					label=none,
@@ -85,8 +87,10 @@
 					\SetCell{LightGreen}scooterID & INT	&  	Jedinstveni identifikator romobila 	\\ \hline
 					\SetCell{LightBlue}ownerID & INT	&  	Jedinstveni identifikator korisnika  \\ \hline 
 					imageIds	& INT &  Identifikatori fotografija romobila 	\\ \hline 
-					images	& MEDIUMTEXT &  Fotografije romobila 	\\ \hline 
+					\SetCell{LightBlue}images	& MEDIUMTEXT &  Fotografije romobila 	\\ \hline 
 				\end{longtblr}
+				
+				\noindent Listing
 				
 				\begin{longtblr}[
 					label=none,
@@ -107,6 +111,8 @@
 					status & VARCHAR & Status oglasa (aktivno, završeno) \\ \hline
 				\end{longtblr}
 				
+				\noindent Rental Request
+				
 				\begin{longtblr}[
 					label=none,
 					entry=none
@@ -123,6 +129,8 @@
 					sentAt & VARCHAR & Primatelj kome je poruka poslana  \\ \hline
 				\end{longtblr}
 				
+				\noindent Image Change Request
+				
 				\begin{longtblr}[
 					label=none,
 					entry=none
@@ -137,6 +145,8 @@
 					\SetCell{LightBlue}userID & INT	&  	Jedinstveni identifikator korisnika  \\ \hline
 					\SetCell{LightBlue}scooterID & INT	&  	Jedinstveni identifikator romobila  \\ \hline
 				\end{longtblr}
+				
+				\noindent Rental
 				
 				\begin{longtblr}[
 					label=none,
@@ -155,6 +165,8 @@
 					rentalTimeEnd & VARCHAR & Završno vrijeme najma romobila  \\ \hline
 				\end{longtblr}
 				
+				\noindent Rating
+				
 				\begin{longtblr}[
 					label=none,
 					entry=none
@@ -170,6 +182,8 @@
 					comment & VARCHAR & Komentar nakon vožnje romobilom  \\ \hline
 					ratingTime & VARCHAR & Vrijeme ocjenjivanja vožnje \\ \hline
 				\end{longtblr}
+				
+				\noindent Transaction
 				
 				\begin{longtblr}[
 					label=none,
@@ -190,7 +204,13 @@
 				
 			
 			\subsection{Dijagram baze podataka}
-				\textit{ U ovom potpoglavlju potrebno je umetnuti dijagram baze podataka. Primarni i strani ključevi moraju biti označeni, a tablice povezane. Bazu podataka je potrebno normalizirati. Podsjetite se kolegija "Baze podataka".}
+			
+				\begin{figure}[H]
+					\centering
+					\includegraphics[width=0.8\textwidth]{slike/relacijski_model_baza.png}
+					\caption{E-R dijagram baze podataka}
+					\label{fig:your_label}
+				\end{figure}
 			
 			\eject
 			
