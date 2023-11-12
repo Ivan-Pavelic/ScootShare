@@ -1,12 +1,14 @@
 import React from 'react';
 import NavigationComponent from '../components/NavigationComponent';
+import UpdateProfileComponent from '../components/UpdateProfileComponent';
 
 const UserProfilePage = (props) => {
-    const {jwtIsValid, setJwt} = {...props};
+    const {jwtIsValid, setJwt, email, jwt} = {...props};
 
     return (
         <>
-            <NavigationComponent displayLogoutButton={true} displayRegisterButton={false} displayLoginButton={false} setJwt={setJwt}/>   
+            <NavigationComponent displayRentScooterButton={true}  displayLogoutButton={true} displayRegisterButton={false} displayLoginButton={false} setJwt={setJwt}/>   
+            <UpdateProfileComponent email={email} jwt={jwt}/>
         </>
     );
 };

@@ -17,6 +17,7 @@ function App() {
     const [jwtIsValid, setJwtIsValid] = useState(false);
     const [loading, setLoading] = useState(false);
     const [authroity, setAuthority] = useState();
+    const [email, setEmail] = useState();
 
     // check if token is valid
     useEffect(() => {
@@ -40,6 +41,7 @@ function App() {
             cookies.set("jwt", jwt, {
               expires: new Date(decoded.exp * 1000)
             })
+            setEmail(decoded.email);
           }
           else {
             cookies.remove("jwt");
@@ -62,7 +64,7 @@ function App() {
           <Route path="/login" element={<LoginPage jwtIsValid={jwtIsValid} setJwt={setJwt}/>}/> 
           <Route path="/profile" element={
             <PrivateRoute jwt={jwt} jwtIsValid={jwtIsValid} clientRole={true} adminRole={false} >
-              <UserProfilePage jwtIsValid={jwtIsValid} setJwt={setJwt}/>
+              <UserProfilePage jwt={jwt} email={email} jwtIsValid={jwtIsValid} setJwt={setJwt}/>
             </PrivateRoute>
           }/>
           <Route path="/rent-scooter" element={

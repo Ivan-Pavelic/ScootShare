@@ -5,8 +5,6 @@ import { useState } from 'react';
 const AdminUserRowComponent = (props) => {
     const {jwt, authority, firstName, lastName, nickname, idCard, certificateOfNoCriminalRecord, email} = {...props};
 
-    console.log(authority);
-
     function donwloadIdCard() {
         
         const a = document.createElement("a");

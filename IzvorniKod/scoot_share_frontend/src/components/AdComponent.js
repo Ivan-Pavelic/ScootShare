@@ -2,11 +2,11 @@ import React, { useEffect, useState } from 'react';
 import { Navigate } from 'react-router-dom';
 
 const AdComponent = (props) => {
-  const {jwtIsValid} = {...props};
+  const {jwtIsValid, canReserveScooter} = {...props};
 
   useEffect(() => {
     const button = document.querySelector(".btn-reserve");
-    if (!jwtIsValid) {
+    if (!canReserveScooter) {
       button.classList.add("pointer-events-none");
       button.classList.add("bg-blue-200");
       button.classList.remove("bg-blue-500");

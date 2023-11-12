@@ -16,8 +16,8 @@ const HomePage = (props) => {
 
     return (
         <>
-            <NavigationComponent authority={authority} displayLogoutButton={jwtIsValid} displayRegisterButton={!jwtIsValid} displayLoginButton={!jwtIsValid} setJwt={setJwt}/>
-            <AdComponent jwtIsValid={jwtIsValid}/>
+            <NavigationComponent displayAdminPage={jwtIsValid && authority === "ROLE_ADMIN"} displayRentScooterButton={jwtIsValid && authority !== "ROLE_ADMIN"} authority={authority} displayProfileButton={jwtIsValid && authority !== "ROLE_ADMIN"} displayLogoutButton={jwtIsValid} displayRegisterButton={!jwtIsValid} displayLoginButton={!jwtIsValid} setJwt={setJwt}/>
+            <AdComponent canReserveScooter={jwtIsValid && authority === "ROLE_CLIENT"} jwtIsValid={jwtIsValid}/>
         </>
     );
 };

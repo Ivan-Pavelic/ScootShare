@@ -16,6 +16,7 @@ public class UserDto {
 	private String email;
 	private String nickname;
 	private String idCard;
+	private String cardNumber;
 	private String certificateOfNoCriminalRecord;
 	private String authority;
 }

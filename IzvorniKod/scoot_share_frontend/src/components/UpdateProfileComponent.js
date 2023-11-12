@@ -1,37 +1,34 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { BsFillPersonFill, BsCreditCard2BackFill } from "react-icons/bs";
 import {AiOutlineMail, AiOutlineIdcard, AiFillFileText} from "react-icons/ai";
 import {RiLockPasswordLine} from "react-icons/ri"
-import { useNavigate } from 'react-router-dom';
 
-const RegistrationComponent = (props) => {
-    const {setJwt} = {...props};
-    const [user, setUser] = useState({
-        "firstName": "",
-        "lastName": "",
-        "nickname": "",
-        "password": "",
-        "repeat_password": "",
-        "cardNumber": "",
-        "email": "",
-        "idCard": null,
-        "certificateOfNoCriminalRecord": null
-    });
-    const navigate = useNavigate();
+const UpdateProfileComponent = (props) => {
+    const {email, jwt} = {...props};
+    const [user, setUser] = useState(null);
+
+    useEffect(() => {
+        fetch(`api/users/${email}`, {
+            headers: {
+                "Content-Type" : "application/json",
+                "Authorization": `Bearer ${jwt}`
+            },
+            method: "GET"
+        })
+        .then((response) => {
+            if (response.ok) {
+                return response.json()
+            }
+        })
+        .then((user) => {
+            user["password"] = "";
+            user["repeat_password"] = "";
+            setUser(user);
+        })
+    }, []);
 
     function handleInputChange(attribute, value) {
         let newUser = {...user};
-        if (attribute === "cardNumber") {
-            if (value.split(" ").join("").length % 4 === 0) {
-                if (user[attribute].length < value.length) {
-                    value += " ";
-                }
-                else {
-
-                    value = value.substr(0, value.length - 1)
-                }
-            }
-        }
         if (attribute === "repeat_password" || attribute === "password") {
             const errorPassword = document.querySelector(".repeat-password-error");
             if (value !== user.password) {
@@ -47,19 +44,7 @@ const RegistrationComponent = (props) => {
         setUser(newUser);
     }
 
-    function handleFileInputChange(event, attribute) {
-        const reader = new FileReader();
-        if (event.target.files[0])  {
-            reader.readAsDataURL(event.target.files[0]);
-            reader.onload = (event) => {
-                let newUser = {...user};
-                newUser[attribute] = event.target.result;
-                setUser(newUser);
-            }
-        }
-    }
-
-    function registerUser(event) {
+    function updateUser(event) {
         event.preventDefault();
         let hasError = false;
         if (user.firstName === "") {
@@ -106,40 +91,7 @@ const RegistrationComponent = (props) => {
             error.classList.add("hidden");
             error.classList.remove("flex");
         }
-        if (!isValidEmail(user.email)) {
-            hasError = true;
-            const error = document.querySelector(".email-error");
-            error.classList.remove("hidden");
-            error.classList.add("flex");
-        }
-        else {
-            const error = document.querySelector(".email-error");
-            error.classList.add("hidden");
-            error.classList.remove("flex");
-        }
-        if (user.idCard == null) {
-            hasError = true;
-            const error = document.querySelector(".id-card-error");
-            error.classList.remove("hidden");
-            error.classList.add("flex");
-        }
-        else {
-            const error = document.querySelector(".id-card-error");
-            error.classList.add("hidden");
-            error.classList.remove("flex");
-        }
-        if (user.idCard == null) {
-            hasError = true;
-            const error = document.querySelector(".criminal-record-error");
-            error.classList.remove("hidden");
-            error.classList.add("flex");
-        }
-        else {
-            const error = document.querySelector(".criminal-record-error");
-            error.classList.add("hidden");
-            error.classList.remove("flex");
-        }
-        if (user.password == null || user.password.length < 8) {
+        if (user.password == null || (user.password.length < 8 && !user.password.length == 0)) {
             hasError = true;
             const error = document.querySelector(".password-error");
             error.classList.remove("hidden");
@@ -161,33 +113,18 @@ const RegistrationComponent = (props) => {
             error.classList.add("hidden");
             error.classList.remove("flex");
         }
+
         if (!hasError) {
-            const formData = new FormData();
-            formData.append("idCard", user.idCard);
-            formData.append("criminalRecord", user.certificateOfNoCriminalRecord);
             const {firstName, lastName, nickname, cardNumber, email, password} = {...user};
             const newUser = {firstName, lastName, nickname, cardNumber, email, password};
-            formData.append("user", JSON.stringify(newUser));
-             formData.append("file", "file")
-             const fetchData = {
+            fetch(`api/users/${email}`, {
                 headers: {
-                    Authorization: `Bearer `
+                    "Content-Type" : "application/json",
+                    "Authorization": `Bearer ${jwt}`
                 },
-                method: "POST",
-                body: formData
-            };
-
-            fetch("api/auth/register", fetchData)
-                .then((response) => {
-                    if (response.ok) {
-                        return response.json()
-                    }
-                })
-                .then((data) => {
-                    setJwt(data.token);
-                    console.log(data);
-                    navigate("/");
-                })
+                method: "PUT",
+                body: JSON.stringify(newUser)
+            });
         }
     }
 
@@ -221,24 +158,13 @@ const RegistrationComponent = (props) => {
         return false;
       }
 
-      function isValidEmail(email) {
-        // Regular expression for basic email format validation
-        const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
-      
-        // Test the email against the regular expression
-        return emailPattern.test(email);
-      }
-
-      function resetForm() {
-        navigate("/")
-      }
-
     return (
+        user && 
         <>
             <div className='flex-row mx-auto justify-center w-2/5 my-20 rounded-lg shadow-lg'>
                 <div className='bg-blue-500 h-2 rounded-lg'></div>
                 <div className='mb-10 flex justify-center align-center mt-8'>
-                    <p className='font-monoy text-4xl font-semibold'>Dobrodošli u ScootShare!</p>
+                    <p className='font-monoy text-4xl font-semibold'>Podatci dostupni za ažuriranje</p>
                 </div>
                 <form className='flex-row px-20'>
                     <div className='flex rounded-sm shadow-md mb-10'>
@@ -287,6 +213,19 @@ const RegistrationComponent = (props) => {
                     <div className='justify-end -mt-8 mb-8 hidden nickname-error'>
                         <p className='text-md text-red-500'>Molimo unesite ispravan nadimak.</p>
                     </div>
+                    <div className='flex rounded-sm shadow-md mb-10'>
+                        <div className='flex justfiy-center align-middle bg-gray-200 p-2'>
+                            <AiOutlineMail size={35} />
+                        </div>
+                        <div className='w-full'>
+                            <input className='w-full h-full pl-4 focus:outline-none text-xl'
+                                disabled
+                                placeholder='Email'
+                                type="email"
+                                value={user.email}
+                                onChange={(event) => handleInputChange("email", event.target.value)}/>
+                        </div>
+                    </div>
                     <div className='flex rounded-sm shadow-md mb-10 relative'>
                         <div className='flex justfiy-center align-middle bg-gray-200 p-2'>
                             <RiLockPasswordLine size={35} />
@@ -332,58 +271,8 @@ const RegistrationComponent = (props) => {
                     <div className='justify-end -mt-8 mb-8 hidden card-error'>
                         <p className='text-md text-red-500'>Molimo unesite ispravan broj kartice.</p>
                     </div>
-                    <div className='flex rounded-sm shadow-md mb-10'>
-                        <div className='flex justfiy-center align-middle bg-gray-200 p-2'>
-                            <AiOutlineMail size={35} />
-                        </div>
-                        <div className='w-full'>
-                            <input className='w-full h-full pl-4 focus:outline-none text-xl'
-                                placeholder='Email'
-                                type="email"
-                                value={user.email}
-                                onChange={(event) => handleInputChange("email", event.target.value)}/>
-                        </div>
-                    </div>
-                    <div className='justify-end -mt-8 mb-8 hidden email-error'>
-                        <p className='text-md text-red-500'>Molimo unesite ispravan email.</p>
-                    </div>
-                    <div className='flex rounded-sm shadow-md mb-10'>
-                        <div className='flex justfiy-center align-middle bg-gray-200 p-2'>
-                            <AiOutlineIdcard size={35} />
-                        </div>
-                        <div className='w-full flex justify-center items-center'>
-                            <label className='pl-4 focus:outline-none text-xl w-full text-center cursor-pointer'>
-                                {user.idCard == null ? "Osobna Iskaznica" : "Osobna Iskaznica: Uneseno"}
-                                <input className='hidden'
-                                    type="file"
-                                    accept='image/*'
-                                    onChange={(event) => handleFileInputChange(event, "idCard")}/>
-                            </label>
-                        </div>
-                    </div>
-                    <div className='justify-end -mt-8 mb-8 hidden id-card-error'>
-                        <p className='text-md text-red-500'>Molimo unesite kopiju osobne iskaznice.</p>
-                    </div>
-                    <div className='flex rounded-sm shadow-md mb-10'>
-                        <div className='flex justfiy-center align-middle bg-gray-200 p-2'>
-                            <AiFillFileText size={35} />
-                        </div>
-                        <div className='w-full flex justify-center items-center'>
-                            <label className='pl-4 focus:outline-none text-xl w-full text-center cursor-pointer'>
-                                {user.certificateOfNoCriminalRecord == null ? "Potvrda o nekažnjavanju" : "Potvrda o nekažnjavanju: Uneseno"}
-                                <input className='hidden'
-                                    type="file"
-                                    accept='application/pdf'
-                                    onChange={(event) => handleFileInputChange(event, "certificateOfNoCriminalRecord")}/>
-                            </label>
-                        </div>
-                    </div>
-                    <div className='justify-end -mt-8 mb-8 hidden criminal-record-error'>
-                        <p className='text-md text-red-500'>Molimo unesite potvrdu o nekažnjavanju.</p>
-                    </div>
-                    <div className='flex justify-between px-10 py-8'>
-                        <button type='button' className='text-xl font-semibold px-8 py-3 bg-red-400 text-white rounded-xl' onClick={resetForm}>Odustani</button>
-                        <button type='submit' className='text-xl font-semibold px-8 py-3 bg-blue-500 text-white rounded-xl' onClick={registerUser}>Potvrdi</button>
+                    <div className='flex justify-center px-10 py-8'>
+                        <button type='button' className='text-xl font-semibold px-8 py-3 bg-blue-500 text-white rounded-xl' onClick={updateUser} >Potvrdi</button>
                     </div>
                 </form>
             </div>
@@ -391,4 +280,4 @@ const RegistrationComponent = (props) => {
     );
 };
 
-export default RegistrationComponent;
+export default UpdateProfileComponent;

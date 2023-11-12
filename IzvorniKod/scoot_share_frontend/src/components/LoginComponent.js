@@ -17,7 +17,8 @@ const LoginComponent = (props) => {
         newUser[attribute] = value
         setUser(newUser);
     }
-    function loginUser() {
+    function loginUser(event) {
+        event.preventDefault();
         fetch("api/auth/authenticate", {
             headers: {
               "Content-Type": "application/json"
@@ -32,7 +33,8 @@ const LoginComponent = (props) => {
           })
           .then((data) => {
             if (data == undefined) {
-                // display error
+                document.querySelector(".error-invalid-credentials").classList.remove("hidden");
+                document.querySelector(".error-invalid-credentials").classList.add("flex");
             }
             else {
                 setJwt(data.token)
@@ -50,12 +52,19 @@ const LoginComponent = (props) => {
         return emailPattern.test(email);
       }
 
+    function cancel() {
+        navigate("/");
+    }
+
     return (
         <>
             <div className='flex-row mx-auto justify-center w-2/5 my-20 rounded-lg shadow-lg'>
                 <div className='bg-blue-500 h-2 rounded-lg'></div>
                 <div className='mb-10 flex justify-center align-center mt-8'>
                     <p className='font-monoy text-3xl font-semibold'>Prijavi se</p>
+                </div>
+                <div className='mb-10 justify-center align-center mt-8 error-invalid-credentials hidden'>
+                    <p className='font-monoy text-xl font-semibold text-red-500'>Greška prilikom prijave. Pokušajte ponovo.</p>
                 </div>
                 <form  className='flex-row px-20'>
                     <div className='flex rounded-sm shadow-md mb-10'>
@@ -82,13 +91,16 @@ const LoginComponent = (props) => {
                                     onChange={(event) => handleInputChange("password", event.target.value)}/>
                         </div>
                     </div>
+                    <div className="flex  justify-between px-10 py-8">
+                    <button type='button' className='text-xl font-semibold px-8 py-3 bg-red-400 text-white rounded-xl' onClick={cancel}>Odustani</button>
+                        <button
+                            type="submit"
+                            className="text-xl font-semibold px-8 py-3 bg-blue-500 text-white rounded-xl"
+                            onClick={loginUser}> 
+                            Potvrdi
+                        </button>
+                    </div>
                 </form>
-                <div className="flex  justify-center px-10 py-8">
-                <button
-                    type="submit"
-                    className="text-xl font-semibold px-8 py-3 bg-blue-500 text-white rounded-xl"
-                    onClick={loginUser}> Potvrdi</button>
-                </div>
             </div>
         </> 
     );

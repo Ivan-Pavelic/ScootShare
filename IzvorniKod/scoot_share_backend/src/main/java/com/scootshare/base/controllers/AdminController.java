@@ -35,6 +35,7 @@ public class AdminController {
 	    			.idCard(user.getIdCard())
 	    			.certificateOfNoCriminalRecord(user.getCertificateOfNoCriminalRecord())
 	    			.authority(List.copyOf(user.getAuthorities()).get(0).getAuthority())
+	    			.cardNumber(user.getCardNumber())
 	    			.build())
     			.collect(Collectors.toList());
         return ResponseEntity.ok(usersDtos);
