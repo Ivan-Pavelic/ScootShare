@@ -22,7 +22,7 @@ function App() {
     // check if token is valid
     useEffect(() => {
       if (jwt !== "") {
-        fetch(`api/auth/validate?token=${jwt}`, {
+        fetch(`/api/auth/validate?token=${jwt}`, {
           headers: {
             "Authorization": `Bearer ${jwt}`,
             "Content-Type": "application/json"

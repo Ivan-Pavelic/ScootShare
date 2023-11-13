@@ -9,7 +9,7 @@ const AdminUserListComponent = (props) => {
     const [users, setUsers] = useState(null);
 
     useEffect(() => {
-        fetch("api/admin/getAllUsers", {
+        fetch("/api/admin/getAllUsers", {
             headers: {
                 "Content-Type": "application/json",
                 Authorization: `Bearer ${jwt}`

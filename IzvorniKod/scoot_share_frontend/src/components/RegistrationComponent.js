@@ -177,7 +177,7 @@ const RegistrationComponent = (props) => {
                 body: formData
             };
 
-            fetch("api/auth/register", fetchData)
+            fetch("/api/auth/register", fetchData)
                 .then((response) => {
                     if (response.ok) {
                         return response.json()

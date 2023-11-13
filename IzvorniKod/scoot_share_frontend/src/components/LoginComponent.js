@@ -19,7 +19,7 @@ const LoginComponent = (props) => {
     }
     function loginUser(event) {
         event.preventDefault();
-        fetch("api/auth/authenticate", {
+        fetch("/api/auth/authenticate", {
             headers: {
               "Content-Type": "application/json"
             },

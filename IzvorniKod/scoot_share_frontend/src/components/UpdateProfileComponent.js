@@ -117,7 +117,7 @@ const UpdateProfileComponent = (props) => {
         if (!hasError) {
             const {firstName, lastName, nickname, cardNumber, email, password} = {...user};
             const newUser = {firstName, lastName, nickname, cardNumber, email, password};
-            fetch(`api/users/${email}`, {
+            fetch(`/api/users/${email}`, {
                 headers: {
                     "Content-Type" : "application/json",
                     "Authorization": `Bearer ${jwt}`

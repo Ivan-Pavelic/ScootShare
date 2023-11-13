@@ -27,7 +27,7 @@ const AdminUserRowComponent = (props) => {
     }
 
     function deleteUser() {
-        fetch(`api/admin/deleteUser/${email}`, {
+        fetch(`/api/admin/deleteUser/${email}`, {
             headers: {
                 "Content-Type": "application/json",
                 Authorization: `Bearer ${jwt}`,
@@ -40,7 +40,7 @@ const AdminUserRowComponent = (props) => {
     }
 
     function updateRoleToClient() {
-        fetch(`api/admin/acceptUser/${email}`, {
+        fetch(`/api/admin/acceptUser/${email}`, {
             headers: {
                 "Content-Type": "application/json",
                 Authorization: `Bearer ${jwt}`,
