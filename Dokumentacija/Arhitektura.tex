@@ -230,15 +230,34 @@
 			
 		\section{Dijagram razreda}
 		
-			\textit{Potrebno je priložiti dijagram razreda s pripadajućim opisom. Zbog preglednosti je moguće dijagram razlomiti na više njih, ali moraju biti grupirani prema sličnim razinama apstrakcije i srodnim funkcionalnostima.}\\
+			\noindent Na slikama 4.3, 4.4 i 4.5 su prikazani razredi koji pripadaju backend dijelu MVC arhitekture. Razredi prikazani na slici 4.3 nasljeduju Controller razred. Metode implementirane u tim razredima manipuliraju s DTO (Data transfer object), a oni su dohvaceni pomoću metoda implementiranih u Entitet razredima. Metode implementirane u Controller razredima vraćaju JSON datoteke s html status kodom. \\
 			
-			\textbf{\textit{dio 1. revizije}}\\
+			\indent Zbog lakše organizacije, razredi su podijeljeni logički po pravu pristupa metodama određenih aktora, kako bi se smanjila prenapučenost unutar dijagrama, prikazane su samo ovisnosti između razreda koji pripadaju istom dijelu dijagrama. Iz naziva i tipova atributa u razredima može se zaključiti vrsta ovisnosti među
+			različitim razredima. \\
+		
+			\begin{figure}[H]
+				\centering
+				\includegraphics[width=0.8\textwidth]{slike/ControllersDiagram.png}
+				\caption{Dijagram razreda - dio Controllers}
+				\label{fig:your_label}
+			\end{figure}
 			
-			\textit{Prilikom prve predaje projekta, potrebno je priložiti potpuno razrađen dijagram razreda vezan uz \textbf{generičku funkcionalnost} sustava. Ostale funkcionalnosti trebaju biti idejno razrađene u dijagramu sa sljedećim komponentama: nazivi razreda, nazivi metoda i vrste pristupa metodama (npr. javni, zaštićeni), nazivi atributa razreda, veze i odnosi između razreda.}\\
+			\begin{figure}[H]
+				\centering
+				\includegraphics[width=0.8\textwidth]{slike/DTO_dijagram.png}
+				\caption{Dijagram razreda - dio Data Transfer Objects}
+				\label{fig:your_label}
+			\end{figure}
 			
-			\textbf{\textit{dio 2. revizije}}\\			
+			 \indent Model razedi
+			 \\
 			
-			\textit{Prilikom druge predaje projekta dijagram razreda i opisi moraju odgovarati stvarnom stanju implementacije}
+			\begin{figure}[H]
+				\centering
+				\includegraphics[width=0.8\textwidth]{slike/entiteti.png}
+				\caption{Dijagram razreda - dio Entiteti}
+				\label{fig:your_label}
+			\end{figure}
 			
 			
 			
