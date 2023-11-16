@@ -1,0 +1,53 @@
+DNEVNIK SASTAJANJA
+
+
+//1. SASTANAK
+
+Datum: 20. listopada 2023.
+
+Prisustvovali: Anamarija Jakoubek, Dino Babić, Jan Grbac, Igor Šoštarko, Karemn Korić, 
+Leonarda Pribanić, Ivan Pavelić
+
+Teme sastanka: Upoznavanje, Osnove projekta
+
+- Prvo upoznavanje, razmjenjivanje kontaktnih podataka i izrada skupne grupe.
+- Biranje imena projekta, tehnologije koje će se koristiti, tko bi se kojim dijelom htio baviti te koliko ćemo se često sastajati.
+
+//2. SASTANAK
+
+Datum: 24. listopada 2023.
+
+Prisustvovali: Anamarija Jakoubek, Dino Babić, Jan Grbac, Igor Šoštarko, Karemn Korić, 
+Leonarda Pribanić, Ivan Pavelić
+
+Teme sastanka: Funkcionalni zahtjevi, Dijagrami, Arhitektura i Baza podataka
+
+- Navođenje i razrada funkcionalnih i ostalih zahtjeva, koje će mogućnosti imati korisnici, a koji administratori
+– Razradeni dijagrami i napravljene prve skice opisa obrazaca uporabe temeljene na funkcionalnim zahtjevima, također napisani prvi
+	sekvencijski dijagrami koji opisuju kako će aplikacija funkcionirati u danim slučajevima
+– Dogovor oko arhitekture klijent-poslužitelj koju ćemo koristiti kroz projekt. Za frontend je odabrana React, a za backend kombinacija
+	Java, JavaScript i Spring Boot tehnologija. Prve skice baze podataka, tablica za entitete i postavljanje primarnih i stranih ključeva
+
+//3. SASTANAK
+
+Datum: 7. studenog 2023.
+
+Prisustvovali: Anamarija Jakoubek, Dino Babić, Jan Grbac, Igor Šoštarko, Karemn Korić, 
+Leonarda Pribanić, Ivan Pavelić
+
+Teme sastanka: Dijagrami razreda, Ažuriranje baze podataka
+
+– Crtanje dijagrama razreda, specifikacija metoda koje povlače Controller razred, definiranje entiteta i servisa koje će entiteti koristiti
+– Dorada i ispravak baze podataka, dodavanje novih atributa u entitete ili cijele koji zamjenjuju nepotrebne funkcionalnosti baze podataka
+
+//4. SASTANAK
+
+Datum: 15. studenog 2023.
+
+Prisustvovali: Anamarija Jakoubek, Dino Babić, Jan Grbac, Igor Šoštarko, Karemn Korić, 
+Leonarda Pribanić, Ivan Pavelić
+
+Teme sastanka: Dovršavanje prvog dijela dokumentacije, Objava i testiranje web-aplikacije
+
+– Ažuriranje slika, dijelova teksta, tablica i ostalih stavki prije prve predaje
+– Deploy aplikacije na Redner i testiranje funkcionalnosti prijave, registracije, odobravanje registracija i osnovnih funkcionalnosti web-stranice

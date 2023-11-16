@@ -230,10 +230,9 @@
 			
 		\section{Dijagram razreda}
 		
-			\noindent Na slikama 4.3, 4.4 i 4.5 su prikazani razredi koji pripadaju backend dijelu MVC arhitekture. Razredi prikazani na slici 4.3 nasljeduju Controller razred. Metode implementirane u tim razredima manipuliraju s DTO (Data transfer object), a oni su dohvaceni pomoću metoda implementiranih u Entitet razredima. Metode implementirane u Controller razredima vraćaju JSON datoteke s html status kodom. \\
+			\noindent Dijagrami razreda predstavljaju skup razreda koji su dio backend segmenta MVC arhitekture. Ti razredi nasljeđuju Controller razred. Metode unutar tih razreda manipuliraju s DTO (Data Transfer Object) koji su dohvaćeni kroz implementirane metode u Entitet i Servisi razredima. Kontrolni razredi implementiraju metode koje vraćaju JSON datoteke s odgovarajućim HTML status kodom. \\
 			
-			\indent Zbog lakše organizacije, razredi su podijeljeni logički po pravu pristupa metodama određenih aktora, kako bi se smanjila prenapučenost unutar dijagrama, prikazane su samo ovisnosti između razreda koji pripadaju istom dijelu dijagrama. Iz naziva i tipova atributa u razredima može se zaključiti vrsta ovisnosti među
-			različitim razredima. \\
+			\indent Razredi su logički grupirani prema pravima pristupa određenih aktera. Ova organizacija pomaže smanjiti prenapučenost unutar dijagrama, gdje su prikazane samo ovisnosti između razreda koji pripadaju istom segmentu dijagrama. Informacije o nazivima i tipovima atributa unutar razreda omogućuju zaključivanje vrste ovisnosti među različitim razredima. \\
 		
 			\begin{figure}[H]
 				\centering
@@ -249,9 +248,12 @@
 				\label{fig:your_label}
 			\end{figure}
 			
-			 \indent Model razedi
-			 \\
+			\indent Servisi i Entiteti predstavljaju dvije ključne komponente koji primjenjuju arhitektonski obrazac poznat kao "Service-Oriented Architecture" (SOA) ili "Domain-Driven Design" (DDD). \\
 			
+			 \indent Entiteti predstavljaju objekte u bazi podataka koji imaju svoj identitet. Svaki entitet ima svoje primarne i sekundarne ključeve kojima su vezani za ostale entitete. \\
+			 
+			 \indent Servisi predstavljaju komponente sustava koje obavljaju određene operacije ili funkcionalnosti. Oni sadrže poslovnu logiku i nude specifične usluge koje se mogu pozvati iz drugih dijelova sustava. \\
+			 
 			\begin{figure}[H]
 				\centering
 				\includegraphics[width=0.8\textwidth]{dijagrami/entiteti.png}
