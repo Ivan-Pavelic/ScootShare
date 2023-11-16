@@ -9,6 +9,7 @@
 			\begin{packed_enum}
 				
 				\item Neregistrirani korisnik
+				\item Prijavljeni korisnik
 				\item Klijent				
 				\item Iznajmljivač
 				\item Administrator
@@ -21,13 +22,25 @@
 
 
 			\begin{packed_enum}
+
 				\item  \underbar{Neregistrirani korisnik može: }
 				
 				\begin{packed_enum}
 					
 					\item se registrirati u sustav, stvoriti novi korisnički račun sa svim potrebnim podatcima
-					\item  prijaviti se s postojećim podacima za prijavu u sustav
-					\item  pregledavati trenutno dostupne romobile i njihove cijene
+					\item pregledavati trenutno dostupne romobile i njihove cijene
+
+				\end{packed_enum}
+
+				\item  \underbar{Prijavljeni korisnik može: }
+				
+				\begin{packed_enum}
+					
+					\item prijaviti se s postojećim podacima za prijavu u sustav
+					\item pregledavati dostupne romobile
+					\item upravljati svojim osobnim podatcima
+					\item pregledati povijest svojih transakcija
+
 
 				\end{packed_enum}
 			
@@ -35,11 +48,9 @@
 				
 				\begin{packed_enum}
 					
-					\item pregledavati dostupne romobile
 					\item iznajmljivati dostupne romobile te provjeriti je li slike odgovaraju stvarnom stanju
 					\item zamijeniti sliku koja ne odgovara stvarnom stanju iznajmljenog romobila novom slikom i kratkim opisom
 					\item javiti se iznajmljivaču s porukom i zahtjevom za iznajmljivanje
-					\item pregledati povijest svojih transakcija
 					
 				\end{packed_enum}
 
@@ -53,7 +64,6 @@
 					\item prijaviti administratoru ako je zamjena slika iznajmljenog romobila predložena bez dobrog razloga
 					\item odgovoriti klijentu i prihvatiti ili odbiti ponudu
 					\item ocijeniti klijenta i napisati komentar
-					\item pregledati povijest svojih transakcija
 
 				\end{packed_enum}
 
@@ -91,7 +101,7 @@
 					\noindent \underbar{\textbf{UC1 - Pregled romobila}}
 					\begin{packed_item}
 	
-						\item \textbf{Glavni sudionik: }Neregistrirani korisnik, klijent
+						\item \textbf{Glavni sudionik: }Prijavljeni korisnik
 						\item  \textbf{Cilj: }Pregledati romobile i njihove cijene
 						\item  \textbf{Sudionici: }Baza podataka
 						\item  \textbf{Preduvjet: }-
@@ -120,10 +130,10 @@
 						\item[] \begin{packed_enum}
 	
 							\item Korisnik odabire opciju za registraciju
-							\item  Korisnik unosi potrebne korisničke podatke
-							\item  Sustav provjerava ispravnost podataka
-							\item  Korisnik prima obavijest o uspješnoj registraciji
-							\item  Sustav preusmjerava korisnika na stranicu s aktivnim oglasima
+							\item Korisnik unosi potrebne korisničke podatke
+							\item Sustav provjerava ispravnost podataka
+							\item Korisnik prima obavijest o uspješnoj registraciji
+							\item Sustav preusmjerava korisnika na stranicu s aktivnim oglasima
 
 						\end{packed_enum}
 						
@@ -147,7 +157,7 @@
 						\noindent \underbar{\textbf{UC3 - Prijava u sustav}}
 					\begin{packed_item}
 	
-						\item \textbf{Glavni sudionik: }Klijent, iznajmljivač, administrator
+						\item \textbf{Glavni sudionik: }Prijavljeni korisnik
 						\item  \textbf{Cilj: }Dobiti pristup korisničkom sučelju
 						\item  \textbf{Sudionici: }Baza podataka
 						\item  \textbf{Preduvjet: }Registracija
@@ -202,7 +212,7 @@
 						\noindent \underbar{\textbf{UC5 - Pregled osobnih podataka}}
 					\begin{packed_item}
 	
-						\item \textbf{Glavni sudionik: }Klijent, iznajmljivač
+						\item \textbf{Glavni sudionik: }Prijavljeni korisnik
 						\item  \textbf{Cilj: }Pregledati osobne podatke
 						\item  \textbf{Sudionici: }Baza podataka
 						\item  \textbf{Preduvjet: }Korisnik je prijavljen
@@ -220,7 +230,7 @@
 						\noindent \underbar{\textbf{UC6 - Promjena osobnih podataka}}
 					\begin{packed_item}
 	
-						\item \textbf{Glavni sudionik: }Klijent, iznajmljivač
+						\item \textbf{Glavni sudionik: }Prijavljeni korisnik
 						\item  \textbf{Cilj: }Promijeniti osobne podatke
 						\item  \textbf{Sudionici: }Baza podataka
 						\item  \textbf{Preduvjet: }Korisnik je prijavljen
@@ -577,7 +587,7 @@
 					\noindent \underbar{\textbf{UC18 - Pregled povijesti transakcija}}
 					\begin{packed_item}
 	
-						\item \textbf{Glavni sudionik: }Klijent, iznajmljivač
+						\item \textbf{Glavni sudionik: }Prijavljeni korisnik
 						\item  \textbf{Cilj: }Pregledati povijest transakcija
 						\item  \textbf{Sudionici: }Baza podataka
 						\item  \textbf{Preduvjet: }Korisnik je prijavljen
@@ -608,31 +618,32 @@
 				
 					\begin{figure}[H]
 						\centering
-						\includegraphics[width=0.8\textwidth]{dijagrami/Funkcionalnost_klijent_korisnik.png}
-						\caption{Dijagram obrasca uporabe, funkcionalnost korisnika i klijenta}
+						\includegraphics[width=0.8\textwidth]{dijagrami/korisnik.png}
+						\caption{Dijagram obrasca uporabe, funkcionalnost korisnika}
 						\label{fig:your_label}
 					\end{figure}
 					
 					\begin{figure}[H]
 						\centering
-						\includegraphics[width=0.8\textwidth]{dijagrami/IznajmljivacUnajmitelj.png}
-						\caption{Dijagram obrasca uporabe, funkcionalnost Klijenta, iznajmljivača i unajmitelja}
+						\includegraphics[width=0.8\textwidth]{dijagrami/klijent.png}
+						\caption{Dijagram obrasca uporabe, funkcionalnost klijenta i iznajmljivača}
 						\label{fig:your_label}
 					\end{figure}
 					
 					\begin{figure}[H]
 						\centering
-						\includegraphics[width=0.8\textwidth]{dijagrami/AdminUC.png}
+						\includegraphics[width=0.8\textwidth]{dijagrami/admin.png}
 						\caption{Dijagram obrasca uporabe, funkcionalnost administratora}
 						\label{fig:your_label}
-					\end{figure}		
+					\end{figure}
+
+			\eject		
 				
 			\subsection{Sekvencijski dijagrami}
 			
 				\noindent \textbf{Obrazac uporabe UC15 – Pregled prijave}
 				
 				\noindent Administrator dobiva obavijest da je iznajmljivača podnio prijavu na zamjenu slika koju je izvršio klijent. Administrator pregledava izmijenjene slike i odlučuje hoće li se zamjena slika izvršiti ili ne. Administratorova odluka dolazi kao obavijest iznajmljivaču i korisniku. Ako je prijava potvrđena nema promjena u bazi, a u slučaju da nije, slike romobila se vraćaju na one prije izmjene.
-				\eject
 				
 				\begin{figure}[H]
 					\centering
@@ -641,10 +652,14 @@
 					\label{fig:your_label}
 				\end{figure}
 				
+
+				\eject
+
+
 				\noindent \textbf{Obrazac uporabe UC12 – Iznajmljivanje romobila}
 				
 				\noindent Klijent inicira zahtjev za pregled dostupnih oglasa kako bi odabrao željeni romobil. Poslužitelj potom pristupa trenutnim oglasima iz baze podataka i prikazuje ih klijentu. Nakon odabira oglasa, poslužitelj povlači sve relevantne podatke o odabranom romobilu i predstavlja ih klijentu. Korisnik ima mogućnost provjeriti usklađenost prikazanih fotografija romobila s njegovim stvarnim stanjem. Kada klijent donese odluku, šalje zahtjev za iznajmljivanje romobila iznajmljivaču. Iznajmljivač ima opciju prihvatiti ili odbiti zahtjev klijenta. U slučaju prihvata, poslužitelj prosljeđuje relevantne podatke o rezervaciji romobila bazi podataka.
-				\eject
+
 				
 				\begin{figure}[H]
 					\centering
@@ -652,11 +667,13 @@
 					\caption{Sekvencijski dijagram za UC12}
 					\label{fig:your_label}
 				\end{figure}
+
+				\eject
 				
 				\noindent \textbf{Obrazac uporabe UC16 – Ocjenjivanje klijenta}
 				
 				\noindent Iznajmljivač odabire klijenta kojemu onda on dodjeljuje ocjenu i komentar. Ukoliko nisu popunjena oba polja za ocjenu i komentar, aplikacija iznajmljivaču šalje poruku da nisu uneseni svi podaci te mo daje opciju ponovnog unosa. Tu poruku iznajmljivač dobiva za svaku takvu nepotpunu objavu. Iznajmljivač može tada odustati od objave ili nadopuniti. Ocjena i komentar su nakon toga vidljivi na profilu klijenata.
-				\eject
+
 				
 				\begin{figure}[H]
 					\centering
@@ -664,7 +681,11 @@
 					\caption{Sekvencijski dijagram za UC16}
 					\label{fig:your_label}
 				\end{figure}
-	
+
+
+				\eject
+
+
 		\section{Ostali zahtjevi}
 		
 			\begin{packed_item} 
