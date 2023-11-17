@@ -1,0 +1,58 @@
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.10.xsd">
+     <!-- Create the 'users' table -->
+    <changeSet id="createUsersTable" author="yourname">
+        <createTable tableName="users">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false" />
+            </column>
+            <column name="first_name" type="VARCHAR(255)" />
+            <column name="last_name" type="VARCHAR(255)" />
+            <column name="nickname" type="VARCHAR(255)" />
+            <column name="password" type="VARCHAR(255)" />
+            <column name="card_number" type="VARCHAR(255)" />
+            <column name="email" type="VARCHAR(255)">
+                <constraints unique="true" />
+            </column>
+            <column name="id_card" type="MEDIUMTEXT">
+	        </column>
+	        <column name="certificate_of_no_criminal_record" type="MEDIUMTEXT"> 
+	        </column>
+        </createTable>
+    </changeSet>
+
+    <!-- Create the 'authority' table -->
+    <changeSet id="createAuthorityTable" author="yourname">
+        <createTable tableName="authority">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false" />
+            </column>
+            <column name="user_id" type="BIGINT">
+                <constraints nullable="false" />
+            </column>
+            <column name="authority" type="VARCHAR(255)" />
+            <!-- Add other columns as needed -->
+        </createTable>
+    </changeSet>
+
+    <!-- Add foreign key constraint between 'authority' and 'users' tables -->
+    <changeSet id="addAuthorityForeignKey" author="yourname">
+        <addForeignKeyConstraint
+            baseTableName="authority"
+            baseColumnNames="user_id"
+            constraintName="fk_authority_user"
+            referencedTableName="users"
+            referencedColumnNames="id"
+            onDelete="CASCADE"
+        />
+    </changeSet>
+    
+    <changeSet id="1" author="yourname">
+        <sql>
+            INSERT INTO users (first_name, last_name, nickname, password, email) VALUES 
+            	('admin', 'admin', 'admin', '$2a$10$7uaP3p8uWXZDjzSu0j9iteKtNPbgJVJ43Hm1lSqSgshEkgD17k8Yq', 'admin@gmail.com');
+            INSERT INTO authority (authority, user_id) VALUES ('ROLE_ADMIN', 1);
+        </sql>
+    </changeSet>
+</databaseChangeLog>
