@@ -1,6 +1,14 @@
 LINK NA DEPLOY: https://scoot-share.onrender.com/
 <div>
-  Podatci ADMIN korisnika za prijavu: 
-  - e-mail: admin@gmail.com
-  - lozinka: scootShareAdmin
+  <p>
+    Podatci ADMIN korisnika za prijavu:
+  </p> 
+ <ul>
+   <li>
+      - e-mail: admin@gmail.com
+   </li>
+   <li>
+      - lozinka: scootShareAdmin
+   </li>
+ </ul>
 </div>
