@@ -9,7 +9,7 @@
 		\indent \textit{\underbar{Klijent}} radi na različitim uređajima, uključujući računala, pametne telefone i tablete, putem web preglednika. Poslužitelj je smješten u lokalnom data centru s potrebnim resursima za podršku poslužiteljskoj logici i bazi podataka. Baza podataka djeluje kao centralno spremište za pohranu podataka, s pristupom koji je kontroliran od strane poslužitelja. \\
 		
 		\indent Klijent inicira zahtjeve i prikazuje podatke korisnicima, dok poslužitelj obrađuje zahtjeve, upravlja poslovnim logikama te komunicira s bazom podataka. \\
-		\indent Za komunikaciju između klijenta i poslužitelja koristimo HTTP/HTTPS, osiguravajući time sigurnu razmjenu podataka. Za pouzdan prijenos podataka između različitih komponenti sustava koristi se TCP/IP \\
+		\indent Za komunikaciju između klijenta i poslužitelja koristimo HTTP/HTTPS, osiguravajući time sigurnu razmjenu podataka. Za pouzdan prijenos podataka između različitih komponenti sustava koristi se TCP/IP. \\
 		
 		\indent \textit{\underbar{Razvojna okolina}} uključuje korištenje Eclipse i Visual Studio Code za razvoj aplikacije, pružajući programerima učinkovite alate za pisanje, testiranje i održavanje koda tijekom razvojnog ciklusa. \\
 				
@@ -22,8 +22,9 @@
 				\item User
 				\item Authority
 				\item Scooter
+				\item ScooterImages
 				\item Listing
-				\item RentalRequest
+				\item Message
 				\item ImageChangeRequest
 				\item Rental
 				\item Rating
@@ -34,7 +35,7 @@
 			\subsection{Opis tablica}
 			
 
-				\textbf{User} entitet sadržava sve važne informacije o korisniku aplikacije. Sadrži atribute: Email, nadimak, lozinku, ime, prezime, broj kartice za plaćanje, presliku osobne iskaznice te potvrdu o nekažnjavanju. Ovaj entitet u vezi je Many-to-One s entitetiom Authority, sa entitetom Scooter, Message, Rental te ImageChangeRequest.
+				\textbf{User} entitet sadržava sve važne informacije o korisniku aplikacije. Sadrži atribute: email, nadimak, lozinku, ime, prezime, broj kartice za plaćanje, presliku osobne iskaznice te potvrdu o nekažnjavanju. Ovaj entitet u vezi je Many-to-One s entitetiom Authority, sa entitetom Scooter, Message te Rental.
 				
 				
 				\begin{longtblr}[
@@ -50,13 +51,13 @@
 					firstName	& VARCHAR &  Ime korisnika 	\\ \hline 
 					lastName & VARCHAR &  Prezime korisnika  \\ \hline
 					password & VARCHAR &  Hash lozinke  \\ \hline
-					CardNumber & VARCHAR &   Broj kreditne kartice   \\ \hline
+					CardNumber & VARCHAR &   Broj kartice za plaćanje  \\ \hline
 					email & VARCHAR &   Email adresa korisnika   \\ \hline
 					idCard & MEDIUMTEXT &  Kopija osobne iskaznice  \\ \hline
 					CertificateOfNo CriminalRecord & MEDIUMTEXT & Potvrda o nekažnjavanju korisnika  \\ \hline 
 				\end{longtblr}
 				
-				\textbf{Authority} ovaj entitet pohranjuje informacije o ovlastima korisnika. Sadrži atribute: Jedinstveni identifikator autorizacije, identifikator korisnika kojemu ovlast pripada i naziv ovlasti. U vezi je One-To-Many s entitetom User preko atributa jedinstvenog identifikatora korisnika.
+				\textbf{Authority}entitet pohranjuje informacije o ovlastima korisnika. Sadrži atribute: jedinstveni identifikator autorizacije, identifikator korisnika kojemu ovlast pripada i naziv ovlasti. U vezi je One-To-Many s entitetom User preko atributa jedinstvenog identifikatora korisnika.
 				
 				\begin{longtblr}[
 					label=none,
@@ -72,7 +73,7 @@
 					authority	& VARCHAR &  Naziv ovlasti 	\\ \hline 
 				\end{longtblr}
 				
-				\textbf{Scooter} pohranjuje informacije o romobilu koji se iznajmljuje. Sadrži atribute: jedinstvenog identifikatora romobila, jedinstvenog identifikator korisnika,  identifikatori fotografija romobila te fotografije romobila. U vezi je One-to-Many sa entitom User preko njegovog identifikatora te Many-To-One sa entitetom ScooterImages.
+				\textbf{Scooter} entitet pohranjuje informacije o romobilu koji se iznajmljuje. Sadrži atribute: jedinstveni identifikator romobila te jedinstveni identifikator vlasnika. U vezi je One-to-Many sa entitom User preko njegovog identifikatora te Many-To-One sa entitetom ScooterImages.
 				
 				\begin{longtblr}[
 					label=none,
@@ -84,10 +85,10 @@
 					} %definicija širine tablice, širine stupaca, poravnanje i broja redaka naslova tablice
 					\hline \SetCell[c=3]{c}{\textbf{Scooter}}	 \\ \hline[3pt]
 					\SetCell{LightGreen}scooterID & INT	&  	Jedinstveni identifikator romobila 	\\ \hline
-					\SetCell{LightBlue}ownerID & INT	&  	Jedinstveni identifikator iznajmljivača romobila  \\ \hline 
+					\SetCell{LightBlue}ownerID & INT	&  	Jedinstveni identifikator vlasnika romobila  \\ \hline 
 				\end{longtblr}
 				
-				\textbf{Listing} ovaj entitet pohranjuje informacije o oglasu za iznajmljivanje romobila. Sadrži atribute: jedinstveni identifikator oglasa, jedinstveni identifikator romobila, lokaciju romobila, lokaciju povratka romobila, vrijeme povratka romobila, cijenu najma po prijeđenom kilometru, iznos novčane kazne u slučaju ne vraćanja romobila na vrijeme te status oglasa. U vezi je Many-To-One s entitetom Scooter preko identifikatora romobila.
+				\textbf{Listing} entitet pohranjuje informacije o oglasu za iznajmljivanje romobila. Sadrži atribute: jedinstveni identifikator oglasa, jedinstveni identifikator romobila, lokaciju romobila, lokaciju povratka romobila, krajnje vrijeme povratka romobila, cijenu najma po prijeđenom kilometru, iznos novčane kazne u slučaju ne vraćanja romobila na vrijeme te status oglasa. U vezi je Many-To-One s entitetom Scooter preko identifikatora romobila.
 				
 				\begin{longtblr}[
 					label=none,
@@ -108,7 +109,7 @@
 					status & VARCHAR & Status oglasa (aktivno, završeno) \\ \hline
 				\end{longtblr}
 				
-				\textbf{Message} Ovaj entitet sadržava sve važne informacije o porukama između iznajmljivača i unajmitelja. Sadrži atribute: Jedinstveni identifikator poruka, identifikator pošiljatelja i primatelja poruke, vrijeme slanja poruke, tekst poruke i  jedinstveni identifikator oglasa na kojeg se korisnik javlja. Ovaj entitet u vezi je Many-to-One s User preko jedinstvenog identifikatora pošiljatelja, u vezi Many-to-One s User preko jedinstvenog identifikatora primatelja i u vezi Many-to-One s Listing preko jedinstvenog identifikatora oglasa.
+				\textbf{Message} entitet sadržava sve važne informacije o porukama između iznajmljivača i unajmitelja. Sadrži atribute: jedinstveni identifikator poruka, identifikator pošiljatelja i primatelja poruke, vrijeme slanja poruke, tekst poruke i jedinstveni identifikator oglasa na kojeg se korisnik javlja. Ovaj entitet u vezi je Many-to-One s User preko jedinstvenog identifikatora pošiljatelja, u vezi Many-to-One s User preko jedinstvenog identifikatora primatelja i u vezi Many-to-One s Listing preko jedinstvenog identifikatora oglasa.
 				
 				\begin{longtblr}[
 					label=none,
@@ -123,11 +124,11 @@
 					\SetCell{LightBlue}userFromID & INT	&  	Jedinstveni identifikator pošiljatelja  \\ \hline
 					\SetCell{LightBlue}userToID & INT	&  	Jedinstveni identifikator primatelja  \\ \hline 
 					\SetCell{LightBlue}listingID & INT	&  	Jedinstveni identifikator oglasa  \\ \hline
-					message & VARCHAR & Poruka korisniku o dostupnosti romobila  \\ \hline
+					content & VARCHAR & Sadržaj poruke  \\ \hline
 					sentAt & DATETIME & vrijeme slanja poruke  \\ \hline
 				\end{longtblr}
 				
-				\textbf{ImageChangeRequest} Ovaj entitet pohranjuje zahtjeve korisnika za promjenu slike romobila kojeg su unajmili. Sadrži atribute: Jedinstveni identifikator najma romobila, novu sliku romobila, identifikator najma i identifikator trenutne fotografije koju želimo zamijeniti. U vezi je One-To-One sa ScooterImages te Many-To-One sa Rental entitetom.
+				\textbf{ImageChangeRequest} entitet pohranjuje zahtjeve korisnika za promjenu slike romobila kojeg su unajmili. Sadrži atribute: jedinstveni identifikator najma romobila, novu sliku romobila, identifikator trenutne fotografije koju želimo zamijeniti te razlog zamjene priloženu uz zahtjev. U vezi je One-To-One sa ScooterImages te Many-To-One sa Rental entitetom.
 				
 				\begin{longtblr}[
 					label=none,
@@ -140,12 +141,12 @@
 					\hline \SetCell[c=3]{c}{\textbf{ImageChangeRequest}}	 \\ \hline[3pt]
 					\SetCell{LightGreen}imageChange RequestID & INT	&  	Jedinstveni identifikator zahtjeva za promjenu slike romobila	\\ \hline
 					replacementImage & MEDIUMTEXT & Slika stanja romobila kojom želimo zamijeniti postojeću  \\ \hline
-					Message & VARCHAR & Razlog zamijene slike romobila  \\ \hline
+					message & VARCHAR & Razlog zamijene slike romobila  \\ \hline
 					\SetCell{LightBlue}rentalID & INT	&  	Jedinstveni identifikator najma romobila \\ \hline
 					\SetCell{LightBlue}imageID & INT	&  	Jedinstveni identifikator fotografije romobila  \\ \hline
 				\end{longtblr}
 				
-				\textbf{Rental} sadržava sve važne informacije o najmu romobila. Sadrži atribute: jedinstveni identifikator najma romobila, jedinstveni identifikator korisnika, jedinstveni identifikator oglasa, početno vrijeme najma romobila i završno vrijeme najma romobila. Ovaj entitet u vezi je Many-to-One s entitetom User preko identifikatora korisnika, također Many-to-One s entitetom Listing. U vezi One-to-One s entitetom Transaction te u vezi One-to-One s entitetom Rating preko atributa jedinstveni identifikator najma romobila.
+				\textbf{Rental} entitet sadržava sve važne informacije o najmu romobila. Sadrži atribute: jedinstveni identifikator najma romobila, jedinstveni identifikator unajmitelja, jedinstveni identifikator oglasa, početno vrijeme najma romobila i završno vrijeme najma romobila. Ovaj entitet u vezi je Many-to-One s entitetom User preko identifikatora unajmitelja, također Many-to-One s entitetom Listing. U vezi One-to-One s entitetom Transaction te u vezi One-to-One s entitetom Rating preko atributa jedinstveni identifikator najma romobila.
 				
 				\begin{longtblr}[
 					label=none,
@@ -157,13 +158,13 @@
 					} %definicija širine tablice, širine stupaca, poravnanje i broja redaka naslova tablice
 					\hline \SetCell[c=3]{c}{\textbf{Rental}}	 \\ \hline[3pt]
 					\SetCell{LightGreen}rentalID & INT	&  	Jedinstveni identifikator najma romobila	\\ \hline
-					\SetCell{LightBlue}userID & INT	&  	Jedinstveni identifikator korisnika  \\ \hline
+					\SetCell{LightBlue}renterID & INT	&  	Jedinstveni identifikator unajmitelja  \\ \hline
 					\SetCell{LightBlue}listingID & INT	&  	Jedinstveni identifikator oglasa  \\ \hline
 					rentalTimeStart & DATETIME & Početno vrijeme najma romobila  \\ \hline
 					rentalTimeEnd & DATETIME & Završno vrijeme najma romobila  \\ \hline
 				\end{longtblr}
 				
-				\textbf{Rating} entitet sadrži sve bitne informacije o ukupnoj ocjeni romobila. Sadrži atribute: Identifikator ocjene, identifikator najma romobila, ocjenu romobila, komentar nakon vožnje te vrijeme postavljanja ocjene. U vezi je One-To-One sa entitetom Rental preko identifikatora najma romobila.
+				\textbf{Rating} entitet sadrži sve bitne informacije o ocjenjivanju korisnika. Sadrži atribute: jedinstveni identifikator ocjene, identifikator najma romobila, ocjenu korisnika, komentar te vrijeme postavljanja ocjene. U vezi je One-To-One sa entitetom Rental preko identifikatora najma romobila.
 				
 				\begin{longtblr}[
 					label=none,
@@ -176,12 +177,12 @@
 					\hline \SetCell[c=3]{c}{\textbf{Rating}}	 \\ \hline[3pt]
 					\SetCell{LightGreen}ratingID & INT	&  	Jedinstveni identifikator ocjene	\\ \hline
 					\SetCell{LightBlue}rentalID & INT	&  	Jedinstveni identifikator najma romobila	\\ \hline
-					grade & VARCHAR & Ocjena vožnje romobilom  \\ \hline
-					comment & VARCHAR & Komentar nakon vožnje romobilom  \\ \hline
-					ratingTime & DATETIME & Vrijeme ocjenjivanja vožnje \\ \hline
+					grade & VARCHAR & Ocjena korisnika  \\ \hline
+					comment & VARCHAR & Komentar  \\ \hline
+					ratingTime & DATETIME & Vrijeme ocjenjivanja korisnika \\ \hline
 				\end{longtblr}
 				
-				\textbf{Transaction} Ovaj entitet pohranjuje informacije o jednoj transakciji. Sadrži atribute: identifikator transakcije, identifikator najma, broj prijeđenih kilometara, ukupnu cijenu najma. U vezi je One-To-One s entitetom Rental.
+				\textbf{Transaction} Ovaj entitet pohranjuje informacije o jednoj transakciji. Sadrži atribute: identifikator transakcije, identifikator najma, broj prijeđenih kilometara te ukupnu cijenu najma. U vezi je One-To-One s entitetom Rental.
 				
 				\begin{longtblr}[
 					label=none,
