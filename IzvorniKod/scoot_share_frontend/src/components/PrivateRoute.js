@@ -5,7 +5,7 @@ import { Navigate } from 'react-router-dom';
 const PrivateRoute = (props) => {
     const {children, jwt, jwtIsValid, clientRole, adminRole} = {...props};
 
-    if (jwtIsValid) {
+    if (jwtIsValid && jwt !== "") {
         const jwtDecoded = jwtDecode(jwt);
         if (adminRole) {
             if (jwtDecoded.authorities[0].authority === "ROLE_ADMIN") {

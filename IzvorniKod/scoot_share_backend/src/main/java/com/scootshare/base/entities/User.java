@@ -2,19 +2,26 @@ package com.scootshare.base.entities;
 
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
+
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
+@Getter
+@Setter
 @Entity
 @Table(name="users")
 public class User implements UserDetails {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String firstName;
     private String lastName;
@@ -29,6 +36,9 @@ public class User implements UserDetails {
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "user", cascade = CascadeType.ALL)
     private Set<Authority> authorities = new HashSet<>();
+    
+    @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Scooter> scooters = new ArrayList<>();
 
     protected User() {}
 
@@ -156,6 +166,11 @@ public class User implements UserDetails {
 
     public void removeAuthority(String authority) {
         authorities.removeIf(auth -> auth.getAuthority().equals(authority));
+    }
+    
+    public void addScooter(Scooter scooter) {
+    	scooter.setOwner(this);
+    	scooters.add(scooter);
     }
     
 }

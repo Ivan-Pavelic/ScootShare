@@ -69,7 +69,7 @@ function App() {
           }/>
           <Route path="/rent-scooter" element={
             <PrivateRoute jwt={jwt} jwtIsValid={jwtIsValid} clientRole={true} adminRole={false}>
-              <RentalPage jwtIsValid={jwtIsValid} setJwt={setJwt}/>
+              <RentalPage jwtIsValid={jwtIsValid} setJwt={setJwt} email={email} jwt={jwt}/>
             </PrivateRoute>
           }/>
           <Route path='/admin' element={

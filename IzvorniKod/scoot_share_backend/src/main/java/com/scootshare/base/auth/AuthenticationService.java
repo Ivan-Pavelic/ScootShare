@@ -10,8 +10,6 @@ import org.springframework.stereotype.Service;
 
 import lombok.RequiredArgsConstructor;
 
-import java.util.Objects;
-
 @Service
 @RequiredArgsConstructor
 public class AuthenticationService {

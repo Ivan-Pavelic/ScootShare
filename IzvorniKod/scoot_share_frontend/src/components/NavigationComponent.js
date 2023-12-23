@@ -5,7 +5,7 @@ import Cookies from 'universal-cookie';
 const NavigationComponent = (props) => {
     const {authority} = {...props};
     const navigate = useNavigate()
-    const {displayAdminPage, displayRegisterButton, displayLoginButton, setJwt, displayLogoutButton, displayRentScooterButton, displayProfileButton} = {...props};
+    const {displayHomeButton, displayAdminPage, displayRegisterButton, displayLoginButton, setJwt, displayLogoutButton, displayRentScooterButton, displayProfileButton} = {...props};
     function register() {
         navigate("/register")
     }
@@ -32,6 +32,10 @@ const NavigationComponent = (props) => {
         navigate("/admin");
     }
 
+    function home() {
+        navigate("/");
+    }
+
     return (
         <div className='flex justify-between items-center bg-slate-800 py-6 px-28'>
             <div className=''>
@@ -46,8 +50,9 @@ const NavigationComponent = (props) => {
                     </div>
                     :
                     <>
+                        {displayHomeButton && <button className='text-white rounded-3xl hover:text-cyan-400' onClick={home}>Početna stranica</button>} 
                         {displayRegisterButton && <button className='text-white rounded-3xl hover:text-cyan-400' onClick={register}>Registracija</button>} 
-                        {displayLoginButton && <button className='text-white rounded-3xl hover:text-cyan-400' onClick={login}>Prijava</button>} 
+                        {displayLoginButton && <button className='text-white rounded-3xl hover:text-cyan-400' onClick={login}>Prijava</button>}           
                         {displayRentScooterButton && <button className='text-white rounded-3xl hover:text-cyan-400' onClick={rentScooter}>Iznajmi Romobil</button>}
                         {displayProfileButton && <button className='text-white rounded-3xl hover:text-cyan-400' onClick={profilePage}>Profil</button>} 
                         {displayAdminPage && <button className='text-white rounded-3xl hover:text-cyan-400' onClick={adminPage}>Admin</button>} 

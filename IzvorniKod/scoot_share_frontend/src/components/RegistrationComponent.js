@@ -95,7 +95,7 @@ const RegistrationComponent = (props) => {
             error.classList.add("hidden");
             error.classList.remove("flex");
         }
-        if (!isValidCreditCardNumber(user.cardNumber)) {
+        if (user.cardNumber === "") {
             hasError = true;
             const error = document.querySelector(".card-error");
             error.classList.remove("hidden");
@@ -168,7 +168,7 @@ const RegistrationComponent = (props) => {
             const {firstName, lastName, nickname, cardNumber, email, password} = {...user};
             const newUser = {firstName, lastName, nickname, cardNumber, email, password};
             formData.append("user", JSON.stringify(newUser));
-             formData.append("file", "file")
+
              const fetchData = {
                 headers: {
                     Authorization: `Bearer `
@@ -185,49 +185,18 @@ const RegistrationComponent = (props) => {
                 })
                 .then((data) => {
                     setJwt(data.token);
-                    console.log(data);
                     navigate("/");
                 })
         }
     }
 
-    function isValidCreditCardNumber(cardNumber) {
-        // Remove spaces and non-digit characters
-        cardNumber = cardNumber.replace(/\s/g, '').replace(/\D/g, '');
-      
-        // Check if the card number is a numeric string with 13 to 19 digits
-        if (/^\d{13,19}$/.test(cardNumber)) {
-          // Perform Luhn algorithm (mod 10) validation
-          let sum = 0;
-          let isEven = false;
-      
-          for (let i = cardNumber.length - 1; i >= 0; i--) {
-            let digit = parseInt(cardNumber[i], 10);
-      
-            if (isEven) {
-              digit *= 2;
-              if (digit > 9) {
-                digit -= 9;
-              }
-            }
-      
-            sum += digit;
-            isEven = !isEven;
-          }
-      
-          return sum % 10 === 0;
-        }
-      
-        return false;
-      }
-
-      function isValidEmail(email) {
-        // Regular expression for basic email format validation
-        const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
-      
-        // Test the email against the regular expression
-        return emailPattern.test(email);
-      }
+    function isValidEmail(email) {
+    // Regular expression for basic email format validation
+    const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+    
+    // Test the email against the regular expression
+    return emailPattern.test(email);
+    }
 
       function resetForm() {
         navigate("/")

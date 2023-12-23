@@ -1,5 +1,6 @@
 package com.scootshare.base.services;
 
+import com.scootshare.base.entities.Scooter;
 import com.scootshare.base.entities.User;
 import com.scootshare.base.repositories.UserRepository;
 
@@ -37,6 +38,10 @@ public class UserService {
     
     public boolean existsUser(long id){
         return userRepository.existsById(id);
+    }
+    
+    public void addScooter(Scooter scooter, User owner) {
+    	owner.addScooter(scooter);
     }
     
     @Transactional

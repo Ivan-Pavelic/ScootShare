@@ -35,6 +35,60 @@
             <!-- Add other columns as needed -->
         </createTable>
     </changeSet>
+    
+    <changeSet id="createScooterTable" author="yourname">
+        <createTable tableName="scooter">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="owner_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="listing_id" type="BIGINT"> 
+                <constraints nullable="true"/>
+            </column>
+        </createTable>
+    </changeSet>
+    
+    <changeSet id="createScooterImagesTable" author="yourname"> 
+    	<createTable tableName="scooter_images">
+	        <column name="scooter_id" type="BIGINT">
+	            <constraints nullable="false"/>
+	        </column>
+	        <column name="image" type="MEDIUMTEXT">
+	            <constraints nullable="false"/>
+	        </column>
+	    </createTable>
+    </changeSet>
+    
+    <changeSet id="createListingTable" author="your_author_name">
+        <createTable tableName="listing">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="scooter_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="location" type="VARCHAR(255)"> 
+                <constraints nullable="false"/>
+            </column>
+            <column name="return_location" type="VARCHAR(255)"> 
+                <constraints nullable="false"/>
+            </column>
+            <column name="return_by_time" type="TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+            <column name="price_per_kilometer" type="DOUBLE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="late_return_penalty" type="DOUBLE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="status" type="VARCHAR(255)"> 
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
 
     <!-- Add foreign key constraint between 'authority' and 'users' tables -->
     <changeSet id="addAuthorityForeignKey" author="yourname">
@@ -46,6 +100,30 @@
             referencedColumnNames="id"
             onDelete="CASCADE"
         />
+    </changeSet>
+    
+    <changeSet id="addUserAndScooterForeignKey" author="yourname">
+    	<!-- Add a Foreign Key Constraint for Owner Relationship -->
+	    <addForeignKeyConstraint 
+	    	baseTableName="scooter" 
+	    	baseColumnNames="owner_id"
+			referencedTableName="users" 
+			referencedColumnNames="id"
+			constraintName="scooter_owner_fk"
+			onUpdate="CASCADE"
+			onDelete="CASCADE"/>
+    </changeSet>
+    
+    <!-- Foreign key constraint for scooter_id -->
+    <changeSet id="addForeignKeyConstraintListingScooter" author="your_author_name">
+        <addForeignKeyConstraint
+                baseTableName="listing"
+                baseColumnNames="scooter_id"
+                constraintName="fk_listing_scooter"
+                referencedTableName="scooter"
+                referencedColumnNames="id"
+                onDelete="CASCADE"
+                onUpdate="CASCADE"/>
     </changeSet>
     
     <changeSet id="1" author="yourname">
