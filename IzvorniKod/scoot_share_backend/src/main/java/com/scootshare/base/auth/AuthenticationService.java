@@ -29,7 +29,9 @@ public class AuthenticationService {
                 request.getCardNumber(),
                 request.getEmail(),
                 idCard,
-                criminalRecord);
+                criminalRecord,
+                request.getUsername());
+        
         user.addAuthority("ROLE_PENDING_REGISTRATION");
         userService.store(user);
         var jwtToken = jwtService.generateToken(user);
@@ -41,11 +43,11 @@ public class AuthenticationService {
     public AuthenticationResponse authenticate(AuthenticationRequest request) {
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
-                        request.getEmail(),
+                        request.getUsername(),
                         request.getPassword()
                 )
         );
-        var user = userService.findByEmail(request.getEmail());
+        var user = userService.findByUsername(request.getUsername());
         var jwtToken = jwtService.generateToken(user);
         return AuthenticationResponse.builder()
                 .token(jwtToken)

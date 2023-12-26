@@ -19,4 +19,5 @@ public class UserDto {
 	private String cardNumber;
 	private String certificateOfNoCriminalRecord;
 	private String authority;
+	private String username;
 }

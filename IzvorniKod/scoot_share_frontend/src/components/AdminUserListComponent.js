@@ -55,6 +55,9 @@ const AdminUserListComponent = (props) => {
                             Nadimak
                         </th>
                         <th scope="col" className="px-6 py-3">
+                            Korisničko Ime
+                        </th>
+                        <th scope="col" className="px-6 py-3">
                             Email
                         </th>
                         <th scope="col" className="px-6 py-3">
@@ -74,7 +77,7 @@ const AdminUserListComponent = (props) => {
                 <tbody>     
                     {users && users.map((user) => {
                         return (
-                            <AdminUserRowComponent jwt={jwt} key={user.email} authority={user.authority} email={user.email} firstName={user.firstName} lastName={user.lastName} nickname={user.nickname} idCard={user.idCard} certificateOfNoCriminalRecord={user.certificateOfNoCriminalRecord} />
+                            <AdminUserRowComponent jwt={jwt} username={user.username} key={user.email} authority={user.authority} email={user.email} firstName={user.firstName} lastName={user.lastName} nickname={user.nickname} idCard={user.idCard} certificateOfNoCriminalRecord={user.certificateOfNoCriminalRecord} />
                         );
                     })}
                 </tbody>

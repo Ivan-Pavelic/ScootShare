@@ -15,6 +15,9 @@
             <column name="email" type="VARCHAR(255)">
                 <constraints unique="true" />
             </column>
+            <column name="username" type="VARCHAR(255)">
+                <constraints unique="true" />
+            </column>
             <column name="id_card" type="MEDIUMTEXT">
 	        </column>
 	        <column name="certificate_of_no_criminal_record" type="MEDIUMTEXT"> 
@@ -89,6 +92,44 @@
             </column>
         </createTable>
     </changeSet>
+    
+    <changeSet id="createChatRoomTable" author="yourname">
+        <createTable tableName="chat_room">
+            <column name="id" type="VARCHAR(255)">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    
+    <changeSet id="createUserChatRoomTable" author="yourname">
+        <createTable tableName="user_chat_room">
+            <column name="user_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="chat_room_id" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    
+    <changeSet id="createMessageTable" author="yourname">
+        <createTable tableName="message">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="sender_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="receiver_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="chat_room_id" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="sent_at" type="TIMESTAMP" />
+            <column name="content" type="VARCHAR(255)" />
+        </createTable>
+    </changeSet>
 
     <!-- Add foreign key constraint between 'authority' and 'users' tables -->
     <changeSet id="addAuthorityForeignKey" author="yourname">
@@ -126,10 +167,66 @@
                 onUpdate="CASCADE"/>
     </changeSet>
     
+    <!-- Add foreign key constraint between 'chatroom' and 'user' tables -->
+    <changeSet id="addUserToChatRoomForeignKey" author="yourname">
+	    <addForeignKeyConstraint
+	        baseTableName="user_chat_room"
+	        baseColumnNames="user_id"
+	        constraintName="fk_user_chatroom_user"
+	        referencedTableName="users"
+	        referencedColumnNames="id"
+	        onDelete="CASCADE"
+	    />
+	    <addForeignKeyConstraint
+	        baseTableName="user_chat_room"
+	        baseColumnNames="chat_room_id"
+	        constraintName="fk_user_chatroom_chatroom"
+	        referencedTableName="chat_room"
+	        referencedColumnNames="id"
+	        onDelete="CASCADE"
+	    />
+	</changeSet>
+    
+    <!-- Add foreign key constraint between 'message' and 'user' tables -->
+    <changeSet id="addMessageSenderForeignKey" author="yourname">
+        <addForeignKeyConstraint
+            baseTableName="message"
+            baseColumnNames="sender_id"
+            constraintName="fk_message_sender"
+            referencedTableName="users"
+            referencedColumnNames="id"
+            onDelete="CASCADE"
+        />
+    </changeSet>
+    
+     <!-- Add foreign key constraint between 'message' and 'chatroom' tables -->
+    <changeSet id="addMessageChatRoomForeignKey" author="yourname">
+	    <addForeignKeyConstraint
+	        baseTableName="message"
+	        baseColumnNames="chat_room_id"
+	        constraintName="fk_message_chatroom"
+	        referencedTableName="chat_room"
+	        referencedColumnNames="id"
+	        onDelete="CASCADE"
+	    />
+	</changeSet>
+    
+    <!-- Add foreign key constraint between 'message' and 'user' tables for receiver -->
+    <changeSet id="addMessageReceiverForeignKey" author="yourname">
+        <addForeignKeyConstraint
+            baseTableName="message"
+            baseColumnNames="receiver_id"
+            constraintName="fk_message_receiver"
+            referencedTableName="users"
+            referencedColumnNames="id"
+            onDelete="CASCADE"
+        />
+    </changeSet>
+    
     <changeSet id="1" author="yourname">
         <sql>
-            INSERT INTO users (first_name, last_name, nickname, password, email) VALUES 
-            	('admin', 'admin', 'admin', '$2a$10$7uaP3p8uWXZDjzSu0j9iteKtNPbgJVJ43Hm1lSqSgshEkgD17k8Yq', 'admin@gmail.com');
+            INSERT INTO users (first_name, last_name, nickname, password, email, username) VALUES 
+            	('admin', 'admin', 'admin', '$2a$10$7uaP3p8uWXZDjzSu0j9iteKtNPbgJVJ43Hm1lSqSgshEkgD17k8Yq', 'admin@gmail.com', 'admin');
             INSERT INTO authority (authority, user_id) VALUES ('ROLE_ADMIN', 1);
         </sql>
     </changeSet>

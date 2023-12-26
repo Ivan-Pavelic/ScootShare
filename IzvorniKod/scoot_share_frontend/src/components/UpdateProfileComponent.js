@@ -4,11 +4,11 @@ import {AiOutlineMail, AiOutlineIdcard, AiFillFileText} from "react-icons/ai";
 import {RiLockPasswordLine} from "react-icons/ri"
 
 const UpdateProfileComponent = (props) => {
-    const {email, jwt} = {...props};
+    const {username, jwt} = {...props};
     const [user, setUser] = useState(null);
 
     useEffect(() => {
-        fetch(`api/users/${email}`, {
+        fetch(`api/users/${username}`, {
             headers: {
                 "Content-Type" : "application/json",
                 "Authorization": `Bearer ${jwt}`
@@ -80,6 +80,17 @@ const UpdateProfileComponent = (props) => {
             error.classList.add("hidden");
             error.classList.remove("flex");
         }
+        if (user.username === "") {
+            hasError = true;
+            const error = document.querySelector(".username-error");
+            error.classList.remove("hidden");
+            error.classList.add("flex");
+        }
+        else {
+            const error = document.querySelector(".username-error");
+            error.classList.add("hidden");
+            error.classList.remove("flex");
+        }
         if (!isValidCreditCardNumber(user.cardNumber)) {
             hasError = true;
             const error = document.querySelector(".card-error");
@@ -115,9 +126,9 @@ const UpdateProfileComponent = (props) => {
         }
 
         if (!hasError) {
-            const {firstName, lastName, nickname, cardNumber, email, password} = {...user};
-            const newUser = {firstName, lastName, nickname, cardNumber, email, password};
-            fetch(`api/users/${email}`, {
+            const {firstName, lastName, nickname, cardNumber, email, password, username} = {...user};
+            const newUser = {firstName, lastName, nickname, cardNumber, email, password, username};
+            fetch(`api/users/update`, {
                 headers: {
                     "Content-Type" : "application/json",
                     "Authorization": `Bearer ${jwt}`
@@ -161,7 +172,7 @@ const UpdateProfileComponent = (props) => {
     return (
         user && 
         <>
-            <div className='flex-row mx-auto justify-center w-2/5 my-20 rounded-lg shadow-lg'>
+            <div className='flex-row mx-auto justify-center w-2/5 mt-20 rounded-lg shadow-lg bg-white'>
                 <div className='bg-blue-500 h-2 rounded-lg'></div>
                 <div className='mb-10 flex justify-center align-center mt-8'>
                     <p className='font-monoy text-4xl font-semibold'>Podatci dostupni za ažuriranje</p>
@@ -212,6 +223,21 @@ const UpdateProfileComponent = (props) => {
                     </div>
                     <div className='justify-end -mt-8 mb-8 hidden nickname-error'>
                         <p className='text-md text-red-500'>Molimo unesite ispravan nadimak.</p>
+                    </div>
+                    <div className='flex rounded-sm shadow-md mb-10 relative'>
+                        <div className='flex justfiy-center align-middle bg-gray-200 p-2'>
+                            <BsFillPersonFill size={35} />
+                        </div>
+                        <div className='w-full'>
+                            <input className='w-full h-full pl-4 focus:outline-none text-xl'
+                                placeholder='Korisničko Ime'
+                                type="text"
+                                value={user.username}
+                                onChange={(event) => handleInputChange("username", event.target.value)}/>
+                        </div>
+                    </div>
+                    <div className='justify-end -mt-8 mb-8 hidden username-error'>
+                        <p className='text-md text-red-500'>Molimo unesite ispravno korisničko ime.</p>
                     </div>
                     <div className='flex rounded-sm shadow-md mb-10'>
                         <div className='flex justfiy-center align-middle bg-gray-200 p-2'>

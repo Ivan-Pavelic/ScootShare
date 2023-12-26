@@ -23,13 +23,21 @@ public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    
     private String firstName;
+    
     private String lastName;
+    
     private String nickname;
+    
     private String password;
+    
     private String cardNumber;
+    
     @Column(unique = true)
     private String email;
+    
+    private String username;
 
     private String idCard;
     private String certificateOfNoCriminalRecord;
@@ -39,11 +47,25 @@ public class User implements UserDetails {
     
     @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Scooter> scooters = new ArrayList<>();
+    
+    @ManyToMany(fetch = FetchType.EAGER)
+	@JoinTable(
+		name = "user_chat_room",
+		joinColumns = @JoinColumn(name = "user_id"),
+		inverseJoinColumns = @JoinColumn(referencedColumnName = "id", name = "chat_room_id")
+	)
+	private Set<ChatRoom> chatRooms = new HashSet<>();
+	
+	@OneToMany(mappedBy = "sender")
+	private List<Message> sentMessages = new ArrayList<>();
+	
+	@OneToMany(mappedBy = "receiver")
+	private List<Message> receivedMessages = new ArrayList<>();
 
     protected User() {}
 
     public User(String firstName, String lastName, String nickname, String password, String cardNumber,
-                String email, String idCard, String criminalRecord) {
+                String email, String idCard, String criminalRecord, String username) {
         super();
         this.firstName = firstName;
         this.lastName = lastName;
@@ -53,6 +75,7 @@ public class User implements UserDetails {
         this.email = email;
         this.idCard = idCard;
         this.certificateOfNoCriminalRecord = criminalRecord;
+        this.username = username;
     }
 
     public Long getId() {
@@ -82,7 +105,7 @@ public class User implements UserDetails {
 
     @Override
     public String getUsername() {
-        return email;
+        return username;
     }
 
     @Override
@@ -105,58 +128,6 @@ public class User implements UserDetails {
         return true;
     }
 
-    public String getCardNumber() {
-        return cardNumber;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public String getIdCard() {
-        return idCard;
-    }
-
-    public String getCertificateOfNoCriminalRecord() {
-        return certificateOfNoCriminalRecord;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public void setNickname(String nickname) {
-        this.nickname = nickname;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public void setCardNumber(String cardNumber) {
-        this.cardNumber = cardNumber;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public void setCard(String idCard) {
-        this.idCard = idCard;
-    }
-
-    public void setCertificateOfNoCriminalRecord(String certificateOfNoCriminalRecord) {
-        this.certificateOfNoCriminalRecord = certificateOfNoCriminalRecord;
-    }
-
     public void addAuthority(String authority) {
         Authority newAuthority = new Authority();
         newAuthority.setAuthority(authority);
@@ -172,5 +143,12 @@ public class User implements UserDetails {
     	scooter.setOwner(this);
     	scooters.add(scooter);
     }
+
+	public void addChatRoom(ChatRoom chatRoom) {
+		if (chatRooms == null) {
+			chatRooms = new HashSet<>();
+		}
+		chatRooms.add(chatRoom);
+	}
     
 }

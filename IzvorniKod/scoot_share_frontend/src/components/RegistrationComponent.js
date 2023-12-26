@@ -15,7 +15,8 @@ const RegistrationComponent = (props) => {
         "cardNumber": "",
         "email": "",
         "idCard": null,
-        "certificateOfNoCriminalRecord": null
+        "certificateOfNoCriminalRecord": null,
+        "username": ""
     });
     const navigate = useNavigate();
 
@@ -81,6 +82,17 @@ const RegistrationComponent = (props) => {
         }
         else {
             const error = document.querySelector(".last-name-error");
+            error.classList.add("hidden");
+            error.classList.remove("flex");
+        }
+        if (user.username === "") {
+            hasError = true;
+            const error = document.querySelector(".username-error");
+            error.classList.remove("hidden");
+            error.classList.add("flex");
+        }
+        else {
+            const error = document.querySelector(".username-error");
             error.classList.add("hidden");
             error.classList.remove("flex");
         }
@@ -165,8 +177,8 @@ const RegistrationComponent = (props) => {
             const formData = new FormData();
             formData.append("idCard", user.idCard);
             formData.append("criminalRecord", user.certificateOfNoCriminalRecord);
-            const {firstName, lastName, nickname, cardNumber, email, password} = {...user};
-            const newUser = {firstName, lastName, nickname, cardNumber, email, password};
+            const {firstName, lastName, nickname, cardNumber, email, password, username} = {...user};
+            const newUser = {firstName, lastName, nickname, cardNumber, email, password, username};
             formData.append("user", JSON.stringify(newUser));
 
              const fetchData = {
@@ -255,6 +267,21 @@ const RegistrationComponent = (props) => {
                     </div>
                     <div className='justify-end -mt-8 mb-8 hidden nickname-error'>
                         <p className='text-md text-red-500'>Molimo unesite ispravan nadimak.</p>
+                    </div>
+                    <div className='flex rounded-sm shadow-md mb-10'>
+                        <div className='flex justfiy-center align-middle bg-gray-200 p-2'>
+                            <BsFillPersonFill size={35} />
+                        </div>
+                        <div className='w-full'>
+                            <input className='w-full h-full pl-4 focus:outline-none text-xl'
+                                placeholder='Korisničko Ime'
+                                type="text"
+                                value={user.username}
+                                onChange={(event) => handleInputChange("username", event.target.value)}/>
+                        </div>
+                    </div>
+                    <div className='justify-end -mt-8 mb-8 hidden username-error'>
+                        <p className='text-md text-red-500'>Molimo unesite ispravno korisničko ime.</p>
                     </div>
                     <div className='flex rounded-sm shadow-md mb-10 relative'>
                         <div className='flex justfiy-center align-middle bg-gray-200 p-2'>

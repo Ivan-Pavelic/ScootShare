@@ -1,5 +1,7 @@
 package com.scootshare.base.services;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
 import com.scootshare.base.entities.Listing;
@@ -26,5 +28,13 @@ public class ListingService {
 
 	public void deleteById(Long id) {
 		repository.deleteById(id);
+	}
+
+	public List<Listing> findAll() {
+		return repository.findAll();
+	}
+
+	public Listing findById(Long listingId) {
+		return repository.findById(listingId).get();
 	}
 }

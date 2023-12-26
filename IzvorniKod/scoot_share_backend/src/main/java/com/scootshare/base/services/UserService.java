@@ -20,6 +20,11 @@ public class UserService {
     public UserService(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
+    
+    public User findByUsername(String username) {
+    	return userRepository.findByUsername(username).orElseThrow();
+    }
+    
     public User findByEmail(String email) {
         return userRepository.findByEmail(email).orElseThrow();
     }
@@ -47,5 +52,13 @@ public class UserService {
     @Transactional
 	public void deleteByEmail(String email) {
 		userRepository.deleteByEmail(email);
+	}
+
+	public void deleteByUsername(String username) {
+		userRepository.deleteByUsername(username);
+	}
+
+	public User findById(Long id) {
+		return userRepository.findById(id).get();
 	}
 }

@@ -24,26 +24,34 @@ public class UserController {
 	@Autowired
 	private PasswordEncoder passwordEncoder;
 	
-	@GetMapping("{email}")
-	public ResponseEntity<UserDto> getUserByEmail(@PathVariable String email) {
-		User user = userService.findByEmail(email);
+	@GetMapping("/getUsernameById/{id}")
+	public ResponseEntity<?> getUsernameById(@PathVariable Long id) {
+		return ResponseEntity.ok(userService.findById(id).getUsername());
+	}
+	
+	@GetMapping("{username}")
+	public ResponseEntity<UserDto> getUserByEmail(@PathVariable String username) {
+		User user = userService.findByUsername(username);
 		UserDto userDto = UserDto.builder()
 				.firstName(user.getFirstName())
 				.lastName(user.getLastName())
 				.email(user.getEmail())
 				.nickname(user.getNickname())
 				.cardNumber(user.getCardNumber())
+				.username(user.getUsername())
 				.build();
 		return ResponseEntity.ok(userDto);
 	}
 	
-	@PutMapping("{email}")
+	@PutMapping("/update")
 	public void updateUser(@RequestBody UpdateUserDto userDto) {
 		User user = userService.findByEmail(userDto.getEmail());
+		user.setUsername(userDto.getUsername());
 		user.setFirstName(userDto.getFirstName());
 		user.setLastName(userDto.getLastName());
 		user.setNickname(userDto.getNickname());
-		user.setCard(userDto.getCardNumber());
+		user.setIdCard(userDto.getCardNumber());
+		user.setUsername(userDto.getUsername());
 		if (!userDto.getPassword().equals("")) {
 			user.setPassword(passwordEncoder.encode(userDto.getPassword()));
 		}

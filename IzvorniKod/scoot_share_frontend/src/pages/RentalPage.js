@@ -6,14 +6,14 @@ import AddScooterListingComponent from '../components/AddScooterListingComponent
 import ScooterListingComponent from '../components/ScooterListingComponent';
 
 const RentalPage = (props) => {
-    const {jwtIsValid, setJwt, email, jwt} = {...props};
+    const {jwtIsValid, setJwt, username, jwt} = {...props};
     const [scooters, setScooters] = useState(null);
     const [scooterListing, setScooterListing] = useState(null);
     const [loading, setLoading] = useState(true);
     const [viewListing, setViewListing] = useState(null);
 
     useEffect(() => {
-        fetch(`api/scooters/${email}`, {
+        fetch(`api/scooters/${username}`, {
             headers: {
                 "Content-Type": "application/json",
                 Authorization: `Bearer ${jwt}`,
@@ -33,7 +33,7 @@ const RentalPage = (props) => {
 
     return (
         <div className='bg-blue-50 min-h-screen pb-16'>
-            <NavigationComponent displayHomeButton={true} displayLogoutButton={true} displayRegisterButton={false} displayLoginButton={false} setJwt={setJwt} displayRentScooterButton={false}/>
+            <NavigationComponent displayChatButton={true} displayHomeButton={true} displayLogoutButton={true} displayRegisterButton={false} displayLoginButton={false} setJwt={setJwt} displayRentScooterButton={false}/>
             {loading ? 
                 <div role="status" className='flex flex-row justify-center mt-4'>
                     <svg aria-hidden="true" className="w-8 h-8 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">

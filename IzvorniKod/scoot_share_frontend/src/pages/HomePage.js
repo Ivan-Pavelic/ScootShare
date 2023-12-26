@@ -1,11 +1,15 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import NavigationComponent from '../components/NavigationComponent';
-import AdComponent from '../components/AdComponent';
 import { jwtDecode } from 'jwt-decode';
+import WebSocketComponent from '../components/WebSocketComponent';
+import { VscSend } from "react-icons/vsc";
+import ListingComponent from '../components/ListingComponent';
+import { useNavigate } from 'react-router-dom';
 
 const HomePage = (props) => {
-    const {jwtIsValid, setJwt, jwt} = {...props};
+    const {jwtIsValid, setJwt, jwt, username} = {...props};
     const [authority, setAuthority] = useState(null);
+    const [listings, setListings] = useState([]);
 
     useEffect(() => {
         if (jwt && jwt !== "") {
@@ -14,10 +18,41 @@ const HomePage = (props) => {
         }
     }, []);
 
+    useEffect(() => {
+        fetchListings();
+    }, [username]);
+
+    const fetchListings = () => {
+        fetch(`api/listings/getAll/${username}`, {
+            headers: {
+              "Content-Type": "application/json",
+            },
+            method: "GET",
+          })
+          .then(response => {
+            if (response.ok) {
+                return response.json();
+            }
+          })
+          .then((data) => {
+            if (data) {
+                setListings(data);
+            }
+          });
+    }
+
     return (
         <>
-            <NavigationComponent displayAdminPage={jwtIsValid && authority === "ROLE_ADMIN"} displayRentScooterButton={jwtIsValid && authority !== "ROLE_ADMIN"} authority={authority} displayProfileButton={jwtIsValid && authority !== "ROLE_ADMIN"} displayLogoutButton={jwtIsValid} displayRegisterButton={!jwtIsValid} displayLoginButton={!jwtIsValid} setJwt={setJwt}/>
-            <AdComponent canReserveScooter={jwtIsValid && authority === "ROLE_CLIENT"} jwtIsValid={jwtIsValid}/>
+            <NavigationComponent displayChatButton={jwtIsValid && authority == "ROLE_CLIENT"} displayAdminPage={jwtIsValid && authority === "ROLE_ADMIN"} displayRentScooterButton={jwtIsValid && authority !== "ROLE_ADMIN"} authority={authority} displayProfileButton={jwtIsValid && authority !== "ROLE_ADMIN"} displayLogoutButton={jwtIsValid} displayRegisterButton={!jwtIsValid} displayLoginButton={!jwtIsValid} setJwt={setJwt}/>
+            <div className='bg-blue-50 py-8 h-screen'>
+                <div className='w-5/6 mx-auto grid grid-cols-6 gap-4'>
+                    {listings.map((listing, index) => {
+                        return (
+                            <ListingComponent key={index} listing={listing} canReserveScooter={jwtIsValid && authority === "ROLE_CLIENT"} jwtIsValid={jwtIsValid}/>
+                        );
+                    })}
+                </div>
+            </div>
         </>
     );
 };

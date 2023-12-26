@@ -36,19 +36,20 @@ public class AdminController {
 	    			.certificateOfNoCriminalRecord(user.getCertificateOfNoCriminalRecord())
 	    			.authority(List.copyOf(user.getAuthorities()).get(0).getAuthority())
 	    			.cardNumber(user.getCardNumber())
+	    			.username(user.getUsername())
 	    			.build())
     			.collect(Collectors.toList());
         return ResponseEntity.ok(usersDtos);
     }
     
-    @DeleteMapping("/deleteUser/{email}")
-    public void deleteUser(@PathVariable String email) {
-    	userService.deleteByEmail(email);
+    @DeleteMapping("/deleteUser/{username}")
+    public void deleteUser(@PathVariable String username) {
+    	userService.deleteByUsername(username);
     }
 
-	@PutMapping("/acceptUser/{email}")
-	public void acceptUser(@PathVariable String email) {
-		User user = userService.findByEmail(email);
+	@PutMapping("/acceptUser/{username}")
+	public void acceptUser(@PathVariable String username) {
+		User user = userService.findByUsername(username);
 		authorityService.deleteByUser(user.getId());
 		user.addAuthority("ROLE_CLIENT");
 		user.removeAuthority("ROLE_PENDING_REGISTRATION");

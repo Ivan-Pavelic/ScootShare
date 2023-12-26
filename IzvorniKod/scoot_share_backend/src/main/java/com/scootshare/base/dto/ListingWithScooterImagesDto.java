@@ -1,7 +1,7 @@
 package com.scootshare.base.dto;
 
 import java.util.Date;
-
+import java.util.List;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -14,10 +14,10 @@ import lombok.Setter;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class ListingDto {
+public class ListingWithScooterImagesDto {
 	
-	private Long listingId;
-	
+	private Long id;
+
 	private Long scooterId;
 	
 	private String location;
@@ -28,6 +28,5 @@ public class ListingDto {
 	
 	private double pricePerKilometer;
 	
-	private double lateReturnPenalty;	
-
+	private List<String> scooterImages;
 }

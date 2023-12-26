@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import ShareComponent from './ShareComponent';
 
 const ScooterListComponent = (props) => {
     const {scooters, setScooterListing, setViewListing, jwt} = {...props};
@@ -9,7 +10,7 @@ const ScooterListComponent = (props) => {
 
     const viewListing = (index) => {
         const scooterToViewListing = scooters[index];
-        fetch(`api/listings/${scooterToViewListing.id}`, {
+        fetch(`api/listings/getOneListing/${scooterToViewListing.id}`, {
             headers: {
                 "Content-Type": "application/json",
                 Authorization: `Bearer ${jwt}`,

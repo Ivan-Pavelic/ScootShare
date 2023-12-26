@@ -12,4 +12,5 @@ public class UpdateUserDto {
 	private String nickname;
 	private String cardNumber;
 	private String password;
+	private String username;
 }

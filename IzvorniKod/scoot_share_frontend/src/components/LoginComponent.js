@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
-import {AiOutlineMail} from "react-icons/ai";
+import { BsFillPersonFill } from "react-icons/bs";
 import {RiLockPasswordLine} from "react-icons/ri"
 import { useNavigate } from 'react-router-dom';
 
 
 const LoginComponent = (props) => {
-    const {setJwt} = {...props};
+    const {setJwt, setUsername} = {...props};
     const [user, setUser] = useState({
-        "email": "",
+        "username": "",
         "password":""
     });
     const navigate = useNavigate();
@@ -37,20 +37,13 @@ const LoginComponent = (props) => {
                 document.querySelector(".error-invalid-credentials").classList.add("flex");
             }
             else {
+                setUsername(user.username);
                 setJwt(data.token)
                 navigate("/")
             }
             
           })
     }
-
-    function isValidEmail(email) {
-        // Regular expression for basic email format validation
-        const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
-      
-        // Test the email against the regular expression
-        return emailPattern.test(email);
-      }
 
     function cancel() {
         navigate("/");
@@ -69,14 +62,14 @@ const LoginComponent = (props) => {
                 <form  className='flex-row px-20'>
                     <div className='flex rounded-sm shadow-md mb-10'>
                         <div className='flex justfiy-center align-middle bg-gray-200 p-2'>
-                                <AiOutlineMail size={35} />
+                                <BsFillPersonFill size={35} />
                         </div>
                         <div className='w-full'>
                             <input className='w-full h-full pl-4 focus:outline-none text-xl'
-                                    placeholder='Email'
-                                    type="email"
-                                    value={user.email}
-                                    onChange={(event) => handleInputChange("email", event.target.value)}/>
+                                    placeholder='Korisničko Ime'
+                                    type="text"
+                                    value={user.username}
+                                    onChange={(event) => handleInputChange("username", event.target.value)}/>
                         </div>
                     </div>
                     <div className='flex rounded-sm shadow-md mb-10 relative'>
