@@ -12,7 +12,7 @@ const AdminDashboardPage = (props) => {
 
     return (
         <>
-            <NavigationComponent displayLogoutButton={true} displayRegisterButton={false} displayLoginButton={false} setJwt={setJwt}/>  
+            <NavigationComponent jwt={jwt} username={"admin"} displayLogoutButton={true} displayRegisterButton={false} displayLoginButton={false} setJwt={setJwt}/>  
             <AdminUserListComponent jwt={jwt}/>
         </>
     );

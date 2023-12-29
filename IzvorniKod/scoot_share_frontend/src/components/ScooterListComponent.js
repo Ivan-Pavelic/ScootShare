@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import ShareComponent from './ShareComponent';
+import { useNavigate } from 'react-router-dom';
 
 const ScooterListComponent = (props) => {
     const {scooters, setScooterListing, setViewListing, jwt} = {...props};
+    const navigate = useNavigate();
 
     const rentScooter = (index) => {
         setScooterListing(scooters[index]);
@@ -25,6 +27,37 @@ const ScooterListComponent = (props) => {
         .then((data) => {
             setViewListing(data);
         })
+    }
+
+    const chatWithRenter = async (index) => {
+        const scooterToViewListing = scooters[index];
+        let response = await fetch(`api/listings/getOneListing/${scooterToViewListing.id}`, {
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${jwt}`,
+            },
+            method: "GET"
+        });
+        response = await response.json();
+        
+        response = await fetch(`api/rentals/getRentalForListing/${response.id}`, {
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${jwt}`,
+            },
+            method: "GET"
+        });
+        response = await response.json();
+
+        response = await fetch(`api/messages/createChatRoom/${response.scooterRenterUsername}`, {
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${jwt}`,
+            },
+            method: "GET"
+        });
+
+        navigate("/chat");
     }
 
     return (
@@ -56,7 +89,13 @@ const ScooterListComponent = (props) => {
                                 </td>
                                 <td className="px-6 py-4">
                                     {scooter.hasListing ? 
-                                        <p className='text-green-500 cursor-pointer' onClick={() => viewListing(index)}>Romobil je već u najmu, pregled oglasa</p>
+                                        scooter.listingIsActive ?
+                                            <p className='text-green-500 cursor-pointer' onClick={() => viewListing(index)}>Romobil je već u najmu, pregled oglasa</p>
+                                        :
+                                        <div>
+                                            <p className='text-green-500'>Romobil je iznajmljen</p>
+                                            <p className='cursor-pointer font-semibold' onClick={() => chatWithRenter(index)}>Kontaktiraj unajmitelja</p>
+                                        </div>
                                     : <p className='text-green-500 cursor-pointer' onClick={() => rentScooter(index)}>Spreman za iznajmljivanje</p>}
                                 </td>
                             </tr>

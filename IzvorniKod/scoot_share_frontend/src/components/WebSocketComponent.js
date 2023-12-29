@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import SockJS from 'sockjs-client';
 import {Stomp} from '@stomp/stompjs';
 
@@ -6,21 +6,24 @@ const WebSocketComponent = (props) => {
     const {webSocketComponentRef, subscribeCustom, onMessageReceivedCustom, userIChatWith, 
         subscribeNotification, onNotificationReceived, children} = {...props};
     const [stompClient, setStompClient] = useState(null);
+    const webSocketOpened = useRef(false);
 
     useEffect(() => {
-        
-        const initializeStomp = () => {
-            if (!stompClient) {
-                const socket = new SockJS('http://localhost:8080/ws');
-                const stomp = Stomp.over(socket);
-                //stomp.debug = null; // prevents stomp from printing messages to console
-                stomp.connect({}, () => setStompClient(stomp));
+        if (!stompClient && !webSocketOpened.current) {
+            webSocketOpened.current = true;
+            const initializeStomp = () => {
+                if (!stompClient) {
+                    const socket = new SockJS('http://localhost:8080/ws');
+                    const stomp = Stomp.over(socket);
+                    //stomp.debug = null; // prevents stomp from printing messages to console
+                    stomp.connect({}, () => setStompClient(stomp));
+                }
             }
+    
+            initializeStomp();
+    
+            return;
         }
-
-        initializeStomp();
-
-        return;
 
     }, [stompClient]);
 

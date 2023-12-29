@@ -7,7 +7,7 @@ import ListingComponent from '../components/ListingComponent';
 import { useNavigate } from 'react-router-dom';
 
 const HomePage = (props) => {
-    const {jwtIsValid, setJwt, jwt, username} = {...props};
+    const {jwtIsValid, setJwt, jwt, username, notifications, setNotifications} = {...props};
     const [authority, setAuthority] = useState(null);
     const [listings, setListings] = useState([]);
 
@@ -42,9 +42,9 @@ const HomePage = (props) => {
     }
 
     return (
-        <>
-            <NavigationComponent displayChatButton={jwtIsValid && authority == "ROLE_CLIENT"} displayAdminPage={jwtIsValid && authority === "ROLE_ADMIN"} displayRentScooterButton={jwtIsValid && authority !== "ROLE_ADMIN"} authority={authority} displayProfileButton={jwtIsValid && authority !== "ROLE_ADMIN"} displayLogoutButton={jwtIsValid} displayRegisterButton={!jwtIsValid} displayLoginButton={!jwtIsValid} setJwt={setJwt}/>
-            <div className='bg-blue-50 py-8 h-screen'>
+        <div className='bg-blue-50 min-h-screen'>
+            <NavigationComponent displayMyRentalsButton={jwtIsValid} setNotifications={setNotifications} notifications={notifications} jwt={jwt} username={username} displayChatButton={jwtIsValid && authority == "ROLE_CLIENT"} displayAdminPage={jwtIsValid && authority === "ROLE_ADMIN"} displayRentScooterButton={jwtIsValid && authority !== "ROLE_ADMIN"} authority={authority} displayProfileButton={jwtIsValid && authority !== "ROLE_ADMIN"} displayLogoutButton={jwtIsValid} displayRegisterButton={!jwtIsValid} displayLoginButton={!jwtIsValid} setJwt={setJwt}/>
+            <div className='pt-8'>
                 <div className='w-5/6 mx-auto grid grid-cols-6 gap-4'>
                     {listings.map((listing, index) => {
                         return (
@@ -53,7 +53,7 @@ const HomePage = (props) => {
                     })}
                 </div>
             </div>
-        </>
+        </div>
     );
 };
 

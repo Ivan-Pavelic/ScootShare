@@ -3,7 +3,7 @@ import NavigationComponent from '../components/NavigationComponent';
 import ChatComponent from '../components/ChatComponent';
 
 const ChatPage = (props) => {
-    const {jwt, username} = {...props};
+    const {jwt, username, setJwt, notifications, setNotifications, jwtIsValid} = {...props};
     const [chatRooms, setChatRooms] = useState([]);
 
     useEffect(() => {
@@ -27,8 +27,8 @@ const ChatPage = (props) => {
     }, []);
 
     return (
-        <div className='bg-blue-50 h-screen'>
-            <NavigationComponent displayHomeButton={true} displayLogoutButton={true} displayProfileButton={true}/>
+        <div className='bg-blue-50 min-h-screen'>
+            <NavigationComponent displayMyRentalsButton={jwtIsValid} setNotifications={setNotifications} notifications={notifications} jwt={jwt} username={username} setJwt={setJwt} displayHomeButton={true} displayLogoutButton={true} displayProfileButton={true}  displayRentScooterButton={jwtIsValid} />
             <ChatComponent chatRooms={chatRooms} username={username} jwt={jwt}/>
         </div>
     );

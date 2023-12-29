@@ -1,0 +1,92 @@
+package com.scootshare.base.controllers;
+
+import java.util.List;
+import java.util.stream.Collectors;
+
+import org.springframework.http.ResponseEntity;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.scootshare.base.dto.RentalDto;
+import com.scootshare.base.entities.Listing;
+import com.scootshare.base.entities.Notification;
+import com.scootshare.base.entities.Rental;
+import com.scootshare.base.services.ListingService;
+import com.scootshare.base.services.NotificationService;
+import com.scootshare.base.services.RentalService;
+import com.scootshare.base.services.UserService;
+
+import lombok.RequiredArgsConstructor;
+
+@RestController
+@RequestMapping("/api/rentals")
+@RequiredArgsConstructor
+public class RentalController {
+
+	private final RentalService rentalService;
+	private final ListingService listingService;
+	private final UserService userService;
+	private final SimpMessagingTemplate messagingTemplate;
+	private final NotificationService notificationService;
+	
+	@PostMapping("/save")
+	public void save(@RequestBody RentalDto rentalDto) {
+		Listing listing = listingService.findById(rentalDto.getListingId());
+		listing.setStatus("IN RENT");
+		listingService.save(listing);
+		
+		Rental rental = Rental.builder()
+				.listing(listing)
+				.scooterRenter(userService.findByUsername(rentalDto.getScooterRenterUsername()))
+				.rentalTimeEnd(rentalDto.getRentalTimeEnd())
+				.rentalTimeStart(rentalDto.getRentalTimeStart())
+				.build();
+		rentalService.save(rental);
+		
+		Notification notification = Notification.builder()
+				.receiverUsername(listing.getScooter().getOwner().getUsername())
+				.senderUsername(rentalDto.getScooterRenterUsername())
+				.type("RENTAL")
+				.build();
+		
+		notification = notificationService.save(notification);
+		
+		messagingTemplate.convertAndSend(
+				"/user/" + notification.getReceiverUsername() + "/queue/notifications",
+				notification);
+	}
+	
+	@GetMapping("/getRentalForListing/{listingId}")
+	public ResponseEntity<?> getRentalForListing(@PathVariable Long listingId) {
+		Listing listing = listingService.findById(listingId);
+		Rental rental = rentalService.findByListing(listing);
+		
+		return ResponseEntity.ok(RentalDto.builder()
+				.listingId(listingId)
+				.rentalTimeEnd(rental.getRentalTimeEnd())
+				.rentalTimeStart(rental.getRentalTimeStart())
+				.scooterRenterUsername(rental.getScooterRenter().getUsername())
+				.scooterOwner(listing.getScooter().getOwner().getUsername())
+				.build());
+	}
+	
+	@GetMapping("/getRentalsForUser/{username}")
+	public List<RentalDto> getActiveRentalsForUser(@PathVariable String username) {
+		return rentalService.findRentalsByUser(userService.findByUsername(username))
+				.stream()
+				.filter((rental) -> rental.getRentalTimeEnd() == null)
+				.map((rental) -> RentalDto.builder()
+					.listingId(rental.getListing().getId())
+					.scooterRenterUsername(username)
+					.scooterOwner(rental.getListing().getScooter().getOwner().getUsername())
+					.rentalTimeEnd(rental.getRentalTimeEnd())
+					.rentalTimeStart(rental.getRentalTimeStart())
+				.build())
+				.collect(Collectors.toList());
+	}
+}

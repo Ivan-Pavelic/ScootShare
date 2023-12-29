@@ -61,6 +61,9 @@ public class User implements UserDetails {
 	
 	@OneToMany(mappedBy = "receiver")
 	private List<Message> receivedMessages = new ArrayList<>();
+	
+	@OneToMany(mappedBy = "scooterRenter")
+    private List<Rental> rentals =  new ArrayList<>();
 
     protected User() {}
 
@@ -151,4 +154,10 @@ public class User implements UserDetails {
 		chatRooms.add(chatRoom);
 	}
     
+	public void addRental(Rental rental) {
+		if (rentals == null) {
+			rentals = new ArrayList<>();
+		}
+		rentals.add(rental);
+	}
 }

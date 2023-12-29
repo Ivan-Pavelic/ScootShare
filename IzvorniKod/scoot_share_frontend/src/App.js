@@ -13,6 +13,7 @@ import Cookies from 'universal-cookie';
 import ListingDetailsPage from './pages/ListingDetailsPage';
 import ChatPage from './pages/ChatPage';
 import WebSocketComponent from './components/WebSocketComponent';
+import MyRentalsPage from './pages/MyRentalsPage';
 
 function App() {
     const cookies = new Cookies();
@@ -23,8 +24,37 @@ function App() {
     const [username, setUsername] = useState();
     const webSocketComponentRef = useRef();
     const [notification, setNotification] = useState(null);
+    const [notifications, setNotifications] = useState([]);
 
-    // check if token is valid
+
+    useEffect(() => {
+      if (username && jwt) {
+        fetch(`/api/notifications/${username}`, {
+          headers: {
+            "Authorization": `Bearer ${jwt}`,
+            "Content-Type": "application/json"
+          },
+          method: "GET",
+        })
+        .then((response) => {
+          if (response.ok) {
+            return response.json()
+          }
+        })
+        .then((response) => {
+          if (response) {
+            setNotifications(response);
+          }
+        })
+      }
+    }, [username, jwt]);
+
+    useEffect(() => {
+      if (notification) {
+        setNotifications([...notifications, notification]);
+      }
+    }, [notification, setNotification]);
+   
     useEffect(() => {
       if (jwt !== "") {
         fetch(`/api/auth/validate?token=${jwt}`, {
@@ -62,9 +92,27 @@ function App() {
     })
 
     const onNotificationReceived = (notification) => {
-      if (window.location.href.split("/")[3] !== "chat") {
-        const newNotification = JSON.parse(notification.body);
+      const newNotification = JSON.parse(notification.body);
+      if (!(newNotification.TYPE === "MESSAGE" && window.location.href.split("/")[3] !== "chat")) {
         setNotification(newNotification);
+      }
+    }
+
+    const removeNotification = (navigateTo) => {
+      fetch(`api/notifications/${notification.id}`, {
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${jwt}`,
+        },
+        method: "DELETE",
+      });
+
+      let tmpNotifications = notifications.filter(not => not.id !== notification.id);
+      setNotifications(tmpNotifications);
+      setNotification(null);
+
+      if (navigateTo) {
+        window.location.href = navigateTo;
       }
     }
 
@@ -74,34 +122,39 @@ function App() {
         <>
           <BrowserRouter>
             <Routes>
-              <Route path='/' element={<HomePage username={username} jwt={jwt} jwtIsValid={jwtIsValid} setJwt={setJwt} />} />
+              <Route path='/' element={<HomePage setNotifications={setNotifications} notifications={notifications} username={username} jwt={jwt} jwtIsValid={jwtIsValid} setJwt={setJwt} />} />
               <Route path="/register" element={<RegistrationPage jwtIsValid={jwtIsValid} setJwt={setJwt} />}/> 
               <Route path="/login" element={<LoginPage jwtIsValid={jwtIsValid} setJwt={setJwt} setUsername={setUsername}/>}/> 
               <Route path="/profile" element={
                 <PrivateRoute jwt={jwt} jwtIsValid={jwtIsValid} clientRole={true} adminRole={false} >
-                  <UserProfilePage jwt={jwt} username={username} jwtIsValid={jwtIsValid} setJwt={setJwt}/>
+                  <UserProfilePage setNotifications={setNotifications} notifications={notifications} jwt={jwt} username={username} jwtIsValid={jwtIsValid} setJwt={setJwt}/>
                 </PrivateRoute>
               }/>
               <Route path="/rent-scooter" element={
                 <PrivateRoute jwt={jwt} jwtIsValid={jwtIsValid} clientRole={true} adminRole={false}>
-                  <RentalPage jwtIsValid={jwtIsValid} setJwt={setJwt} username={username} jwt={jwt}/>
+                  <RentalPage setNotifications={setNotifications} notifications={notifications} jwtIsValid={jwtIsValid} setJwt={setJwt} username={username} jwt={jwt}/>
                 </PrivateRoute>
               }/>
               <Route path='/admin' element={
                 <PrivateRoute jwt={jwt} jwtIsValid={jwtIsValid} clientRole={false} adminRole={true}>
-                  <AdminDashboardPage jwt={jwt} setJwt={setJwt}/>
+                  <AdminDashboardPage setNotifications={setNotifications} notifications={notifications} jwt={jwt} setJwt={setJwt}/>
                 </PrivateRoute>
               } />
               <Route path='/listing/:id' element={
-                <ListingDetailsPage jwt={jwt}/>
+                <ListingDetailsPage setNotifications={setNotifications} notifications={notifications} username={username} jwt={jwt} jwtIsValid={jwtIsValid} setJwt={setJwt}/>
               } 
               />
               <Route path='/chat' element={
                 <PrivateRoute jwt={jwt} jwtIsValid={jwtIsValid} clientRole={true} adminRole={false}>
-                  <ChatPage jwt={jwt} username={username}/>
+                  <ChatPage setNotifications={setNotifications} notifications={notifications} jwt={jwt} username={username} setJwt={setJwt} jwtIsValid={jwtIsValid}/>
                 </PrivateRoute>
               } 
               />
+              <Route path="/my-rentals" element={
+                <PrivateRoute jwt={jwt} jwtIsValid={jwtIsValid} clientRole={true} adminRole={false} >
+                  <MyRentalsPage setNotifications={setNotifications} notifications={notifications} jwt={jwt} username={username} jwtIsValid={jwtIsValid} setJwt={setJwt}/>
+                </PrivateRoute>
+              }/>
             </Routes>
           </BrowserRouter>
           <WebSocketComponent onNotificationReceived={onNotificationReceived}
@@ -112,8 +165,11 @@ function App() {
                   <div className="relative bg-white rounded-lg shadow dark:bg-gray-700">
                       <div className="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
                           {notification.type === "MESSAGE" && <p className='text-2xl font-semibold text-center'>Nova poruka!</p>}
+                          {notification.type === "RENTAL" && <p className='text-2xl font-semibold text-center'>Vaš romobil je unajmljen!</p>}
+                          {notification.type === "IMAGE_CHANGE_REQUEST" && <p className='text-2xl font-semibold text-center'>Pristigao je zahtjev za zamjenu slike vašeg romobila!</p>}
+                          {notification.type === "IMAGE_CHANGE_REQUEST_ADMIN" && <p className='text-2xl font-semibold text-center'>Pristigao je zahtjev za zamjenu slike romobila!</p>}
                           <button 
-                            onClick={() => setNotification(null)}
+                            onClick={() => removeNotification(null)}
                             type="button" className="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-hide="default-modal">
                               <svg className="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
                                   <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
@@ -122,12 +178,15 @@ function App() {
                           </button>
                       </div>
                       <div className="p-4 md:p-5 space-y-4">
-                      {notification.type === "MESSAGE" && <p className='text-xl'>Korisnik <span className='font-semibold'>{notification.sender}</span> Vam je poslao novu poruku. Klikom na sljedeći link pogledajte poruku. 
-                                <span className='font-bold text-xl cursor-pointer text-slate-800'
-                                    onClick={() => {window.location.href = "/chat"}}>  Poruka</span></p>}
+                        {notification.type === "MESSAGE" && <p className='text-xl'>Korisnik <span className='font-semibold'>{notification.senderUsername}</span> Vam je poslao novu poruku. Klikom na sljedeći link pogledajte poruku. 
+                                  <span className='font-bold text-xl cursor-pointer text-slate-800'
+                                      onClick={() => removeNotification("/chat")}>  Poruka</span></p>}
+                        {notification.type === "RENTAL" && <p className='text-xl'>Korisnik <span className='font-semibold'>{notification.senderUsername}</span> je unajmio vaš romobil.</p>}
+                        {notification.type === "IMAGE_CHANGE_REQUEST" && <p className='text-xl'>Korisnik <span className='font-semibold'>{notification.senderUsername}</span> je zatražio zamjenu slike jednog od vaših romobila.</p>}
+                        {notification.type === "IMAGE_CHANGE_REQUEST_ADMIN" && <p className='text-xl'>Korisnik <span className='font-semibold'>{notification.senderUsername}</span> je zatražio zamjenu slike jednog od romobila.</p>}
                         <div className='flex justify-end'>
                           <button className='text-white bg-slate-800 font-semibold text-lg rounded-lg cursor-pointer py-2 px-3'
-                            onClick={() => setNotification(null)}>U redu</button>
+                            onClick={() => removeNotification(null)}>U redu</button>
                         </div>
                       </div>
                   </div>

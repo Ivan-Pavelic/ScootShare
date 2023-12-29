@@ -17,9 +17,11 @@ import com.scootshare.base.dto.ChatRoomDto;
 import com.scootshare.base.dto.MessageDto;
 import com.scootshare.base.entities.ChatRoom;
 import com.scootshare.base.entities.Message;
+import com.scootshare.base.entities.Notification;
 import com.scootshare.base.entities.User;
 import com.scootshare.base.services.ChatRoomService;
 import com.scootshare.base.services.MessageService;
+import com.scootshare.base.services.NotificationService;
 import com.scootshare.base.services.UserService;
 
 import lombok.RequiredArgsConstructor;
@@ -33,6 +35,7 @@ public class MessageController {
 	private final UserService userService;
 	private final MessageService messageService;
 	private final SimpMessagingTemplate messagingTemplate;
+	private final NotificationService notificationService;
 	
 	@GetMapping("/createChatRoom/{username}")
 	public void createChatRoom(@PathVariable String username, @AuthenticationPrincipal User user) {
@@ -102,14 +105,16 @@ public class MessageController {
 					.sentAt(messageDto.getSentAt())
 					.build());
 		
+		Notification notification = Notification.builder()
+				.receiverUsername(messageDto.getReceiver())
+				.senderUsername(messageDto.getSender())
+				.type("MESSAGE")
+				.build();
+		
+		notification = notificationService.save(notification);
+		
 		messagingTemplate.convertAndSend(
 				"/user/" + messageDto.getReceiver() + "/queue/notifications",
-				MessageNotification.builder()
-					.sender(message.getSender().getUsername())
-					.receiver(message.getReceiver().getUsername())
-					.content(message.getContent())
-					.sentAt(messageDto.getSentAt())
-					.type("MESSAGE")
-					.build());
+				notification);
 	}
 }

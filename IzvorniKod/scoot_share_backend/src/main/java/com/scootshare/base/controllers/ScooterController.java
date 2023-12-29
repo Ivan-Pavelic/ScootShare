@@ -70,6 +70,7 @@ public class ScooterController {
 							.images(scooter.getImages())
 							.id(scooter.getId())
 							.hasListing(listing != 	null)
+							.listingIsActive(listing != null && listing.getStatus().equals("ACTIVE"))
 							.build();
 				})
 				.collect(Collectors.toList());

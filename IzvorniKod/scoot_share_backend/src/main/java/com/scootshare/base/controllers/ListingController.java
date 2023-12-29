@@ -60,6 +60,7 @@ public class ListingController {
 				.returnByTime(listing.getReturnByTime())
 				.pricePerKilometer(listing.getPricePerKilometer())
 				.scooterImages(listing.getScooter().getImages())
+				.lateReturnPenalty(listing.getLateReturnPenalty())
 				.build());
 	}
 	
@@ -78,9 +79,9 @@ public class ListingController {
 	}
 	
 	@GetMapping("/getAll/{username}")
-	public List<ListingWithScooterImagesDto> getAll(@PathVariable String username) {
+	public List<ListingWithScooterImagesDto> getAllActiveListings(@PathVariable String username) {
 		return listingService.findAll().stream()
-				.filter((listing) -> !listing.getScooter().getOwner().getUsername().equals(username))
+				.filter((listing) -> !listing.getScooter().getOwner().getUsername().equals(username) && listing.getStatus().equals("ACTIVE"))
 				.map((listing) -> ListingWithScooterImagesDto.builder()
 				.id(listing.getId())
 				.scooterId(listing.getScooter().getId())

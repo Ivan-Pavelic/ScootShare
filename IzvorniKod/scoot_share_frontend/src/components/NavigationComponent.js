@@ -1,11 +1,12 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Cookies from 'universal-cookie';
 
 const NavigationComponent = (props) => {
     const {authority} = {...props};
     const navigate = useNavigate()
-    const {displayChatButton, displayHomeButton, displayAdminPage, displayRegisterButton, displayLoginButton, setJwt, displayLogoutButton, displayRentScooterButton, displayProfileButton} = {...props};
+    const {notifications, setNotifications, jwt, username, displayMyRentalsButton, displayChatButton, displayHomeButton, displayAdminPage, displayRegisterButton, displayLoginButton, setJwt, displayLogoutButton, displayRentScooterButton, displayProfileButton} = {...props};
+
     function register() {
         navigate("/register")
     }
@@ -40,6 +41,39 @@ const NavigationComponent = (props) => {
         navigate("/chat");
     }
 
+    function myRentals() {
+        navigate("/my-rentals");
+    }
+
+    function displayNotifications() {
+        const notificationsDiv = document.querySelector(".notifications-div");
+        if (notificationsDiv.classList.contains("hidden")) {
+            notificationsDiv.classList.remove("hidden");
+            notificationsDiv.classList.add("flex");
+        }
+        else {
+            notificationsDiv.classList.add("hidden");
+            notificationsDiv.classList.remove("flex");
+        }
+    }
+
+    function deleteNotification(notification, index) {
+        fetch(`api/notifications/${notification.id}`, {
+            headers: {
+              "Content-Type": "application/json",
+              "Authorization": `Bearer ${jwt}`,
+            },
+            method: "DELETE",
+        });
+
+        let tmpNotifications = notifications.splice(index, 1);
+        setNotifications(tmpNotifications);                                                    
+
+        if (notification.type === "MESSAGE") {
+            navigate("/chat");
+        }
+    }
+
     return (
         <div className='flex justify-between items-center bg-slate-800 py-6 px-28'>
             <div className=''>
@@ -55,12 +89,32 @@ const NavigationComponent = (props) => {
                     :
                     <>
                         {displayHomeButton && <button className='text-white rounded-3xl hover:text-cyan-400' onClick={home}>Početna stranica</button>} 
+                        {displayMyRentalsButton && <button className='text-white rounded-3xl hover:text-cyan-400' onClick={myRentals}>Unajmljeni romobili</button>} 
                         {displayRegisterButton && <button className='text-white rounded-3xl hover:text-cyan-400' onClick={register}>Registracija</button>} 
                         {displayLoginButton && <button className='text-white rounded-3xl hover:text-cyan-400' onClick={login}>Prijava</button>}           
                         {displayRentScooterButton && <button className='text-white rounded-3xl hover:text-cyan-400' onClick={rentScooter}>Iznajmi Romobil</button>}
                         {displayProfileButton && <button className='text-white rounded-3xl hover:text-cyan-400' onClick={profilePage}>Profil</button>} 
                         {displayChatButton && <button className='text-white rounded-3xl hover:text-cyan-400' onClick={chatPage}>Razgovori</button>} 
                         {displayAdminPage && <button className='text-white rounded-3xl hover:text-cyan-400' onClick={adminPage}>Admin</button>} 
+                        {notifications && !displayLoginButton && 
+                        <div className='flex flex-row items-start gap-1 cursor-pointer relative' onClick={displayNotifications}>
+                            <p className='text-white rounded-3xl hover:text-cyan-400 cursor-pointer'>Obavijesti</p>
+                            <div className='w-6 h-6 flex items-center justify-center bg-blue-100 rounded-full'><p className='text-slate-800 font-bold'>{notifications.length}</p></div>
+                            <div className='hidden absolute notifications-div flex-col bg-white z-50 top-7 -left-16 w-[240px] rounded-lg shadow-lg'>
+                                {notifications.map((notification, index) => {
+                                    return (
+                                        <div key={index} className='cursor-pointer border-b-2 border-b-slate-200'>
+                                            {notification.type === "MESSAGE" && 
+                                                <p className='text-md text-center py-2 px-4 w-full h-full' onClick={() => deleteNotification(notification, index)}>Korisnik <span className='font-semibold'>{notification.senderUsername}</span> šalje vam poruku.</p>}
+                                            {notification.type === "RENTAL" && 
+                                                <p className='text-md text-center py-2 px-4 w-full h-full' onClick={() => deleteNotification(notification, index)}>Korisnik <span className='font-semibold'>{notification.senderUsername}</span> je unajmio vaš romobil.</p>}
+                                                {(notification.type === "IMAGE_CHANGE_REQUEST" || notification.type === "IMAGE_CHANGE_REQUEST_ADMIN") && 
+                                                <p className='text-md text-center py-2 px-4 w-full h-full' onClick={() => deleteNotification(notification, index)}>Korisnik <span className='font-semibold'>{notification.senderUsername}</span> je zatražio zamjenu slike romobila.</p>}
+                                        </div>
+                                    );
+                                })}
+                            </div>
+                        </div>}
                         {displayLogoutButton && <button className='text-white rounded-3xl hover:text-red-500' onClick={logout}>Odjava</button>} 
                     </>
                 }

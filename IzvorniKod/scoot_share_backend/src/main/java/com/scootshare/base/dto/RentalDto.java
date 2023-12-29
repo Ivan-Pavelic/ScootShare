@@ -1,6 +1,6 @@
 package com.scootshare.base.dto;
 
-import java.util.List;
+import java.util.Date;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -10,14 +10,18 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class ScooterDto {
+@Builder
+public class RentalDto {
 
-	private Long id;
-	private List<String> images;
-	private boolean hasListing;
-	private boolean listingIsActive;
+	private long listingId;
 	
+	private String scooterRenterUsername;
+	
+	private String scooterOwner;
+	
+	private Date rentalTimeStart;
+	
+	private Date rentalTimeEnd;
 }

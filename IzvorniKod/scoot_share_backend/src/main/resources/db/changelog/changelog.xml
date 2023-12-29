@@ -130,6 +130,88 @@
             <column name="content" type="VARCHAR(255)" />
         </createTable>
     </changeSet>
+    
+    <changeSet id="createRentalTable" author="yourname">
+	    <createTable tableName="rental">
+	        <column name="id" type="BIGINT" autoIncrement="true">
+	            <constraints primaryKey="true" nullable="false" />
+	        </column>
+	        <column name="listing_id" type="BIGINT" />
+	        <column name="scooter_renter_id" type="BIGINT" />
+	        <column name="rental_time_start" type="TIMESTAMP" />
+	        <column name="rental_time_end" type="TIMESTAMP" />
+	    </createTable>
+	</changeSet>
+	
+	<changeSet id="createRatingTable" author="yourname">
+        <createTable tableName="rating">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="rental_id" type="BIGINT" />
+            <column name="grade" type="INTEGER" />
+            <column name="comment" type="VARCHAR(255)" />
+            <column name="rating_time" type="TIMESTAMP" />
+        </createTable>
+    </changeSet>
+    
+    <changeSet id="createTransactionTable" author="yourname">
+        <createTable tableName="transaction">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="rental_id" type="BIGINT" />
+            <column name="total_price" type="INTEGER" />
+            <column name="kilometers_passed" type="DOUBLE" />
+            <column name="time_of_transaction" type="TIMESTAMP" />
+        </createTable>
+    </changeSet>
+    
+    <changeSet id="createImageChangeRequestTable" author="yourname">
+        <createTable tableName="image_change_request">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="scooter_id" type="BIGINT" />
+            <column name="old_image" type="MEDIUMTEXT" />
+            <column name="replacement_image" type="MEDIUMTEXT" />
+            <column name="message" type="VARCHAR(255)" />
+        </createTable>
+    </changeSet>
+    
+    <changeSet id="createNotificationTable" author="yourname">
+        <createTable tableName="notification">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="sender_username" type="VARCHAR(255)"/>
+            <column name="receiver_username" type="VARCHAR(255)"/>
+            <column name="type" type="VARCHAR(255)"/>
+        </createTable>
+    </changeSet>
+
+    <!-- Changeset to add foreign key for rental_id -->
+    <changeSet id="addForeignKeyForRentalInTransaction" author="yourname">
+        <addForeignKeyConstraint
+            baseTableName="transaction"
+            baseColumnNames="rental_id"
+            constraintName="fk_transaction_rental"
+            referencedTableName="rental"
+            referencedColumnNames="id"
+            onDelete="CASCADE"  
+        />
+    </changeSet>
+
+    <changeSet id="addForeignKeyForRentalRating" author="yourname">
+        <addForeignKeyConstraint
+            baseTableName="rating"
+            baseColumnNames="rental_id"
+            constraintName="fk_rating_rental"
+            referencedTableName="rental"
+            referencedColumnNames="id"
+            onDelete="CASCADE" 
+        />
+    </changeSet>
 
     <!-- Add foreign key constraint between 'authority' and 'users' tables -->
     <changeSet id="addAuthorityForeignKey" author="yourname">
@@ -222,6 +304,29 @@
             onDelete="CASCADE"
         />
     </changeSet>
+    
+    <changeSet id="addForeignKeyForListing" author="yourname">
+	    <addForeignKeyConstraint
+	        baseTableName="rental"
+	        baseColumnNames="listing_id"
+	        constraintName="fk_rental_listing"
+	        referencedTableName="listing"
+	        referencedColumnNames="id"
+	        onDelete="CASCADE"  
+	    />
+	</changeSet>
+	
+	<changeSet id="addForeignKeyForScooterRenter" author="yourname">
+	    <addForeignKeyConstraint
+	        baseTableName="rental"
+	        baseColumnNames="scooter_renter_id"
+	        constraintName="fk_rental_scooter_renter"
+	        referencedTableName="users"
+	        referencedColumnNames="id"
+	        onDelete="CASCADE"  
+	    />
+	</changeSet>
+    
     
     <changeSet id="1" author="yourname">
         <sql>

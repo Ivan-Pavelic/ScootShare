@@ -29,4 +29,6 @@ public class ListingWithScooterImagesDto {
 	private double pricePerKilometer;
 	
 	private List<String> scooterImages;
+	
+	private double lateReturnPenalty;
 }
