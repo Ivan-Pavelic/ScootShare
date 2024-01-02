@@ -62,7 +62,11 @@ public class ScooterController {
 				.map((scooter) -> {
 					Listing listing = null;
 					try {
-						listing = scooter.getListing();
+						for (Listing listingTmp : scooter.getListings()) {
+							if (listingTmp.getStatus().equals("ACTIVE") || listingTmp.getStatus().equals("IN RENT")) {
+								listing = listingTmp;
+							}
+						}
 					} catch (Exception e) {
 					}
 					return ScooterDto

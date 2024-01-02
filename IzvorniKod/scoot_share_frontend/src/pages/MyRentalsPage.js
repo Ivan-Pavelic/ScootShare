@@ -209,7 +209,21 @@ const MyRentalsPage = (props) => {
             document.querySelector(".message-error").classList.add("hidden");
             document.querySelector(".replacement-image-error").classList.add("hidden");
         })
-}
+    }
+
+    const returnScooter = (rental) => {
+        fetch(`/api/rentals/returnScooter`, {
+            headers: {
+                "Authorization": `Bearer ${jwt}`,
+                "Content-Type": "application/json"
+            },
+            method: "PUT",
+            body: JSON.stringify(rental)
+        });
+
+        let tmpRentals = rentals.filter((tmp) => tmp.listingId !== rental.listingId);
+        setRentals(tmpRentals);
+    }
 
     return (
         <div className='min-h-screen bg-blue-50 pb-20'>
@@ -290,7 +304,7 @@ const MyRentalsPage = (props) => {
                                                 onMouseLeave={() => displayReplaceImageButton(`button_${listing.id}_${imageIndex}`, false)} 
                                                 className='relative'>
                                                 <button className={`button_${listing.id}_${imageIndex} hidden absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 opacity-80 shadow-md font-semibold text-lg bg-white rounded-lg p-2`}>Klikni na sliku za zamjenu</button>
-                                                <img src={listing.scooterImages[imageIndex]} className='w-96 shadow-lg cursor-pointer'/>
+                                                <img src={listing.scooterImages[imageIndex]} className='max-h-96 shadow-lg cursor-pointer'/>
                                             </div>
                                             <FaArrowRight 
                                                 onClick={() => changeCurrentImage("increase", listing)}
@@ -322,7 +336,9 @@ const MyRentalsPage = (props) => {
                                                 <p className='text-xl'>Početak najma: <span className='font-semibold'>{`${(new Date(rental.rentalTimeStart).getFullYear())}-${(new Date(rental.rentalTimeStart)).getDate()}-${(new Date(rental.rentalTimeStart)).getMonth()+1}`}</span></p>
                                             </div>
                                             <div className='flex flex-row gap-8 mt-6'>
-                                                <button className='bg-green-500 text-white font-semibold text-xl rounded-lg py-2 px-3 hover:bg-green-700'>Vrati romobil</button>
+                                                <button 
+                                                    onClick={() => returnScooter(rental)}
+                                                    className='bg-green-500 text-white font-semibold text-xl rounded-lg py-2 px-3 hover:bg-green-700'>Vrati romobil</button>
                                                 <button 
                                                     onClick={() => chatWithOwner(rental.scooterOwner)}
                                                     className='bg-slate-800 text-white font-semibold text-xl rounded-lg py-2 px-3 hover:bg-slate-700'>Kontaktiraj vlasnika</button>

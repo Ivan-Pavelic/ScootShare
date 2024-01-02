@@ -12,7 +12,7 @@ const ScooterListComponent = (props) => {
 
     const viewListing = (index) => {
         const scooterToViewListing = scooters[index];
-        fetch(`api/listings/getOneListing/${scooterToViewListing.id}`, {
+        fetch(`api/listings/getOneListingByScooterId/${scooterToViewListing.id}`, {
             headers: {
                 "Content-Type": "application/json",
                 Authorization: `Bearer ${jwt}`,
@@ -31,7 +31,7 @@ const ScooterListComponent = (props) => {
 
     const chatWithRenter = async (index) => {
         const scooterToViewListing = scooters[index];
-        let response = await fetch(`api/listings/getOneListing/${scooterToViewListing.id}`, {
+        let response = await fetch(`api/listings/getOneListingByScooterId/${scooterToViewListing.id}`, {
             headers: {
                 "Content-Type": "application/json",
                 Authorization: `Bearer ${jwt}`,

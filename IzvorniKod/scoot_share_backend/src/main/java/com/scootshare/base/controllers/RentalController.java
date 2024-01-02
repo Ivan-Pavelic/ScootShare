@@ -1,5 +1,6 @@
 package com.scootshare.base.controllers;
 
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -8,6 +9,7 @@ import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -88,5 +90,19 @@ public class RentalController {
 					.rentalTimeStart(rental.getRentalTimeStart())
 				.build())
 				.collect(Collectors.toList());
+	}
+	
+	@PutMapping("/returnScooter")
+	public void returnScooter(@RequestBody RentalDto rentalDto) {
+		Rental rental = rentalService.findByListing(listingService.findById(rentalDto.getListingId()));
+		
+		rental.setRentalTimeEnd(new Date());
+		rentalService.save(rental);
+		
+		Listing listing = listingService.findById(rentalDto.getListingId());
+		listing.setStatus("INACTIVE");
+		listingService.save(listing);
+		
+		// TODO: create Transaction object, save it and send notification to users
 	}
 }

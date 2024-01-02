@@ -5,7 +5,7 @@ import Cookies from 'universal-cookie';
 const NavigationComponent = (props) => {
     const {authority} = {...props};
     const navigate = useNavigate()
-    const {notifications, setNotifications, jwt, username, displayMyRentalsButton, displayChatButton, displayHomeButton, displayAdminPage, displayRegisterButton, displayLoginButton, setJwt, displayLogoutButton, displayRentScooterButton, displayProfileButton} = {...props};
+    const {notifications, setNotifications, jwt, username, displayImageChangeRequestsButton, displayMyRentalsButton, displayChatButton, displayHomeButton, displayAdminPage, displayRegisterButton, displayLoginButton, setJwt, displayLogoutButton, displayRentScooterButton, displayProfileButton} = {...props};
 
     function register() {
         navigate("/register")
@@ -18,7 +18,9 @@ const NavigationComponent = (props) => {
         setJwt("");
         const cookies = new Cookies();
         cookies.remove("jwt");
-        window.location.reload();
+        if (authority === "ROLE_PENDING_REGISTRATION") {
+            window.location.reload();
+        }
     }
 
     function rentScooter() {
@@ -45,6 +47,10 @@ const NavigationComponent = (props) => {
         navigate("/my-rentals");
     }
 
+    function imageChangeRequests() {
+        navigate("/admin/image-change-requests");
+    }
+
     function displayNotifications() {
         const notificationsDiv = document.querySelector(".notifications-div");
         if (notificationsDiv.classList.contains("hidden")) {
@@ -58,7 +64,7 @@ const NavigationComponent = (props) => {
     }
 
     function deleteNotification(notification, index) {
-        fetch(`api/notifications/${notification.id}`, {
+        fetch(`/api/notifications/${notification.id}`, {
             headers: {
               "Content-Type": "application/json",
               "Authorization": `Bearer ${jwt}`,
@@ -66,7 +72,7 @@ const NavigationComponent = (props) => {
             method: "DELETE",
         });
 
-        let tmpNotifications = notifications.splice(index, 1);
+        let tmpNotifications = notifications.filter((tmp) => tmp.id !== notification.id);
         setNotifications(tmpNotifications);                                                    
 
         if (notification.type === "MESSAGE") {
@@ -96,6 +102,7 @@ const NavigationComponent = (props) => {
                         {displayProfileButton && <button className='text-white rounded-3xl hover:text-cyan-400' onClick={profilePage}>Profil</button>} 
                         {displayChatButton && <button className='text-white rounded-3xl hover:text-cyan-400' onClick={chatPage}>Razgovori</button>} 
                         {displayAdminPage && <button className='text-white rounded-3xl hover:text-cyan-400' onClick={adminPage}>Admin</button>} 
+                        {displayImageChangeRequestsButton && <button className='text-white rounded-3xl hover:text-cyan-400' onClick={imageChangeRequests}>Pregled zamjena slika</button>} 
                         {notifications && !displayLoginButton && 
                         <div className='flex flex-row items-start gap-1 cursor-pointer relative' onClick={displayNotifications}>
                             <p className='text-white rounded-3xl hover:text-cyan-400 cursor-pointer'>Obavijesti</p>
@@ -108,8 +115,12 @@ const NavigationComponent = (props) => {
                                                 <p className='text-md text-center py-2 px-4 w-full h-full' onClick={() => deleteNotification(notification, index)}>Korisnik <span className='font-semibold'>{notification.senderUsername}</span> šalje vam poruku.</p>}
                                             {notification.type === "RENTAL" && 
                                                 <p className='text-md text-center py-2 px-4 w-full h-full' onClick={() => deleteNotification(notification, index)}>Korisnik <span className='font-semibold'>{notification.senderUsername}</span> je unajmio vaš romobil.</p>}
-                                                {(notification.type === "IMAGE_CHANGE_REQUEST" || notification.type === "IMAGE_CHANGE_REQUEST_ADMIN") && 
-                                                <p className='text-md text-center py-2 px-4 w-full h-full' onClick={() => deleteNotification(notification, index)}>Korisnik <span className='font-semibold'>{notification.senderUsername}</span> je zatražio zamjenu slike romobila.</p>}
+                                            {(notification.type === "IMAGE_CHANGE_REQUEST" || notification.type === "IMAGE_CHANGE_REQUEST_ADMIN") && 
+                                            <p className='text-md text-center py-2 px-4 w-full h-full' onClick={() => deleteNotification(notification, index)}>Korisnik <span className='font-semibold'>{notification.senderUsername}</span> je zatražio zamjenu slike romobila.</p>}
+                                            {notification.type === "IMAGE_CHANGE_REQUEST_REJECTED" && 
+                                            <p className='text-md text-center py-2 px-4 w-full h-full' onClick={() => deleteNotification(notification, index)}>Zahtjev za zamjenom slike romobila je odbačen.</p>}
+                                            {notification.type === "IMAGE_CHANGE_REQUEST_ACCPETED" && 
+                                            <p className='text-md text-center py-2 px-4 w-full h-full' onClick={() => deleteNotification(notification, index)}>Zahtjev za zamjenom slike romobila je prihvaćen.</p>}
                                         </div>
                                     );
                                 })}

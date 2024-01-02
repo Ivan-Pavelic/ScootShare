@@ -28,4 +28,8 @@ public class RentalService {
 	public Rental findByListing(Listing listing) {
 		return repository.findByListing(listing);
 	}
+
+	public void deleteById(Long id) {
+		repository.deleteById(id);
+	}
 }

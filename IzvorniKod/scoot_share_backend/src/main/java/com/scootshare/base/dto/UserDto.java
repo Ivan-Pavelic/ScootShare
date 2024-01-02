@@ -20,4 +20,8 @@ public class UserDto {
 	private String certificateOfNoCriminalRecord;
 	private String authority;
 	private String username;
+	private boolean showFirstName;
+    private boolean showLastName;
+    private boolean showNickname;
+    private boolean showEmail;
 }

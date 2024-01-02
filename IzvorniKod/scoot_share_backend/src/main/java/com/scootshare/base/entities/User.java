@@ -41,6 +41,11 @@ public class User implements UserDetails {
 
     private String idCard;
     private String certificateOfNoCriminalRecord;
+    
+    private boolean showFirstName;
+    private boolean showLastName;
+    private boolean showNickname;
+    private boolean showEmail;
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "user", cascade = CascadeType.ALL)
     private Set<Authority> authorities = new HashSet<>();
@@ -64,6 +69,9 @@ public class User implements UserDetails {
 	
 	@OneToMany(mappedBy = "scooterRenter")
     private List<Rental> rentals =  new ArrayList<>();
+	
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+	private List<Rating> ratings = new ArrayList<>();
 
     protected User() {}
 

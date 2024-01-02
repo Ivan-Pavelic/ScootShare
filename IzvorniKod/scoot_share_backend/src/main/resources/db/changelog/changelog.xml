@@ -18,6 +18,10 @@
             <column name="username" type="VARCHAR(255)">
                 <constraints unique="true" />
             </column>
+            <column name="show_first_name" type="BOOLEAN" />
+            <column name="show_last_name" type="BOOLEAN" />
+            <column name="show_nickname" type="BOOLEAN" />
+            <column name="show_email" type="BOOLEAN" />
             <column name="id_card" type="MEDIUMTEXT">
 	        </column>
 	        <column name="certificate_of_no_criminal_record" type="MEDIUMTEXT"> 
@@ -148,7 +152,7 @@
             <column name="id" type="BIGINT" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
-            <column name="rental_id" type="BIGINT" />
+            <column name="user_id" type="BIGINT" />
             <column name="grade" type="INTEGER" />
             <column name="comment" type="VARCHAR(255)" />
             <column name="rating_time" type="TIMESTAMP" />
@@ -202,12 +206,12 @@
         />
     </changeSet>
 
-    <changeSet id="addForeignKeyForRentalRating" author="yourname">
+    <changeSet id="addForeignKeyForUserRating" author="yourname">
         <addForeignKeyConstraint
             baseTableName="rating"
-            baseColumnNames="rental_id"
-            constraintName="fk_rating_rental"
-            referencedTableName="rental"
+            baseColumnNames="user_id"
+            constraintName="fk_rating_user"
+            referencedTableName="users"
             referencedColumnNames="id"
             onDelete="CASCADE" 
         />
@@ -330,8 +334,8 @@
     
     <changeSet id="1" author="yourname">
         <sql>
-            INSERT INTO users (first_name, last_name, nickname, password, email, username) VALUES 
-            	('admin', 'admin', 'admin', '$2a$10$7uaP3p8uWXZDjzSu0j9iteKtNPbgJVJ43Hm1lSqSgshEkgD17k8Yq', 'admin@gmail.com', 'admin');
+            INSERT INTO users (first_name, last_name, nickname, password, email, username, show_first_name, show_last_name, show_nickname, show_email) VALUES 
+            	('admin', 'admin', 'admin', '$2a$10$7uaP3p8uWXZDjzSu0j9iteKtNPbgJVJ43Hm1lSqSgshEkgD17k8Yq', 'admin@gmail.com', 'admin', false, false, false, false);
             INSERT INTO authority (authority, user_id) VALUES ('ROLE_ADMIN', 1);
         </sql>
     </changeSet>

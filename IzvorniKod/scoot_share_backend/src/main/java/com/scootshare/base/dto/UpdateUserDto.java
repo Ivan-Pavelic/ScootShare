@@ -13,4 +13,8 @@ public class UpdateUserDto {
 	private String cardNumber;
 	private String password;
 	private String username;
+	private boolean showFirstName;
+    private boolean showLastName;
+    private boolean showNickname;
+    private boolean showEmail;
 }

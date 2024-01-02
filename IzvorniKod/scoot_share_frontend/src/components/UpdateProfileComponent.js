@@ -91,7 +91,7 @@ const UpdateProfileComponent = (props) => {
             error.classList.add("hidden");
             error.classList.remove("flex");
         }
-        if (!isValidCreditCardNumber(user.cardNumber)) {
+        if (user.cardNumber === "") {
             hasError = true;
             const error = document.querySelector(".card-error");
             error.classList.remove("hidden");
@@ -126,8 +126,8 @@ const UpdateProfileComponent = (props) => {
         }
 
         if (!hasError) {
-            const {firstName, lastName, nickname, cardNumber, email, password, username} = {...user};
-            const newUser = {firstName, lastName, nickname, cardNumber, email, password, username};
+            const {firstName, lastName, nickname, cardNumber, email, password, username, showFirstName, showLastName, showNickname, showEmail} = {...user};
+            const newUser = {firstName, lastName, nickname, cardNumber, email, password, username, showFirstName, showLastName, showNickname, showEmail};
             fetch(`api/users/update`, {
                 headers: {
                     "Content-Type" : "application/json",
@@ -139,35 +139,11 @@ const UpdateProfileComponent = (props) => {
         }
     }
 
-    function isValidCreditCardNumber(cardNumber) {
-        // Remove spaces and non-digit characters
-        cardNumber = cardNumber.replace(/\s/g, '').replace(/\D/g, '');
-      
-        // Check if the card number is a numeric string with 13 to 19 digits
-        if (/^\d{13,19}$/.test(cardNumber)) {
-          // Perform Luhn algorithm (mod 10) validation
-          let sum = 0;
-          let isEven = false;
-      
-          for (let i = cardNumber.length - 1; i >= 0; i--) {
-            let digit = parseInt(cardNumber[i], 10);
-      
-            if (isEven) {
-              digit *= 2;
-              if (digit > 9) {
-                digit -= 9;
-              }
-            }
-      
-            sum += digit;
-            isEven = !isEven;
-          }
-      
-          return sum % 10 === 0;
-        }
-      
-        return false;
-      }
+    const changeVisibility = (attribute, value) => {
+        let newUser = {...user};
+        newUser[attribute] = value;
+        setUser(newUser);
+    }
 
     return (
         user && 
@@ -178,79 +154,125 @@ const UpdateProfileComponent = (props) => {
                     <p className='font-monoy text-4xl font-semibold'>Podatci dostupni za ažuriranje</p>
                 </div>
                 <form className='flex-row px-20'>
-                    <div className='flex rounded-sm shadow-md mb-10'>
-                        <div className='flex justfiy-center align-middle bg-gray-200 p-2'>
-                            <BsFillPersonFill size={35} />
+                    <div className='flex justify-between items-center mb-10'>
+                        <div className='flex rounded-sm shadow-md w-4/6'>
+                            <div className='flex justfiy-center align-middle bg-gray-200 p-2'>
+                                <BsFillPersonFill size={35} />
+                            </div>
+                            <div className='w-full'>
+                                <input className='w-full h-full pl-4 focus:outline-none text-xl'
+                                    placeholder='Ime'
+                                    type="text"
+                                    value={user.firstName}
+                                    onChange={(event) => handleInputChange("firstName", event.target.value)}/>
+                            </div>
                         </div>
-                        <div className='w-full'>
-                            <input className='w-full h-full pl-4 focus:outline-none text-xl'
-                                placeholder='Ime'
-                                type="text"
-                                value={user.firstName}
-                                onChange={(event) => handleInputChange("firstName", event.target.value)}/>
-                        </div>
-                        
+                        {user.showFirstName ?
+                            <p 
+                                onClick={() => changeVisibility("showFirstName", false)}
+                                className='text-green-500 hover:text-red-500 cursor-pointer text-md font-semibold'>Vidljivo</p>
+                        :
+                            <p 
+                            onClick={() => changeVisibility("showFirstName", true)}
+                                className='text-red-500 hover:text-green-500 cursor-pointer text-md font-semibold'>Skriveno</p>
+                        }
                     </div>
                     <div className='justify-end -mt-8 mb-8 hidden first-name-error'>
                         <p className='text-md text-red-500'>Molimo unesite ispravno ime.</p>
                     </div>
-                    <div className='flex rounded-sm shadow-md mb-10'>
-                        <div className='flex justfiy-center align-middle bg-gray-200 p-2'>
-                            <BsFillPersonFill size={35} />
+                    <div className='flex justify-between items-center mb-10'>
+                        <div className='flex rounded-sm shadow-md w-4/6'>
+                            <div className='flex justfiy-center align-middle bg-gray-200 p-2'>
+                                <BsFillPersonFill size={35} />
+                            </div>
+                            <div className='w-full'>
+                                <input className='w-full h-full pl-4 focus:outline-none text-xl'
+                                    placeholder='Prezime'
+                                    type="text"
+                                    value={user.lastName}
+                                    onChange={(event) => handleInputChange("lastName", event.target.value)}/>
+                            </div>
                         </div>
-                        <div className='w-full'>
-                            <input className='w-full h-full pl-4 focus:outline-none text-xl'
-                                placeholder='Prezime'
-                                type="text"
-                                value={user.lastName}
-                                onChange={(event) => handleInputChange("lastName", event.target.value)}/>
-                        </div>
+                        {user.showLastName ?
+                            <p
+                                onClick={() => changeVisibility("showLastName", false)}
+                                className='text-green-500 hover:text-red-500 cursor-pointer text-md font-semibold'>Vidljivo</p>
+                        :
+                            <p 
+                                onClick={() => changeVisibility("showLastName", true)}
+                                className='text-red-500 hover:text-green-500 cursor-pointer text-md font-semibold'>Skriveno</p>
+                        }
                     </div>
                     <div className='justify-end -mt-8 mb-8 hidden last-name-error'>
                         <p className='text-md text-red-500'>Molimo unesite ispravno prezime.</p>
                     </div>
-                    <div className='flex rounded-sm shadow-md mb-10 relative'>
-                        <div className='flex justfiy-center align-middle bg-gray-200 p-2'>
-                            <BsFillPersonFill size={35} />
+                    <div className='flex justify-between items-center mb-10'>
+                        <div className='flex rounded-sm shadow-md w-4/6 relative'>
+                            <div className='flex justfiy-center align-middle bg-gray-200 p-2'>
+                                <BsFillPersonFill size={35} />
+                            </div>
+                            <div className='w-full'>
+                                <input className='w-full h-full pl-4 focus:outline-none text-xl'
+                                    placeholder='Nadimak'
+                                    type="text"
+                                    value={user.nickname}
+                                    onChange={(event) => handleInputChange("nickname", event.target.value)}/>
+                            </div>
                         </div>
-                        <div className='w-full'>
-                            <input className='w-full h-full pl-4 focus:outline-none text-xl'
-                                placeholder='Nadimak'
-                                type="text"
-                                value={user.nickname}
-                                onChange={(event) => handleInputChange("nickname", event.target.value)}/>
-                        </div>
+                        {user.showNickname ?
+                            <p 
+                                onClick={() => changeVisibility("showNickname", false)}
+                                className='text-green-500 hover:text-red-500 cursor-pointer text-md font-semibold'>Vidljivo</p>
+                        :
+                            <p 
+                                onClick={() => changeVisibility("showNickname", true)}
+                                className='text-red-500 hover:text-green-500 cursor-pointer text-md font-semibold'>Skriveno</p>
+                        }
                     </div>
                     <div className='justify-end -mt-8 mb-8 hidden nickname-error'>
                         <p className='text-md text-red-500'>Molimo unesite ispravan nadimak.</p>
                     </div>
-                    <div className='flex rounded-sm shadow-md mb-10 relative'>
-                        <div className='flex justfiy-center align-middle bg-gray-200 p-2'>
-                            <BsFillPersonFill size={35} />
+                    <div className='flex justify-between items-center mb-10'>
+                        <div className='flex rounded-sm shadow-md w-4/6 relative'>
+                            <div className='flex justfiy-center align-middle bg-gray-200 p-2'>
+                                <BsFillPersonFill size={35} />
+                            </div>
+                            <div className='w-full'>
+                                <input className='w-full h-full pl-4 focus:outline-none text-xl'
+                                    placeholder='Korisničko Ime'
+                                    type="text"
+                                    value={user.username}
+                                    onChange={(event) => handleInputChange("username", event.target.value)}/>
+                            </div>
                         </div>
-                        <div className='w-full'>
-                            <input className='w-full h-full pl-4 focus:outline-none text-xl'
-                                placeholder='Korisničko Ime'
-                                type="text"
-                                value={user.username}
-                                onChange={(event) => handleInputChange("username", event.target.value)}/>
-                        </div>
+                        <p className='text-green-500 text-md font-semibold'>Uvijek vidljivo</p>
                     </div>
                     <div className='justify-end -mt-8 mb-8 hidden username-error'>
                         <p className='text-md text-red-500'>Molimo unesite ispravno korisničko ime.</p>
                     </div>
-                    <div className='flex rounded-sm shadow-md mb-10'>
-                        <div className='flex justfiy-center align-middle bg-gray-200 p-2'>
-                            <AiOutlineMail size={35} />
+                    <div className='flex justify-between items-center mb-10'>
+                        <div className='flex rounded-sm shadow-md w-4/6'>
+                            <div className='flex justfiy-center align-middle bg-gray-200 p-2'>
+                                <AiOutlineMail size={35} />
+                            </div>
+                            <div className='w-full'>
+                                <input className='w-full h-full pl-4 focus:outline-none text-xl'
+                                    disabled
+                                    placeholder='Email'
+                                    type="email"
+                                    value={user.email}
+                                    onChange={(event) => handleInputChange("email", event.target.value)}/>
+                            </div>
                         </div>
-                        <div className='w-full'>
-                            <input className='w-full h-full pl-4 focus:outline-none text-xl'
-                                disabled
-                                placeholder='Email'
-                                type="email"
-                                value={user.email}
-                                onChange={(event) => handleInputChange("email", event.target.value)}/>
-                        </div>
+                        {user.showEmail ?
+                            <p 
+                                onClick={() => changeVisibility("showEmail", false)}
+                                className='text-green-500 hover:text-red-500 cursor-pointer text-md font-semibold'>Vidljivo</p>
+                        :
+                            <p 
+                                onClick={() => changeVisibility("showEmail", true)}
+                                className='text-red-500 hover:text-green-500 cursor-pointer text-md font-semibold'>Skriveno</p>
+                        }
                     </div>
                     <div className='flex rounded-sm shadow-md mb-10 relative'>
                         <div className='flex justfiy-center align-middle bg-gray-200 p-2'>

@@ -42,8 +42,8 @@ public class AuthenticationController {
     }
 
     @GetMapping("/validate")
-    public ResponseEntity<?> validateToken(@RequestParam String token	) {
+    public ResponseEntity<String> validateToken(@RequestParam String token	) {
         boolean validToken = jwtService.isTokenExpired(token);
-        return ResponseEntity.ok(!validToken);
+        return ResponseEntity.ok(!validToken + "");
     }
 }

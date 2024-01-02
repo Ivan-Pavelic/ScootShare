@@ -39,6 +39,10 @@ public class UserController {
 				.nickname(user.getNickname())
 				.cardNumber(user.getCardNumber())
 				.username(user.getUsername())
+				.showFirstName(user.isShowFirstName())
+				.showLastName(user.isShowLastName())
+				.showEmail(user.isShowEmail())
+				.showNickname(user.isShowNickname())
 				.build();
 		return ResponseEntity.ok(userDto);
 	}
@@ -52,9 +56,37 @@ public class UserController {
 		user.setNickname(userDto.getNickname());
 		user.setIdCard(userDto.getCardNumber());
 		user.setUsername(userDto.getUsername());
+		user.setShowFirstName(userDto.isShowFirstName());
+		user.setShowLastName(userDto.isShowLastName());
+		user.setShowNickname(userDto.isShowNickname());
+		user.setShowEmail(userDto.isShowEmail());
 		if (!userDto.getPassword().equals("")) {
 			user.setPassword(passwordEncoder.encode(userDto.getPassword()));
 		}
 		userService.store(user);
+	}
+	
+	@GetMapping("/viewUser/{username}")
+	public ResponseEntity<UserDto> viewUser(@PathVariable String username) {
+		User user = userService.findByUsername(username);
+		
+		UserDto userDto = UserDto.builder()
+				.showFirstName(user.isShowFirstName())
+				.showLastName(user.isShowLastName())
+				.showNickname(user.isShowNickname())
+				.showEmail(user.isShowEmail())
+				.build();
+		
+		userDto.setUsername(user.getUsername());
+		if (user.isShowFirstName())
+			userDto.setFirstName(user.getFirstName());
+		if (user.isShowLastName())
+			userDto.setLastName(user.getLastName());
+		if (user.isShowNickname())
+			userDto.setNickname(user.getNickname());
+		if (user.isShowEmail())
+			userDto.setEmail(user.getEmail());
+		
+		return ResponseEntity.ok(userDto);
 	}
 }

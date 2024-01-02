@@ -14,6 +14,8 @@ import ListingDetailsPage from './pages/ListingDetailsPage';
 import ChatPage from './pages/ChatPage';
 import WebSocketComponent from './components/WebSocketComponent';
 import MyRentalsPage from './pages/MyRentalsPage';
+import AdminImageChangeRequestsPage from './pages/AdminImageChangeRequestsPage';
+import ViewUserProfilePage from './pages/ViewUserProfilePage';
 
 function App() {
     const cookies = new Cookies();
@@ -93,13 +95,14 @@ function App() {
 
     const onNotificationReceived = (notification) => {
       const newNotification = JSON.parse(notification.body);
-      if (!(newNotification.TYPE === "MESSAGE" && window.location.href.split("/")[3] !== "chat")) {
+      if (!(newNotification.type === "MESSAGE" && window.location.href.split("/")[3] === "chat") && 
+          !(newNotification.type === "IMAGE_CHANGE_REQUEST_ADMIN" && window.location.href.split("/")[4] === "image-change-requests")) {
         setNotification(newNotification);
       }
     }
 
     const removeNotification = (navigateTo) => {
-      fetch(`api/notifications/${notification.id}`, {
+      fetch(`/api/notifications/${notification.id}`, {
         headers: {
           "Content-Type": "application/json",
           "Authorization": `Bearer ${jwt}`,
@@ -137,13 +140,23 @@ function App() {
               }/>
               <Route path='/admin' element={
                 <PrivateRoute jwt={jwt} jwtIsValid={jwtIsValid} clientRole={false} adminRole={true}>
-                  <AdminDashboardPage setNotifications={setNotifications} notifications={notifications} jwt={jwt} setJwt={setJwt}/>
+                  <AdminDashboardPage setNotifications={setNotifications} notifications={notifications} jwt={jwt} setJwt={setJwt} username={"admin"}/>
+                </PrivateRoute>
+              } />
+              <Route path='/admin/image-change-requests' element={
+                <PrivateRoute jwt={jwt} jwtIsValid={jwtIsValid} clientRole={false} adminRole={true}>
+                  <AdminImageChangeRequestsPage setNotifications={setNotifications} notifications={notifications} jwt={jwt} setJwt={setJwt} username={"admin"}/>
                 </PrivateRoute>
               } />
               <Route path='/listing/:id' element={
                 <ListingDetailsPage setNotifications={setNotifications} notifications={notifications} username={username} jwt={jwt} jwtIsValid={jwtIsValid} setJwt={setJwt}/>
               } 
               />
+              <Route path="/profile/:username" element={
+                <PrivateRoute jwt={jwt} jwtIsValid={jwtIsValid} clientRole={true} adminRole={false} >
+                  <ViewUserProfilePage setNotifications={setNotifications} notifications={notifications} jwt={jwt} username={username} jwtIsValid={jwtIsValid} setJwt={setJwt}/>
+                </PrivateRoute>
+              }/>
               <Route path='/chat' element={
                 <PrivateRoute jwt={jwt} jwtIsValid={jwtIsValid} clientRole={true} adminRole={false}>
                   <ChatPage setNotifications={setNotifications} notifications={notifications} jwt={jwt} username={username} setJwt={setJwt} jwtIsValid={jwtIsValid}/>
@@ -168,6 +181,8 @@ function App() {
                           {notification.type === "RENTAL" && <p className='text-2xl font-semibold text-center'>Vaš romobil je unajmljen!</p>}
                           {notification.type === "IMAGE_CHANGE_REQUEST" && <p className='text-2xl font-semibold text-center'>Pristigao je zahtjev za zamjenu slike vašeg romobila!</p>}
                           {notification.type === "IMAGE_CHANGE_REQUEST_ADMIN" && <p className='text-2xl font-semibold text-center'>Pristigao je zahtjev za zamjenu slike romobila!</p>}
+                          {notification.type === "IMAGE_CHANGE_REQUEST_REJECTED" && <p className='text-xl'>Odluka o zamjeni slike romobila!.</p>}
+                        {notification.type === "IMAGE_CHANGE_REQUEST_ACCEPTED" && <p className='text-xl'>Odluka o zamjeni slike romobila!</p>}
                           <button 
                             onClick={() => removeNotification(null)}
                             type="button" className="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-hide="default-modal">
@@ -183,7 +198,10 @@ function App() {
                                       onClick={() => removeNotification("/chat")}>  Poruka</span></p>}
                         {notification.type === "RENTAL" && <p className='text-xl'>Korisnik <span className='font-semibold'>{notification.senderUsername}</span> je unajmio vaš romobil.</p>}
                         {notification.type === "IMAGE_CHANGE_REQUEST" && <p className='text-xl'>Korisnik <span className='font-semibold'>{notification.senderUsername}</span> je zatražio zamjenu slike jednog od vaših romobila.</p>}
-                        {notification.type === "IMAGE_CHANGE_REQUEST_ADMIN" && <p className='text-xl'>Korisnik <span className='font-semibold'>{notification.senderUsername}</span> je zatražio zamjenu slike jednog od romobila.</p>}
+                        {notification.type === "IMAGE_CHANGE_REQUEST_ADMIN" && <p className='text-xl'>Korisnik <span className='font-semibold'>{notification.senderUsername}</span> je zatražio zamjenu slike jednog od romobila.
+                                Klikom na sljedeći link pogledajte zamjenu. <span className='font-semibold cursor-pointer' onClick={() => removeNotification("/admin/image-change-requests")}>Zamjena</span></p>}
+                        {notification.type === "IMAGE_CHANGE_REQUEST_REJECTED" && <p className='text-xl'>Zahtjev za zamjenom slike romobila je odbačen.</p>}
+                        {notification.type === "IMAGE_CHANGE_REQUEST_ACCEPTED" && <p className='text-xl'>Zahtjev za zamjenom slike romobila je prihvaćen.</p>}
                         <div className='flex justify-end'>
                           <button className='text-white bg-slate-800 font-semibold text-lg rounded-lg cursor-pointer py-2 px-3'
                             onClick={() => removeNotification(null)}>U redu</button>

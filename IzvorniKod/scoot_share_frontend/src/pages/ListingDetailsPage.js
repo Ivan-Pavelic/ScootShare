@@ -10,6 +10,7 @@ const ListingDetailsPage = (props) => {
     const [listing, setListing] = useState(null);
     const [newChatRoomUser, setNewChatRoomUser] = useState(null);
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
+    const [owner, setOwner] = useState(null);
 
     useEffect(() => {
         const listingId = window.location.href.split("/")[4];
@@ -31,6 +32,26 @@ const ListingDetailsPage = (props) => {
             }
           });
     }, []);
+
+    useEffect(() => {
+      if (listing) {
+        fetch(`/api/scooters/getOwnerUsername/${listing.scooterId}`, {
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${jwt}`
+          },
+          method: "GET",
+        })
+        .then(response => {
+          if (response.ok) {
+              return response.json();
+          }
+        })
+        .then((data) => {
+          setOwner(data.username);
+        });
+      }
+    }, [listing, setListing]);
 
     const navigateAndCreateChatRoom = () => {
       if (listing) {
@@ -97,6 +118,8 @@ const ListingDetailsPage = (props) => {
           })
         });
       }
+
+      navigate("/my-rentals");
     }
 
     return (
@@ -109,7 +132,7 @@ const ListingDetailsPage = (props) => {
                   <FaArrowLeft 
                     onClick={() => changeCurrentImageIndex("decrease")}
                     className={`left-arrow text-2xl ${currentImageIndex === 0 ? "text-gray-300" : "cursor-pointer"}`}/>
-                  <img src={listing.scooterImages[currentImageIndex]} className='w-96 shadow-lg'/>
+                  <img src={listing.scooterImages[currentImageIndex]} className='max-h-96 shadow-lg'/>
                   <FaArrowRight 
                     onClick={() => changeCurrentImageIndex("increase")}
                     className={`right-arrow text-2xl ${currentImageIndex === listing.scooterImages.length - 1 ? "text-gray-300" : "cursor-pointer"}`} />
@@ -134,6 +157,10 @@ const ListingDetailsPage = (props) => {
                   <div className='flex gap-4 items-center'>
                     <FaArrowRightLong className='text-xl text-gray-400'/>
                     <p className='text-xl'>Kazna u slučaju kašnjenja: <span className='font-semibold'>{listing.lateReturnPenalty}€</span></p>
+                  </div>
+                  <div className='flex gap-4 items-center'>
+                    <FaArrowRightLong className='text-xl text-gray-400'/>
+                    <p className='text-xl'>Vlasnik: <span className='font-semibold cursor-pointer hover:text-slate-600' onClick={() => navigate(`/profile/${owner}`)}>{owner}</span></p>
                   </div>
                   <div className='flex mt-6 gap-16'>
                     <button 

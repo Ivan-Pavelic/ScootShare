@@ -21,7 +21,7 @@ public class ListingService {
 		return repository.save(listing);
 	}
 
-	public Listing findByScooterId(Long scooterId) {
+	public List<Listing> findByScooterId(Long scooterId) {
 		Scooter scooter = scooterService.findById(scooterId);
 		return repository.findByScooter(scooter);
 	}

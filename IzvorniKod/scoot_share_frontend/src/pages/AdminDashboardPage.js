@@ -7,12 +7,12 @@ import AdminUserListComponent from '../components/AdminUserListComponent';
 and he must check if provided documents are okay. And lastly when user wants to replace scooter pictures with his own
 admin must also check that.*/
 const AdminDashboardPage = (props) => {
-    const {setJwt, jwt} = {...props};
+    const {setJwt, jwt, username, notifications, setNotifications} = {...props};
 
 
     return (
         <>
-            <NavigationComponent jwt={jwt} username={"admin"} displayLogoutButton={true} displayRegisterButton={false} displayLoginButton={false} setJwt={setJwt}/>  
+            <NavigationComponent displayHomeButton={true} displayImageChangeRequestsButton={true} jwt={jwt} setNotifications={setNotifications} notifications={notifications} username={username} displayLogoutButton={true} displayRegisterButton={false} displayLoginButton={false} setJwt={setJwt}/>  
             <AdminUserListComponent jwt={jwt}/>
         </>
     );

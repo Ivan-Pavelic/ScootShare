@@ -8,7 +8,7 @@ const AddScooterListingComponent = (props) => {
         "returnLocation": "",
         "returnByTime": new Date(),
         "pricePerKilometer": "",
-        "lateReturnPenalty": ""
+        "lateReturnPenalty": "",
     });
 
     useEffect(() => {
@@ -20,12 +20,9 @@ const AddScooterListingComponent = (props) => {
             let oldListing = {...listing};
             const [year, month, day] = value.split("-");
     
-            // Ensure day is a two-digit number
             const formattedDay = String(day).padStart(2, "0");
 
-            // Assuming oldListing.returnByTime is already a Date object
             oldListing.returnByTime.setFullYear(parseInt(year, 10));
-            // Note: Subtract 1 from the month as JavaScript's Date object months are zero-based
             oldListing.returnByTime.setMonth(parseInt(month, 10) - 1);
             oldListing.returnByTime.setDate(parseInt(formattedDay, 10));
             setListing(oldListing);
@@ -54,10 +51,11 @@ const AddScooterListingComponent = (props) => {
         newScooters.forEach((scooter) =>{
             if (scooter.id === listing.scooterId) {
                 scooter.hasListing = true;
+                scooter.listingIsActive = true;
             }
         });
-        setScooterListing(null);
         setScooters(newScooters);
+        setScooterListing(null);
     };
 
     const cancel = () => {
