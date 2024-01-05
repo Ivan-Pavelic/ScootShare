@@ -70,8 +70,11 @@ public class User implements UserDetails {
 	@OneToMany(mappedBy = "scooterRenter")
     private List<Rental> rentals =  new ArrayList<>();
 	
-	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-	private List<Rating> ratings = new ArrayList<>();
+	@OneToMany(mappedBy = "receiver_id", cascade = CascadeType.ALL)
+	private List<Rating> ratingsReceived = new ArrayList<>();
+
+    @OneToMany(mappedBy = "sender_id", cascade = CascadeType.ALL)
+    private List<Rating> ratingsSent = new ArrayList<>();
 
     protected User() {}
 
@@ -168,4 +171,18 @@ public class User implements UserDetails {
 		}
 		rentals.add(rental);
 	}
+    
+    public void addRatingReceived(Rating rating) {
+        if(ratingsReceived == null) {
+            ratingsReceived = new ArrayList<>();
+        }
+        ratingsReceived.add(rating);
+    }
+
+    public void addRatingSent(Rating rating) {
+        if(ratingsSent == null) {
+            ratingsSent = new ArrayList<>();
+        }
+        ratingsSent.add(rating);
+    }
 }

@@ -2,12 +2,7 @@ package com.scootshare.base.entities;
 
 import java.util.Date;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -25,11 +20,15 @@ public class Rating {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+
+	@ManyToOne
+	@JoinColumn(name = "sender_id")
+	private User ratingSender;
 	
 	@ManyToOne
-    @JoinColumn(name = "user_id")
-	private User user;
-	
+    @JoinColumn(name = "receiver_id")
+	private User ratingReceiver;
+
 	private int grade;
 	
 	private String comment;

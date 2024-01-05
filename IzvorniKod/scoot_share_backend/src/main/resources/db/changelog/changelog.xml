@@ -152,7 +152,8 @@
             <column name="id" type="BIGINT" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
-            <column name="user_id" type="BIGINT" />
+            <column name="receiver_id" type="BIGINT" />
+            <column name="sender_id" type="BIGINT" />
             <column name="grade" type="INTEGER" />
             <column name="comment" type="VARCHAR(255)" />
             <column name="rating_time" type="TIMESTAMP" />
@@ -209,11 +210,19 @@
     <changeSet id="addForeignKeyForUserRating" author="yourname">
         <addForeignKeyConstraint
             baseTableName="rating"
-            baseColumnNames="user_id"
-            constraintName="fk_rating_user"
+            baseColumnNames="receiver_id"
+            constraintName="fk_rating_receiver_user"
             referencedTableName="users"
             referencedColumnNames="id"
             onDelete="CASCADE" 
+        />
+        <addForeignKeyConstraint
+            baseTableName="rating"
+            baseColumnNames="sender_id"
+            constraintName="fk_rating_sender_user"
+            referencedTableName="users"
+            referencedColumnNames="id"
+            onDelete="CASCADE"
         />
     </changeSet>
 
