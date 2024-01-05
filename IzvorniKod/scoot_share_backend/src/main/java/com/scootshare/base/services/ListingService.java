@@ -37,4 +37,5 @@ public class ListingService {
 	public Listing findById(Long listingId) {
 		return repository.findById(listingId).get();
 	}
+
 }

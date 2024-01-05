@@ -30,7 +30,7 @@ public class Transaction {
 	@JoinColumn(name = "rental_id")
 	private Rental rental;
 	
-	private int totalPrice;
+	private double totalPrice;
 	
 	private double kilometersPassed;
 	
