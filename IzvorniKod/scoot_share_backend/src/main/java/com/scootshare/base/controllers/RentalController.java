@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import com.scootshare.base.services.*;
 import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,10 +19,7 @@ import com.scootshare.base.dto.RentalDto;
 import com.scootshare.base.entities.Listing;
 import com.scootshare.base.entities.Notification;
 import com.scootshare.base.entities.Rental;
-import com.scootshare.base.services.ListingService;
-import com.scootshare.base.services.NotificationService;
-import com.scootshare.base.services.RentalService;
-import com.scootshare.base.services.UserService;
+import com.scootshare.base.entities.Transaction;
 
 import lombok.RequiredArgsConstructor;
 
@@ -35,6 +33,7 @@ public class RentalController {
 	private final UserService userService;
 	private final SimpMessagingTemplate messagingTemplate;
 	private final NotificationService notificationService;
+	private final TransactionService transactionService;
 	
 	@PostMapping("/save")
 	public void save(@RequestBody RentalDto rentalDto) {
@@ -104,5 +103,37 @@ public class RentalController {
 		listingService.save(listing);
 		
 		// TODO: create Transaction object, save it and send notification to users
+
+		Transaction transaction = Transaction.builder()
+				.rental(rental)
+				.kilometersPassed(Math.random()*15)
+				.timeOfTransaction(new Date())
+				.build();
+		transaction.setTotalPrice(transaction.getKilometersPassed()*rental.getListing().getPricePerKilometer());
+
+		transactionService.save(transaction);
+
+		Notification notification = Notification.builder()
+				.receiverUsername(listing.getScooter().getOwner().getUsername())
+				.type("TRANSACTION")
+				.build();
+
+		notification = notificationService.save(notification);
+
+		messagingTemplate.convertAndSend(
+				"/user/" + notification.getReceiverUsername() + "/queue/notifications",
+				notification);
+
+		notification = Notification.builder()
+				.receiverUsername(rental.getScooterRenter().getUsername())
+				.type("TRANSACTION")
+				.build();
+
+		notification = notificationService.save(notification);
+
+		messagingTemplate.convertAndSend(
+				"/user/" + notification.getReceiverUsername() + "/queue/notifications",
+				notification);
+
 	}
 }
