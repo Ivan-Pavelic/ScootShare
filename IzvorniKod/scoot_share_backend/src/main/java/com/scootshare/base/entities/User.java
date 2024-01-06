@@ -70,10 +70,10 @@ public class User implements UserDetails {
 	@OneToMany(mappedBy = "scooterRenter")
     private List<Rental> rentals =  new ArrayList<>();
 	
-	@OneToMany(mappedBy = "receiver_id", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "ratingReceiver", cascade = CascadeType.ALL)
 	private List<Rating> ratingsReceived = new ArrayList<>();
 
-    @OneToMany(mappedBy = "sender_id", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "ratingSender", cascade = CascadeType.ALL)
     private List<Rating> ratingsSent = new ArrayList<>();
 
     protected User() {}

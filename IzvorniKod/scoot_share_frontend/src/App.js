@@ -16,6 +16,7 @@ import WebSocketComponent from './components/WebSocketComponent';
 import MyRentalsPage from './pages/MyRentalsPage';
 import AdminImageChangeRequestsPage from './pages/AdminImageChangeRequestsPage';
 import ViewUserProfilePage from './pages/ViewUserProfilePage';
+import TransactionPage from './pages/TransactionPage';
 
 function App() {
     const cookies = new Cookies();
@@ -146,6 +147,11 @@ function App() {
               <Route path='/admin/image-change-requests' element={
                 <PrivateRoute jwt={jwt} jwtIsValid={jwtIsValid} clientRole={false} adminRole={true}>
                   <AdminImageChangeRequestsPage setNotifications={setNotifications} notifications={notifications} jwt={jwt} setJwt={setJwt} username={"admin"}/>
+                </PrivateRoute>
+              } />
+              <Route path='/transactions' element={
+                <PrivateRoute jwt={jwt} jwtIsValid={jwtIsValid} clientRole={true} adminRole={false}>
+                  <TransactionPage setNotifications={setNotifications} notifications={notifications} jwt={jwt} username={username} setJwt={setJwt} jwtIsValid={jwtIsValid}/>
                 </PrivateRoute>
               } />
               <Route path='/listing/:id' element={
