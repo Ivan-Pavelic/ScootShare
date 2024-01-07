@@ -134,7 +134,7 @@ const ChatComponent = (props) => {
                                         <div className='flex flex-row gap-6 justify-between'>
                                             <p className='text-sm font-semibold max-w-4/5 break-all'>{message.content}</p>
                                             <div className='flex items-center gap-1'>
-                                                <p className='text-xs self-end justify-end'>{date.getHours().toString().padStart(2, "0")}:{date.getMinutes().toString().padStart(2, "0")}</p>
+                                                <p className='text-xs self-end'>{date.getHours().toString().padStart(2, "0")}:{date.getMinutes().toString().padStart(2, "0")}</p>
                                             </div>
                                         </div>
                                     </div>

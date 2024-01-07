@@ -15,7 +15,7 @@ const LoginPage = (props) => {
 
     return (
         <>
-            <NavigationComponent displayLoginButton={false} displayLogoutButton={false} displayRegisterButton={true} setJwt={setJwt}/>
+            <NavigationComponent displayHomeButton={true} displayLoginButton={false} displayLogoutButton={false} displayRegisterButton={true} setJwt={setJwt}/>
             <LoginComponent setJwt={setJwt} setUsername={setUsername}/>
         </>
     )

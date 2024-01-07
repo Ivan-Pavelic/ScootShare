@@ -27,16 +27,29 @@ public class TransactionService {
 		User user = userService.findByUsername(username);
 		List <Rental> rentals = rentalService.findRentalsByUser(user);
 		List <Transaction> transactions = new ArrayList<>();
-		for (Rental rental:rentals) transactions.add(repository.findByRental(rental));
+		for (Rental rental:rentals) {
+			if (rental.getRentalTimeEnd() != null) {
+				transactions.add(repository.findByRental(rental));
+			}
+		}
 
 		List <Scooter> scooters = scooterService.findByOwner(user);
 		List <Listing> listings = new ArrayList<>();
-		for (Scooter scooter:scooters) listings.addAll(listingService.findByScooterId(scooter.getId()));
+		for (Scooter scooter:scooters) 
+			listings.addAll(listingService.findByScooterId(scooter.getId()));
 
 		rentals = new ArrayList<>();
-		for (Listing listing:listings) rentals.add(rentalService.findByListing(listing));
+		for (Listing listing:listings) {
+			if (!listing.getStatus().equals("ACTIVE")) {
+				rentals.add(rentalService.findByListing(listing));
+			}
+		}
 
-		for (Rental rental:rentals) transactions.add(repository.findByRental(rental));
+		for (Rental rental:rentals) {
+			if (rental.getRentalTimeEnd() != null) {
+				transactions.add(repository.findByRental(rental));
+			}
+		}
 
 		return transactions;
 	}

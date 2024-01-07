@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import NavigationComponent from '../components/NavigationComponent';
 import { FaArrowRightLong } from 'react-icons/fa6';
+import RatingComponent from '../components/RatingComponent';
 
 const ViewUserProfilePage = (props) => {
     const {jwtIsValid, setJwt, username, jwt, notifications, setNotifications} = {...props};
@@ -14,20 +15,20 @@ const ViewUserProfilePage = (props) => {
               "Authorization": `Bearer ${jwt}`
             },
             method: "GET",
-          })
-          .then((response) => {
-            if (response.ok) {
-                return response.json();
-            }
-          })
-          .then((data) => {
-            setUser(data);
-          });
+        })
+        .then((response) => {
+        if (response.ok) {
+            return response.json();
+        }
+        })
+        .then((data) => {
+        setUser(data);
+        });
     }, []);
 
     return (
         <div className='min-h-screen bg-blue-50 pb-20'>
-            <NavigationComponent displayProfileButton={true} displayMyRentalsButton={jwtIsValid} setNotifications={setNotifications} notifications={notifications} jwt={jwt} username={username} displayChatButton={true} displayHomeButton={true} displayRentScooterButton={true}  displayLogoutButton={true} displayRegisterButton={false} displayLoginButton={false} setJwt={setJwt}/>   
+            <NavigationComponent displayTransactionsButton={jwtIsValid} displayProfileButton={true} displayMyRentalsButton={jwtIsValid} setNotifications={setNotifications} notifications={notifications} jwt={jwt} username={username} displayChatButton={true} displayHomeButton={true} displayRentScooterButton={true}  displayLogoutButton={true} displayRegisterButton={false} displayLoginButton={false} setJwt={setJwt}/>   
             <div className='w-5/6 mx-auto mt-16 flex justify-center'>
                 {user &&
                     <div className='flex flex-col gap-4'>
@@ -62,6 +63,7 @@ const ViewUserProfilePage = (props) => {
                     </div>
                 }
             </div>
+            {user && <RatingComponent username={user.username} jwt={jwt}/>}
         </div>
     );
 };

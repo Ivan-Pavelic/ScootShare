@@ -1,6 +1,5 @@
 package com.scootshare.base.dto;
 
-import com.scootshare.base.entities.User;
 import lombok.*;
 
 import java.util.Date;
@@ -11,8 +10,8 @@ import java.util.Date;
 @NoArgsConstructor
 @Builder
 public class RatingDto {
-    private User ratingSender;
-    private User ratingReceiver;
+    private String ratingSender;
+    private String ratingReceiver;
     private int grade;
     private String comment;
     private Date ratingTime;

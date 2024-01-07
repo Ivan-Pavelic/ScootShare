@@ -124,7 +124,7 @@ const ListingDetailsPage = (props) => {
 
     return (
         <div className='bg-blue-50 min-h-screen'>
-            <NavigationComponent displayMyRentalsButton={jwtIsValid} displayRentScooterButton={jwtIsValid} setNotifications={setNotifications} notifications={notifications} jwt={jwt} username={username} setJwt={setJwt} displayLoginButton={!jwtIsValid} displayRegisterButton={!jwtIsValid} displayChatButton={jwtIsValid} displayHomeButton={true} displayLogoutButton={jwtIsValid} displayProfileButton={jwtIsValid} />   
+            <NavigationComponent displayTransactionsButton={jwtIsValid} displayMyRentalsButton={jwtIsValid} displayRentScooterButton={jwtIsValid} setNotifications={setNotifications} notifications={notifications} jwt={jwt} username={username} setJwt={setJwt} displayLoginButton={!jwtIsValid} displayRegisterButton={!jwtIsValid} displayChatButton={jwtIsValid} displayHomeButton={true} displayLogoutButton={jwtIsValid} displayProfileButton={jwtIsValid} />   
             {listing &&
             <div className='w-4/6 mx-auto mt-16'>
               <div className='flex flex-row gap-16'>

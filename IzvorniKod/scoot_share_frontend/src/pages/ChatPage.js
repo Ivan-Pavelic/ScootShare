@@ -28,7 +28,7 @@ const ChatPage = (props) => {
 
     return (
         <div className='bg-blue-50 min-h-screen'>
-            <NavigationComponent displayMyRentalsButton={jwtIsValid} setNotifications={setNotifications} notifications={notifications} jwt={jwt} username={username} setJwt={setJwt} displayHomeButton={true} displayLogoutButton={true} displayProfileButton={true}  displayRentScooterButton={jwtIsValid} />
+            <NavigationComponent displayTransactionsButton={jwtIsValid} displayMyRentalsButton={jwtIsValid} setNotifications={setNotifications} notifications={notifications} jwt={jwt} username={username} setJwt={setJwt} displayHomeButton={true} displayLogoutButton={true} displayProfileButton={true}  displayRentScooterButton={jwtIsValid} />
             <ChatComponent chatRooms={chatRooms} username={username} jwt={jwt}/>
         </div>
     );

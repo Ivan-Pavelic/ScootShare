@@ -88,7 +88,7 @@ public class ImageChangeController {
 		List<Listing> listings = listingService.findByScooterId(scooter.getId());
 		Listing listing = null;
 		for (Listing tmp : listings) {
-			if (tmp.getStatus().equals("ACTIVE")) {
+			if (tmp.getStatus().equals("IN RENT")) {
 				listing = tmp;
 			}
 		}
@@ -112,7 +112,7 @@ public class ImageChangeController {
 		Notification notification = Notification.builder()
 				.receiverUsername(owner.getUsername())
 				.senderUsername("admin")
-				.type("IMAGE_CHANGE_REQUEST_ACCPTED")
+				.type("IMAGE_CHANGE_REQUEST_ACCEPTED")
 				.build();
 		
 		notification = notificationService.save(notification);
@@ -144,7 +144,7 @@ public class ImageChangeController {
 		List<Listing> listings = listingService.findByScooterId(scooter.getId());
 		Listing listing = null;
 		for (Listing tmp : listings) {
-			if (tmp.getStatus().equals("ACTIVE")) {
+			if (tmp.getStatus().equals("IN RENT")) {
 				listing = tmp;
 			}
 		}

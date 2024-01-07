@@ -16,22 +16,15 @@ const AddScooterListingComponent = (props) => {
     }, [scooterListing, setScooterListing]);
 
     const updateListing = (value, attribute) => {
-         if (attribute === "returnByDate") {
+        if (attribute === "returnByTime") {
             let oldListing = {...listing};
-            const [year, month, day] = value.split("-");
-    
-            const formattedDay = String(day).padStart(2, "0");
-
-            oldListing.returnByTime.setFullYear(parseInt(year, 10));
-            oldListing.returnByTime.setMonth(parseInt(month, 10) - 1);
-            oldListing.returnByTime.setDate(parseInt(formattedDay, 10));
-            setListing(oldListing);
+            oldListing[attribute] = new Date(value);
+            setListing(oldListing); 
+            return;
         }
-        else {
-            let oldListing = {...listing};
-            oldListing[attribute] = value;
-            setListing(oldListing);
-        }
+        let oldListing = {...listing};
+        oldListing[attribute] = value;
+        setListing(oldListing);
     };
 
     const addListing = (event) => {
@@ -87,9 +80,9 @@ const AddScooterListingComponent = (props) => {
 
                 <div className='flex flex-col gap-2'>
                     <label className='text-md font-semibold' htmlFor='returnByDate'>Datum Povratka</label>
-                    <input id='returnByDate' type='date' value={`${listing.returnByTime.getFullYear()}-${listing.returnByTime.getMonth()+1}-${listing.returnByTime.getDate()}`} 
+                    <input id='returnByDate' type='date' value={listing.returnByTime.toISOString().split('T')[0]} 
                         className='w-3/5 rounded-sm shadow-md py-2 px-4 text-xl focus:outline-none'
-                        onChange={(event) => updateListing(event.target.value, "returnByDate")} />
+                        onChange={(event) => updateListing(event.target.value, "returnByTime")} />
                 </div>
 
                 <div className='flex flex-col gap-2'>

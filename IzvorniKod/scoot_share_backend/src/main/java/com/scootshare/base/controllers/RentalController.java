@@ -101,8 +101,6 @@ public class RentalController {
 		Listing listing = listingService.findById(rentalDto.getListingId());
 		listing.setStatus("INACTIVE");
 		listingService.save(listing);
-		
-		// TODO: create Transaction object, save it and send notification to users
 
 		Transaction transaction = Transaction.builder()
 				.rental(rental)
@@ -111,6 +109,10 @@ public class RentalController {
 				.build();
 		transaction.setTotalPrice(transaction.getKilometersPassed()*rental.getListing().getPricePerKilometer());
 
+		if (rental.getRentalTimeEnd().compareTo(listing.getReturnByTime()) == 1) {
+			transaction.setTotalPrice(transaction.getTotalPrice() + listing.getLateReturnPenalty());
+		}
+		
 		transactionService.save(transaction);
 
 		Notification notification = Notification.builder()
@@ -124,7 +126,7 @@ public class RentalController {
 				"/user/" + notification.getReceiverUsername() + "/queue/notifications",
 				notification);
 
-		notification = Notification.builder()
+		/*notification = Notification.builder()
 				.receiverUsername(rental.getScooterRenter().getUsername())
 				.type("TRANSACTION")
 				.build();
@@ -133,7 +135,7 @@ public class RentalController {
 
 		messagingTemplate.convertAndSend(
 				"/user/" + notification.getReceiverUsername() + "/queue/notifications",
-				notification);
+				notification);*/
 
 	}
 }

@@ -96,8 +96,8 @@ function App() {
 
     const onNotificationReceived = (notification) => {
       const newNotification = JSON.parse(notification.body);
-      if (!(newNotification.type === "MESSAGE" && window.location.href.split("/")[3] === "chat") && 
-          !(newNotification.type === "IMAGE_CHANGE_REQUEST_ADMIN" && window.location.href.split("/")[4] === "image-change-requests")) {
+      //!(newNotification.type === "IMAGE_CHANGE_REQUEST_ADMIN" && window.location.href.split("/")[4] === "image-change-requests")
+      if (!(newNotification.type === "MESSAGE" && window.location.href.split("/")[3] === "chat")) {
         setNotification(newNotification);
       }
     }
@@ -179,43 +179,48 @@ function App() {
           <WebSocketComponent onNotificationReceived={onNotificationReceived}
               subscribeNotification={`/user/${username}/queue/notifications`} webSocketComponentRef={webSocketComponentRef}/>
         {notification &&
-        <div id="default-modal" tabIndex="-1" aria-hidden="true" className="absolute z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full bg-gray-200 bg-opacity-50">
-              <div className="relative p-4 w-full max-w-2xl max-h-full top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 ">
-                  <div className="relative bg-white rounded-lg shadow dark:bg-gray-700">
-                      <div className="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
-                          {notification.type === "MESSAGE" && <p className='text-2xl font-semibold text-center'>Nova poruka!</p>}
-                          {notification.type === "RENTAL" && <p className='text-2xl font-semibold text-center'>Vaš romobil je unajmljen!</p>}
-                          {notification.type === "IMAGE_CHANGE_REQUEST" && <p className='text-2xl font-semibold text-center'>Pristigao je zahtjev za zamjenu slike vašeg romobila!</p>}
-                          {notification.type === "IMAGE_CHANGE_REQUEST_ADMIN" && <p className='text-2xl font-semibold text-center'>Pristigao je zahtjev za zamjenu slike romobila!</p>}
-                          {notification.type === "IMAGE_CHANGE_REQUEST_REJECTED" && <p className='text-xl'>Odluka o zamjeni slike romobila!.</p>}
-                        {notification.type === "IMAGE_CHANGE_REQUEST_ACCEPTED" && <p className='text-xl'>Odluka o zamjeni slike romobila!</p>}
-                          <button 
-                            onClick={() => removeNotification(null)}
-                            type="button" className="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-hide="default-modal">
-                              <svg className="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
-                                  <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
-                              </svg>
-                              <span className="sr-only">Close modal</span>
-                          </button>
-                      </div>
-                      <div className="p-4 md:p-5 space-y-4">
-                        {notification.type === "MESSAGE" && <p className='text-xl'>Korisnik <span className='font-semibold'>{notification.senderUsername}</span> Vam je poslao novu poruku. Klikom na sljedeći link pogledajte poruku. 
-                                  <span className='font-bold text-xl cursor-pointer text-slate-800'
-                                      onClick={() => removeNotification("/chat")}>  Poruka</span></p>}
-                        {notification.type === "RENTAL" && <p className='text-xl'>Korisnik <span className='font-semibold'>{notification.senderUsername}</span> je unajmio vaš romobil.</p>}
-                        {notification.type === "IMAGE_CHANGE_REQUEST" && <p className='text-xl'>Korisnik <span className='font-semibold'>{notification.senderUsername}</span> je zatražio zamjenu slike jednog od vaših romobila.</p>}
-                        {notification.type === "IMAGE_CHANGE_REQUEST_ADMIN" && <p className='text-xl'>Korisnik <span className='font-semibold'>{notification.senderUsername}</span> je zatražio zamjenu slike jednog od romobila.
-                                Klikom na sljedeći link pogledajte zamjenu. <span className='font-semibold cursor-pointer' onClick={() => removeNotification("/admin/image-change-requests")}>Zamjena</span></p>}
-                        {notification.type === "IMAGE_CHANGE_REQUEST_REJECTED" && <p className='text-xl'>Zahtjev za zamjenom slike romobila je odbačen.</p>}
-                        {notification.type === "IMAGE_CHANGE_REQUEST_ACCEPTED" && <p className='text-xl'>Zahtjev za zamjenom slike romobila je prihvaćen.</p>}
-                        <div className='flex justify-end'>
-                          <button className='text-white bg-slate-800 font-semibold text-lg rounded-lg cursor-pointer py-2 px-3'
-                            onClick={() => removeNotification(null)}>U redu</button>
-                        </div>
-                      </div>
-                  </div>
+
+        <div id="default-modal" tabIndex="-1" aria-hidden="true" className="rating-modal fixed inset-0 z-50 flex items-center justify-center bg-gray-200 bg-opacity-50">
+          <div className="relative p-4 w-full max-w-2xl max-h-full bg-white rounded-lg shadow dark:bg-gray-700">
+              <div className="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
+                {notification.type === "MESSAGE" && <p className='text-2xl font-semibold text-center'>Nova poruka!</p>}
+                {notification.type === "RENTAL" && <p className='text-2xl font-semibold text-center'>Vaš romobil je unajmljen!</p>}
+                {notification.type === "IMAGE_CHANGE_REQUEST" && <p className='text-2xl font-semibold text-center'>Pristigao je zahtjev za zamjenu slike vašeg romobila!</p>}
+                {notification.type === "IMAGE_CHANGE_REQUEST_ADMIN" && <p className='text-2xl font-semibold text-center'>Pristigao je zahtjev za zamjenu slike romobila!</p>}
+                {notification.type === "IMAGE_CHANGE_REQUEST_REJECTED" && <p className='text-xl'>Odluka o zamjeni slike romobila!.</p>}
+                {notification.type === "IMAGE_CHANGE_REQUEST_ACCEPTED" && <p className='text-xl'>Odluka o zamjeni slike romobila!</p>}
+                {notification.type === "TRANSACTION" && <p className='text-xl'>Provedena je transakcija!</p>}
+                {notification.type === "NEW_REGISTRATION" && <p className='text-xl'>Nova registracija!</p>}
+                {notification.type === "RATING" && <p className='text-xl'>Pristigao je novi komentar za vas!</p>}
+                <button 
+                  onClick={() => removeNotification(null)}
+                  type="button" className="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-hide="default-modal">
+                    <svg className="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                        <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+                    </svg>
+                    <span className="sr-only">Close modal</span>
+                </button>
               </div>
-          </div>}
+              <div className="p-4 md:p-5 space-y-4">
+                {notification.type === "MESSAGE" && <p className='text-xl'>Korisnik <span className='font-semibold'>{notification.senderUsername}</span> Vam je poslao novu poruku. Klikom na sljedeći link pogledajte poruku. 
+                          <span className='font-bold text-xl cursor-pointer text-slate-800'
+                              onClick={() => removeNotification("/chat")}>  Poruka</span></p>}
+                {notification.type === "RENTAL" && <p className='text-xl'>Korisnik <span className='font-semibold'>{notification.senderUsername}</span> je unajmio vaš romobil.</p>}
+                {notification.type === "IMAGE_CHANGE_REQUEST" && <p className='text-xl'>Korisnik <span className='font-semibold'>{notification.senderUsername}</span> je zatražio zamjenu slike jednog od vaših romobila.</p>}
+                {notification.type === "IMAGE_CHANGE_REQUEST_ADMIN" && <p className='text-xl'>Korisnik <span className='font-semibold'>{notification.senderUsername}</span> je zatražio zamjenu slike jednog od romobila.
+                        Klikom na sljedeći link pogledajte zamjenu. <span className='font-semibold cursor-pointer' onClick={() => removeNotification("/admin/image-change-requests")}>Zamjena</span></p>}
+                {notification.type === "IMAGE_CHANGE_REQUEST_REJECTED" && <p className='text-xl'>Zahtjev za zamjenom slike romobila je odbačen.</p>}
+                {notification.type === "IMAGE_CHANGE_REQUEST_ACCEPTED" && <p className='text-xl'>Zahtjev za zamjenom slike romobila je prihvaćen.</p>}
+                {notification.type === "TRANSACTION" && <p className='text-xl'>Korisnik <span className='font-semibold'>{notification.senderUsername}</span> je vratio vaš romobil. Transakcija je provedena. <span className='font-semibold cursor-pointer' onClick={() => removeNotification("/transactions")}>Pregled transakcije.</span></p>}
+                {notification.type === "NEW_REGISTRATION" && <p className='text-xl'>Korisnik <span className='font-semibold'>{notification.senderUsername}</span> se registrirao. <span className='font-semibold cursor-pointer' onClick={() => removeNotification("/admin")}>Pregled registracija.</span></p>}
+                {notification.type === "RATING" && <p className='text-xl'>Korisnik <span className='font-semibold'>{notification.senderUsername}</span> vas je ocjenio. <span className='font-semibold cursor-pointer' onClick={() => removeNotification("/profile")}>Pregled komentara i ocjena.</span></p>}
+                <div className='flex justify-end'>
+                  <button className='text-white bg-slate-800 font-semibold text-lg rounded-lg cursor-pointer py-2 px-3'
+                    onClick={() => removeNotification(null)}>U redu</button>
+                </div> 
+              </div>
+          </div>
+        </div>}
         </>
   );
 }

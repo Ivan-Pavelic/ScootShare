@@ -5,7 +5,7 @@ import Cookies from 'universal-cookie';
 const NavigationComponent = (props) => {
     const {authority} = {...props};
     const navigate = useNavigate()
-    const {notifications, setNotifications, jwt, username, displayImageChangeRequestsButton, displayMyRentalsButton, displayChatButton, displayHomeButton, displayAdminPage, displayRegisterButton, displayLoginButton, setJwt, displayLogoutButton, displayRentScooterButton, displayProfileButton} = {...props};
+    const {notifications, setNotifications, jwt, username, displayTransactionsButton, displayImageChangeRequestsButton, displayMyRentalsButton, displayChatButton, displayHomeButton, displayAdminPage, displayRegisterButton, displayLoginButton, setJwt, displayLogoutButton, displayRentScooterButton, displayProfileButton} = {...props};
 
     function register() {
         navigate("/register")
@@ -51,6 +51,10 @@ const NavigationComponent = (props) => {
         navigate("/admin/image-change-requests");
     }
 
+    function transactionPage() {
+        navigate("/transactions");
+    }
+
     function displayNotifications() {
         const notificationsDiv = document.querySelector(".notifications-div");
         if (notificationsDiv.classList.contains("hidden")) {
@@ -78,6 +82,12 @@ const NavigationComponent = (props) => {
         if (notification.type === "MESSAGE") {
             navigate("/chat");
         }
+        if (notification.type === "TRANSACTION") {
+            navigate("/transactions");
+        }
+        if (notification.type === "RATING") {
+            navigate("/profile");
+        }
     }
 
     return (
@@ -99,6 +109,7 @@ const NavigationComponent = (props) => {
                         {displayRegisterButton && <button className='text-white rounded-3xl hover:text-cyan-400' onClick={register}>Registracija</button>} 
                         {displayLoginButton && <button className='text-white rounded-3xl hover:text-cyan-400' onClick={login}>Prijava</button>}           
                         {displayRentScooterButton && <button className='text-white rounded-3xl hover:text-cyan-400' onClick={rentScooter}>Iznajmi Romobil</button>}
+                        {displayTransactionsButton && <button className='text-white rounded-3xl hover:text-cyan-400' onClick={transactionPage}>Transackije</button>} 
                         {displayProfileButton && <button className='text-white rounded-3xl hover:text-cyan-400' onClick={profilePage}>Profil</button>} 
                         {displayChatButton && <button className='text-white rounded-3xl hover:text-cyan-400' onClick={chatPage}>Razgovori</button>} 
                         {displayAdminPage && <button className='text-white rounded-3xl hover:text-cyan-400' onClick={adminPage}>Admin</button>} 
@@ -119,8 +130,14 @@ const NavigationComponent = (props) => {
                                             <p className='text-md text-center py-2 px-4 w-full h-full' onClick={() => deleteNotification(notification, index)}>Korisnik <span className='font-semibold'>{notification.senderUsername}</span> je zatražio zamjenu slike romobila.</p>}
                                             {notification.type === "IMAGE_CHANGE_REQUEST_REJECTED" && 
                                             <p className='text-md text-center py-2 px-4 w-full h-full' onClick={() => deleteNotification(notification, index)}>Zahtjev za zamjenom slike romobila je odbačen.</p>}
-                                            {notification.type === "IMAGE_CHANGE_REQUEST_ACCPETED" && 
+                                            {notification.type === "IMAGE_CHANGE_REQUEST_ACCEPTED" && 
                                             <p className='text-md text-center py-2 px-4 w-full h-full' onClick={() => deleteNotification(notification, index)}>Zahtjev za zamjenom slike romobila je prihvaćen.</p>}
+                                            {notification.type === "TRANSACTION" && 
+                                            <p className='text-md text-center py-2 px-4 w-full h-full' onClick={() => deleteNotification(notification, index)}>Transakcija je provedena.</p>}
+                                            {notification.type === "NEW_REGISTRATION" && 
+                                            <p className='text-md text-center py-2 px-4 w-full h-full' onClick={() => deleteNotification(notification, index)}>Nova registracija.</p>}
+                                            {notification.type === "RATING" && 
+                                            <p className='text-md text-center py-2 px-4 w-full h-full' onClick={() => deleteNotification(notification, index)}>Pristigao je novi komentar za vas.</p>}
                                         </div>
                                     );
                                 })}

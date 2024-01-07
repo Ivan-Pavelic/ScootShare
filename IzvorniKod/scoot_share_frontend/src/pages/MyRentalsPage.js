@@ -227,7 +227,7 @@ const MyRentalsPage = (props) => {
 
     return (
         <div className='min-h-screen bg-blue-50 pb-20'>
-            <NavigationComponent displayProfileButton={true} setNotifications={setNotifications} notifications={notifications} jwt={jwt} username={username} displayChatButton={true} displayHomeButton={true} displayRentScooterButton={true}  displayLogoutButton={true} displayRegisterButton={false} displayLoginButton={false} setJwt={setJwt}/>   
+            <NavigationComponent displayTransactionsButton={jwtIsValid} displayProfileButton={true} setNotifications={setNotifications} notifications={notifications} jwt={jwt} username={username} displayChatButton={true} displayHomeButton={true} displayRentScooterButton={true}  displayLogoutButton={true} displayRegisterButton={false} displayLoginButton={false} setJwt={setJwt}/>   
             <div id="default-modal" tabIndex="-1" aria-hidden="true" className="new-image hidden absolute z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full bg-gray-200 bg-opacity-50">
               <div className="relative p-4 w-full max-w-2xl max-h-full top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 ">
                   <div className="relative bg-white rounded-lg shadow dark:bg-gray-700">

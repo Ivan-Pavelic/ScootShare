@@ -18,4 +18,6 @@ public class TransactionsDto {
     private double kilometersPassed;
 
     private Date timeOfTransaction;
+    
+    private boolean wasLate;
 }

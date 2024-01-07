@@ -11,6 +11,7 @@ import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/ratings")
@@ -22,21 +23,39 @@ public class RatingController {
     private final NotificationService notificationService;
     private final SimpMessagingTemplate messagingTemplate;
 
-    @GetMapping("/getRatingsReceiver/{username}")
-    private List<Rating> getRatingsReceiver(@PathVariable String receiver) {
-        return ratingService.getRatingsReceiver(userService.findByUsername(receiver));
+    @GetMapping("/getRatingsReceiver/{receiver}")
+    private List<RatingDto> getRatingsReceiver(@PathVariable String receiver) {
+        return ratingService.getRatingsReceiver(userService.findByUsername(receiver))
+        		.stream()
+        		.map(rating -> RatingDto.builder()
+        			.ratingReceiver(receiver)
+        			.ratingSender(rating.getRatingSender().getUsername())
+        			.grade(rating.getGrade())
+        			.comment(rating.getComment())
+        			.ratingTime(rating.getRatingTime())
+        			.build())
+        		.collect(Collectors.toList());
     }
 
-    @GetMapping("/getRatingsSender/{username}")
-    private List<Rating> getRatingsSender(@PathVariable String sender) {
-        return ratingService.getRatingsSender(userService.findByUsername(sender));
+    @GetMapping("/getRatingsSender/{sender}")
+    private List<RatingDto> getRatingsSender(@PathVariable String sender) {
+        return ratingService.getRatingsSender(userService.findByUsername(sender))
+        		.stream()
+        		.map(rating -> RatingDto.builder()
+        				.ratingSender(sender)
+            			.ratingReceiver(rating.getRatingReceiver().getUsername())
+            			.grade(rating.getGrade())
+            			.comment(rating.getComment())
+            			.ratingTime(rating.getRatingTime())
+        			.build())
+        		.collect(Collectors.toList());
     }
 
     @PostMapping("/save")
     public void save(@RequestBody RatingDto ratingDto) {
         Rating rating = Rating.builder()
-            .ratingSender(ratingDto.getRatingSender())
-            .ratingReceiver(ratingDto.getRatingReceiver())
+            .ratingSender(userService.findByUsername(ratingDto.getRatingSender()))
+            .ratingReceiver(userService.findByUsername(ratingDto.getRatingReceiver()))
             .grade(ratingDto.getGrade())
             .comment(ratingDto.getComment())
             .ratingTime(ratingDto.getRatingTime())
@@ -46,6 +65,7 @@ public class RatingController {
 
         Notification notification = Notification.builder()
                 .receiverUsername(rating.getRatingReceiver().getUsername())
+                .senderUsername(ratingDto.getRatingSender())
                 .type("RATING")
                 .build();
 
