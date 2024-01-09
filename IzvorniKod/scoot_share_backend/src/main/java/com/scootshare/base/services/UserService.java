@@ -1,5 +1,6 @@
 package com.scootshare.base.services;
 
+import com.scootshare.base.entities.Scooter;
 import com.scootshare.base.entities.User;
 import com.scootshare.base.repositories.UserRepository;
 
@@ -19,6 +20,11 @@ public class UserService {
     public UserService(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
+    
+    public User findByUsername(String username) {
+    	return userRepository.findByUsername(username).orElseThrow();
+    }
+    
     public User findByEmail(String email) {
         return userRepository.findByEmail(email).orElseThrow();
     }
@@ -39,8 +45,20 @@ public class UserService {
         return userRepository.existsById(id);
     }
     
+    public void addScooter(Scooter scooter, User owner) {
+    	owner.addScooter(scooter);
+    }
+    
     @Transactional
 	public void deleteByEmail(String email) {
 		userRepository.deleteByEmail(email);
+	}
+
+	public void deleteByUsername(String username) {
+		userRepository.deleteByUsername(username);
+	}
+
+	public User findById(Long id) {
+		return userRepository.findById(id).get();
 	}
 }
