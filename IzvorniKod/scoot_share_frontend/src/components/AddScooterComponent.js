@@ -28,7 +28,7 @@ const AddScooterComponent = (props) => {
         }
         else {
             error.classList.add("hidden");
-            fetch(`api/scooters/add`, {
+            fetch(`/api/scooters/add`, {
                 headers: {
                     "Content-Type": "application/json",
                     Authorization: `Bearer ${jwt}`,
@@ -51,7 +51,7 @@ const AddScooterComponent = (props) => {
     };
 
     return (
-        <div className='flex flex-col justify-center items-center w-2/6 mx-auto rounded-md shadow-lg p-4 bg-white'>
+        <div className='flex flex-col justify-center items-center w-5/6 md:w-4/6 lg:w-2/6 mx-auto rounded-md shadow-lg p-4 bg-white'>
             <form className='flex flex-col'>
                 <div className='mb-8'>
                     <p className='text-center first-letter:text-xl font-semibold'>Dodajte novi Romobil</p>

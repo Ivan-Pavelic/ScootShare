@@ -37,7 +37,7 @@ const ScooterListingComponent = (props) => {
     }
 
     return (
-        <div className='w-2/5 shadow-lg rounded-lg py-4 px-8 flex flex-col gap-4 bg-white'>
+        <div className='w-4/5 md:w-3/5 lg:w-2/5 shadow-lg rounded-lg py-4 px-8 flex flex-col gap-4 bg-white'>
             <p className='text-2xl font-semibold text-center'>Oglas za romobil {viewListing.scooterId}</p>
             {viewListing && viewListing.scooterImages.length > 0 && <div className='flex items-center justify-center my-8'>
                 <FaArrowLeft onClick={decreaseIndex} className={currentImage == 0 ? 'text-gray-200' : 'cursor-pointer text-slate-800'}/>

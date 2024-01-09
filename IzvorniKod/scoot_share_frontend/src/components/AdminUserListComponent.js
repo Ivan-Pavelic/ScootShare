@@ -9,7 +9,7 @@ const AdminUserListComponent = (props) => {
     const [users, setUsers] = useState(null);
 
     useEffect(() => {
-        fetch("api/admin/getAllUsers", {
+        fetch("/api/admin/getAllUsers", {
             headers: {
                 "Content-Type": "application/json",
                 Authorization: `Bearer ${jwt}`
@@ -26,7 +26,7 @@ const AdminUserListComponent = (props) => {
     }, []);
 
     return (
-    <div className='mx-auto w-3/5 mt-16'>    
+    <div className='mx-auto w-4/5 md:w-3/5 mt-16'>    
         <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
             <div className='flex justify-center my-10 text-3xl font-semibold'>
                 Pregled svih korisnika

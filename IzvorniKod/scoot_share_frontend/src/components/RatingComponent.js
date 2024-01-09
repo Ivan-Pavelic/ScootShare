@@ -30,7 +30,7 @@ const RatingComponent = (props) => {
     }, [username]);
 
     return (
-        <div className='w-3/5 mx-auto my-16 py-4 px-8 bg-white max-h-96 overflow-y-auto'>
+        <div className='w-4/5 md:w-3/5 mx-auto my-16 py-4 px-8 bg-white max-h-96 overflow-y-auto'>
                 <p className='text-2xl font-semibold text-center mb-8'>Komentari i Ocjene</p>
                 <div className='flex flex-col gap-8'>
                     {ratings.map((rating, index) => {

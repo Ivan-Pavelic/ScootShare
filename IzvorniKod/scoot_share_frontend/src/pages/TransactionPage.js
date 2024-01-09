@@ -72,7 +72,7 @@ const TransactionPage = (props) => {
     const rateClient = () => {
         let newRating = {...rating};
         newRating.ratingTime = new Date();
-        fetch(`api/ratings/save`, {
+        fetch(`/api/ratings/save`, {
             headers: {
               "Content-Type": "application/json",
               "Authorization": `Bearer ${jwt}`
@@ -94,7 +94,7 @@ const TransactionPage = (props) => {
     return (
         <div className='min-h-screen bg-blue-50'>
            <NavigationComponent displayChatButton={true} displayMyRentalsButton={jwtIsValid} setNotifications={setNotifications} notifications={notifications} jwt={jwt} username={username} setJwt={setJwt} displayHomeButton={true} displayLogoutButton={true} displayProfileButton={true}  displayRentScooterButton={jwtIsValid} />
-            <div className='w-3/6 mx-auto py-16 flex flex-col gap-10'>
+            <div className='w-5/6 md:w-3/5 lg:w-2/5 mx-auto py-16 flex flex-col gap-10'>
                 {transactions.map((transaction, index) => {
                     return (
                         <div className='shadow-lg rounded-sm py-8 px-8 bg-white' key={index}>

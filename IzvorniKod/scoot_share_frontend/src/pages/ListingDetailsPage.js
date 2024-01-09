@@ -3,6 +3,7 @@ import NavigationComponent from '../components/NavigationComponent';
 import { useNavigate } from 'react-router-dom';
 import { FaArrowRight, FaArrowLeft } from "react-icons/fa";
 import { FaArrowRightLong } from "react-icons/fa6";
+import { jwtDecode } from 'jwt-decode';
 
 const ListingDetailsPage = (props) => {
     const {jwt, jwtIsValid, setJwt, username, notifications, setNotifications} = {...props};
@@ -11,8 +12,13 @@ const ListingDetailsPage = (props) => {
     const [newChatRoomUser, setNewChatRoomUser] = useState(null);
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
     const [owner, setOwner] = useState(null);
+    const [authority, setAuthority] = useState(null);
 
     useEffect(() => {
+
+        const jwtDecoded = jwtDecode(jwt);
+        setAuthority(jwtDecoded.authorities[0].authority);
+
         const listingId = window.location.href.split("/")[4];
         fetch(`/api/listings/getOneListing/${listingId}`, {
             headers: {
@@ -54,6 +60,13 @@ const ListingDetailsPage = (props) => {
     }, [listing, setListing]);
 
     const navigateAndCreateChatRoom = () => {
+      console.log(authority);
+      if (!jwtIsValid) {
+        navigate("/login");
+      }
+      if (authority !== "ROLE_CLIENT") {
+        return;
+      }
       if (listing) {
         fetch(`/api/scooters/getOwnerUsername/${listing.scooterId}`, {
             headers: {
@@ -103,6 +116,10 @@ const ListingDetailsPage = (props) => {
       if (!jwtIsValid) {
         navigate("/login");
       }
+      if (authority !== "ROLE_CLIENT") {
+        return;
+      }
+
       else {
         fetch(`/api/rentals/save`, {
           headers: {
@@ -126,7 +143,7 @@ const ListingDetailsPage = (props) => {
         <div className='bg-blue-50 min-h-screen'>
             <NavigationComponent displayTransactionsButton={jwtIsValid} displayMyRentalsButton={jwtIsValid} displayRentScooterButton={jwtIsValid} setNotifications={setNotifications} notifications={notifications} jwt={jwt} username={username} setJwt={setJwt} displayLoginButton={!jwtIsValid} displayRegisterButton={!jwtIsValid} displayChatButton={jwtIsValid} displayHomeButton={true} displayLogoutButton={jwtIsValid} displayProfileButton={jwtIsValid} />   
             {listing &&
-            <div className='w-4/6 mx-auto mt-16'>
+            <div className='w-6/6 lg:w-4/6 mx-auto mt-16'>
               <div className='flex flex-row gap-16'>
                 <div className='flex flex-row gap-6 items-center'>
                   <FaArrowLeft 

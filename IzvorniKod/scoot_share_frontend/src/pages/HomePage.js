@@ -23,7 +23,7 @@ const HomePage = (props) => {
     }, [username]);
 
     const fetchListings = () => {
-        fetch(`api/listings/getAll/${username}`, {
+        fetch(`/api/listings/getAll/${username}`, {
             headers: {
               "Content-Type": "application/json",
             },
@@ -45,7 +45,7 @@ const HomePage = (props) => {
         <div className='bg-blue-50 min-h-screen'>
             <NavigationComponent displayTransactionsButton={jwtIsValid} displayImageChangeRequestsButton={jwtIsValid && authority === "ROLE_ADMIN"} displayMyRentalsButton={jwtIsValid && authority === "ROLE_CLIENT"} setNotifications={setNotifications} notifications={notifications} jwt={jwt} username={username} displayChatButton={jwtIsValid && authority == "ROLE_CLIENT"} displayAdminPage={jwtIsValid && authority === "ROLE_ADMIN"} displayRentScooterButton={jwtIsValid && authority !== "ROLE_ADMIN"} authority={authority} displayProfileButton={jwtIsValid && authority !== "ROLE_ADMIN"} displayLogoutButton={jwtIsValid} displayRegisterButton={!jwtIsValid} displayLoginButton={!jwtIsValid} setJwt={setJwt}/>
             <div className='pt-8'>
-                <div className='w-5/6 mx-auto grid grid-cols-6 gap-4'>
+                <div className='w-5/6 mx-auto grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-4'>
                     {listings.map((listing, index) => {
                         return (
                             <ListingComponent key={index} listing={listing} canReserveScooter={jwtIsValid && authority === "ROLE_CLIENT"} jwtIsValid={jwtIsValid}/>

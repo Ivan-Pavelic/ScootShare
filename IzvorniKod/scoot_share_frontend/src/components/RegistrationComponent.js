@@ -189,7 +189,7 @@ const RegistrationComponent = (props) => {
                 body: formData
             };
 
-            fetch("api/auth/register", fetchData)
+            fetch("/api/auth/register", fetchData)
                 .then((response) => {
                     if (response.ok) {
                         return response.json()
@@ -216,7 +216,7 @@ const RegistrationComponent = (props) => {
 
     return (
         <>
-            <div className='flex-row mx-auto justify-center w-2/5 my-20 rounded-lg shadow-lg'>
+            <div className='flex-row mx-auto justify-center w-4/5 md:w-3/5 lg:w-2/5 my-20 rounded-lg shadow-lg'>
                 <div className='bg-blue-500 h-2 rounded-lg'></div>
                 <div className='mb-10 flex justify-center align-center mt-8'>
                     <p className='font-monoy text-4xl font-semibold'>Dobrodošli u ScootShare!</p>

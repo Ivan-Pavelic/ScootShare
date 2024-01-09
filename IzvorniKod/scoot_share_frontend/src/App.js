@@ -155,7 +155,7 @@ function App() {
                 </PrivateRoute>
               } />
               <Route path='/listing/:id' element={
-                <ListingDetailsPage setNotifications={setNotifications} notifications={notifications} username={username} jwt={jwt} jwtIsValid={jwtIsValid} setJwt={setJwt}/>
+                <ListingDetailsPage authority={authroity} setNotifications={setNotifications} notifications={notifications} username={username} jwt={jwt} jwtIsValid={jwtIsValid} setJwt={setJwt}/>
               } 
               />
               <Route path="/profile/:username" element={

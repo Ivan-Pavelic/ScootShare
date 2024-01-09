@@ -19,7 +19,7 @@ const LoginComponent = (props) => {
     }
     function loginUser(event) {
         event.preventDefault();
-        fetch("api/auth/authenticate", {
+        fetch("/api/auth/authenticate", {
             headers: {
               "Content-Type": "application/json"
             },
@@ -51,7 +51,7 @@ const LoginComponent = (props) => {
 
     return (
         <>
-            <div className='flex-row mx-auto justify-center w-2/5 my-20 rounded-lg shadow-lg'>
+            <div className='flex-row mx-auto justify-center w-4/5 md:w-3/5 lg:w-2/5 my-20 rounded-lg shadow-lg'>
                 <div className='bg-blue-500 h-2 rounded-lg'></div>
                 <div className='mb-10 flex justify-center align-center mt-8'>
                     <p className='font-monoy text-3xl font-semibold'>Prijavi se</p>

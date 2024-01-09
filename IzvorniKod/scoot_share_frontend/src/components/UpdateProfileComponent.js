@@ -8,7 +8,7 @@ const UpdateProfileComponent = (props) => {
     const [user, setUser] = useState(null);
 
     useEffect(() => {
-        fetch(`api/users/${username}`, {
+        fetch(`/api/users/${username}`, {
             headers: {
                 "Content-Type" : "application/json",
                 "Authorization": `Bearer ${jwt}`
@@ -128,7 +128,7 @@ const UpdateProfileComponent = (props) => {
         if (!hasError) {
             const {firstName, lastName, nickname, cardNumber, email, password, username, showFirstName, showLastName, showNickname, showEmail} = {...user};
             const newUser = {firstName, lastName, nickname, cardNumber, email, password, username, showFirstName, showLastName, showNickname, showEmail};
-            fetch(`api/users/update`, {
+            fetch(`/api/users/update`, {
                 headers: {
                     "Content-Type" : "application/json",
                     "Authorization": `Bearer ${jwt}`
@@ -148,7 +148,7 @@ const UpdateProfileComponent = (props) => {
     return (
         user && 
         <>
-            <div className='flex-row mx-auto justify-center w-2/5 mt-20 rounded-lg shadow-lg bg-white'>
+            <div className='flex-row mx-auto justify-center w-4/5 md:w-3/5 lg:w-2/5 mt-20 rounded-lg shadow-lg bg-white'>
                 <div className='bg-blue-500 h-2 rounded-lg'></div>
                 <div className='mb-10 flex justify-center align-center mt-8'>
                     <p className='font-monoy text-4xl font-semibold'>Podatci dostupni za ažuriranje</p>

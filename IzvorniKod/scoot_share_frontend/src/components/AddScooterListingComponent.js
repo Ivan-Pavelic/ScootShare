@@ -32,7 +32,7 @@ const AddScooterListingComponent = (props) => {
         let newListing = {...listing};
         newListing.returnByTime = new Date(listing.returnByTime);
 
-        fetch(`api/listings/add`, {
+        fetch(`/api/listings/add`, {
             headers: {
                 "Content-Type": "application/json",
                 Authorization: `Bearer ${jwt}`,
@@ -56,7 +56,7 @@ const AddScooterListingComponent = (props) => {
     };
 
     return (
-        <form className='flex flex-col mt-14 shadow-lg rounded-lg w-2/5 mx-auto py-4 px-10 bg-white'>
+        <form className='flex flex-col mt-14 shadow-lg rounded-lg w-4/5 md:w-3/5 lg:w-2/5 mx-auto py-4 px-10 bg-white'>
             <div className='mb-8'>
                 <p className='text-center text-2xl font-semibold'>Dodajte Romobil u Najam</p>
             </div>

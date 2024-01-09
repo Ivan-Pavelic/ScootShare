@@ -105,7 +105,7 @@ const MyRentalsPage = (props) => {
     }
 
     const chatWithOwner = (owner) => {
-        fetch(`api/messages/createChatRoom/${owner}`, {
+        fetch(`/api/messages/createChatRoom/${owner}`, {
             headers: {
                 "Content-Type": "application/json",
                 Authorization: `Bearer ${jwt}`,

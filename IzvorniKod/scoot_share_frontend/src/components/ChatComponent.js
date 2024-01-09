@@ -29,7 +29,7 @@ const ChatComponent = (props) => {
                 notification.classList.add("hidden");
             }
 
-            fetch(`api/messages/getMessages/${username}/${selectedUser}`, {
+            fetch(`/api/messages/getMessages/${username}/${selectedUser}`, {
                 headers: {
                   "Content-Type": "application/json",
                   "Authorization": `Bearer ${jwt}`
@@ -103,7 +103,7 @@ const ChatComponent = (props) => {
     }
 
     return (
-        <div className='flex flex-col w-4/6 mx-auto mt-16 rounded-lg shadow-lg h-96 bg-white'>
+        <div className='flex flex-col w-5/6 md:w-4/6 mx-auto mt-16 rounded-lg shadow-lg h-96 bg-white'>
             <p className='text-center text-2xl font-semibold py-4'>Vaši Razgovori</p>
             <div className='flex flex-row border-t-2 border-t-slate-200 h-80'>
                 <div className='flex flex-col w-2/6 border-r-2 border-r-slate-200 overflow-y-auto h-fit'>

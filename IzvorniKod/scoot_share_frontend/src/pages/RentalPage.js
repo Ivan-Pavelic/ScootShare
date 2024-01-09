@@ -13,7 +13,7 @@ const RentalPage = (props) => {
     const [viewListing, setViewListing] = useState(null);
 
     useEffect(() => {
-        fetch(`api/scooters/${username}`, {
+        fetch(`/api/scooters/${username}`, {
             headers: {
                 "Content-Type": "application/json",
                 Authorization: `Bearer ${jwt}`,
@@ -44,7 +44,7 @@ const RentalPage = (props) => {
                 </div>
             :
             <>   
-                <div className='flex flex-row w-5/6 mx-auto mt-16 items-center'>
+                <div className='flex flex-col xl:flex-row w-5/6 mx-auto mt-16 items-center gap-16'>
                     <ScooterListComponent scooters={scooters} setScooterListing={setScooterListing} setViewListing={setViewListing} jwt={jwt} />
                     <AddScooterComponent jwt={jwt} setScooters={setScooters} scooters={scooters}/>
                 </div>
