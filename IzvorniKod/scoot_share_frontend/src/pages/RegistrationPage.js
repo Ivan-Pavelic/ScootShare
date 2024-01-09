@@ -6,7 +6,7 @@ const RegistrationPage = (props) => {
     const {jwtIsValid, setJwt} = {...props};
     return (
         <>
-            <NavigationComponent displayLogoutButton={jwtIsValid} displayRegisterButton={false}  displayLoginButton={!jwtIsValid} setJwt={setJwt}/>
+            <NavigationComponent displayHomeButton={true} displayLogoutButton={jwtIsValid} displayRegisterButton={false}  displayLoginButton={!jwtIsValid} setJwt={setJwt}/>
             <RegistrationComponent setJwt={setJwt}/>
         </>
     );

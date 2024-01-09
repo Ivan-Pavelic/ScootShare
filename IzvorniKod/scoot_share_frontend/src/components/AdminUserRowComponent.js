@@ -3,10 +3,9 @@ import { useEffect } from 'react';
 import { useState } from 'react';
 
 const AdminUserRowComponent = (props) => {
-    const {jwt, authority, firstName, lastName, nickname, idCard, certificateOfNoCriminalRecord, email} = {...props};
+    const {jwt, username, authority, firstName, lastName, nickname, idCard, certificateOfNoCriminalRecord, email} = {...props};
 
     function donwloadIdCard() {
-        
         const a = document.createElement("a");
         a.href = idCard;
         a.download = "image.jpg";
@@ -27,7 +26,7 @@ const AdminUserRowComponent = (props) => {
     }
 
     function deleteUser() {
-        fetch(`/api/admin/deleteUser/${email}`, {
+        fetch(`/api/admin/deleteUser/${username}`, {
             headers: {
                 "Content-Type": "application/json",
                 Authorization: `Bearer ${jwt}`,
@@ -40,7 +39,7 @@ const AdminUserRowComponent = (props) => {
     }
 
     function updateRoleToClient() {
-        fetch(`/api/admin/acceptUser/${email}`, {
+        fetch(`/api/admin/acceptUser/${username}`, {
             headers: {
                 "Content-Type": "application/json",
                 Authorization: `Bearer ${jwt}`,
@@ -62,6 +61,9 @@ const AdminUserRowComponent = (props) => {
             </td>
             <td className="px-6 py-4">
                 {nickname}
+            </td>
+            <td className="px-6 py-4">
+                {username}
             </td>
             <td className="px-6 py-4">
                 {email}

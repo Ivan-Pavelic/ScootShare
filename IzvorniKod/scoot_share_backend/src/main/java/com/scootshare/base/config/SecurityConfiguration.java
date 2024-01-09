@@ -28,6 +28,8 @@ public class SecurityConfiguration {
                         auth
                                 .requestMatchers("/api/auth/**")
                                 .permitAll()
+                                .requestMatchers("/api/listings/getAll")
+                                .permitAll()
                                 .requestMatchers("/api/admin/**")
                                 .hasAuthority("ROLE_ADMIN")
                                 .anyRequest()
