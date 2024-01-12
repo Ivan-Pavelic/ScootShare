@@ -29,6 +29,10 @@ public class SecurityConfiguration {
                 .csrf((csrf) -> csrf.disable())
                 .authorizeHttpRequests((auth) ->
                         auth
+                                .requestMatchers("/ws")
+                                .permitAll()
+                                .requestMatchers("/ws/**")
+                                .permitAll()
                                 .requestMatchers("/api/auth/**")
                                 .permitAll()
                                 .requestMatchers("/api/listings/getAll", "/api/listings/getAll/**")
@@ -48,7 +52,7 @@ public class SecurityConfiguration {
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
         configuration.setAllowCredentials(true);
-        configuration.addAllowedOrigin("https://scoot-share.onrender.com");
+        configuration.addAllowedOrigin("*");
         configuration.addAllowedHeader("*");
         configuration.addAllowedMethod("*");
 
