@@ -2,7 +2,10 @@ package com.scootshare.base.entities;
 
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import org.springframework.security.core.GrantedAuthority;
@@ -16,6 +19,8 @@ import java.util.Set;
 
 @Getter
 @Setter
+@Builder
+@AllArgsConstructor
 @Entity
 @Table(name="users")
 public class User implements UserDetails {
@@ -184,5 +189,17 @@ public class User implements UserDetails {
             ratingsSent = new ArrayList<>();
         }
         ratingsSent.add(rating);
+    }
+    
+    @Override
+    public boolean equals(Object other) {
+    	if (!(other instanceof User)) 
+    		return false;
+    	
+    	User userOther = (User) other;
+    	if (!userOther.getUsername().equals(this.getUsername())) 
+    		return false;
+    	
+    	return true;
     }
 }
