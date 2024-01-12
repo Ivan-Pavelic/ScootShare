@@ -17,27 +17,29 @@ const ListingDetailsPage = (props) => {
     useEffect(() => {
         if (!jwtIsValid)
             navigate("/login");
-        const jwtDecoded = jwtDecode(jwt);
-        setAuthority(jwtDecoded.authorities[0].authority);
+        else {
+            const jwtDecoded = jwtDecode(jwt);
+            setAuthority(jwtDecoded.authorities[0].authority);
 
-        const listingId = window.location.href.split("/")[4];
-        fetch(`/api/listings/getOneListing/${listingId}`, {
-            headers: {
-              "Content-Type": "application/json",
-              "Authorization": `Bearer ${jwt}`
-            },
-            method: "GET",
-          })
-          .then(response => {
-            if (response.ok) {
-                return response.json();
-            }
-          })
-          .then((data) => {
-            if (data) {
-                setListing(data);
-            }
-          });
+            const listingId = window.location.href.split("/")[4];
+            fetch(`/api/listings/getOneListing/${listingId}`, {
+                headers: {
+                  "Content-Type": "application/json",
+                  "Authorization": `Bearer ${jwt}`
+                },
+                method: "GET",
+              })
+              .then(response => {
+                if (response.ok) {
+                    return response.json();
+                }
+              })
+              .then((data) => {
+                if (data) {
+                    setListing(data);
+                }
+              });
+        }
     }, []);
 
     useEffect(() => {
