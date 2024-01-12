@@ -15,7 +15,8 @@ const ListingDetailsPage = (props) => {
     const [authority, setAuthority] = useState(null);
 
     useEffect(() => {
-
+        if (!jwtIsValid)
+            navigate("/login");
         const jwtDecoded = jwtDecode(jwt);
         setAuthority(jwtDecoded.authorities[0].authority);
 
