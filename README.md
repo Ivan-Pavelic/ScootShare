@@ -5,7 +5,7 @@ LINK NA DEPLOY: https://scoot-share.onrender.com/
   </p> 
  <ul>
    <li>
-      - e-mail: admin@gmail.com
+      - korisnicko ime: admin
    </li>
    <li>
       - lozinka: scootShareAdmin
