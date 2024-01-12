@@ -23,18 +23,69 @@
 			\noindent\textsuperscript{10}\url{https://react.dev/}\newline
 			\noindent\textsuperscript{11}\url{https://www.javascript.com/}\newline
 			\noindent\textsuperscript{12}\url{https://www.postgresql.org/}\newline
+			
+		\newpage
 		
 		\section{Ispitivanje programskog rješenja}
 			
-			\textbf{\textit{dio 2. revizije}}\\
-			
-			 \textit{U ovom poglavlju je potrebno opisati provedbu ispitivanja implementiranih funkcionalnosti na razini komponenti i na razini cijelog sustava s prikazom odabranih ispitnih slučajeva. Studenti trebaju ispitati temeljnu funkcionalnost i rubne uvjete.}
+			\indent Za provođenje testiranja naše Spring Boot aplikacije koristili smo biblioteke JUnit i Mockito. One su nam omogućile pouzdano i sustavno testiranje raličitih dijelova aplikacije. Za ispitivanje sustava koristili smo alat Selenium.
+			 
 	
 			
 			\subsection{Ispitivanje komponenti}
-			\textit{Potrebno je provesti ispitivanje jedinica (engl. unit testing) nad razredima koji implementiraju temeljne funkcionalnosti. Razraditi \textbf{minimalno 6 ispitnih slučajeva} u kojima će se ispitati redovni slučajevi, rubni uvjeti te izazivanje pogreške (engl. exception throwing). Poželjno je stvoriti i ispitni slučaj koji koristi funkcionalnosti koje nisu implementirane. Potrebno je priložiti izvorni kôd svih ispitnih slučajeva te prikaz rezultata izvođenja ispita u razvojnom okruženju (prolaz/pad ispita). }
+			U nastavku ovog poglavlja, pronaći ćete detaljan opis šest odabranih ispitnih slučajeva koji obuhvaćaju redovne situacije, rubne uvjete te testiranje ponašanja sustava u situacijama iznimki. Uz opis ispitnih slučajeva, priložili smo i odgovarajući izvorni kôd svakog testa, kao i rezultate izvođenja ispita u razvojnom okruženju, što omogućuje transparentnost i preglednost provedenih ispitivanja.
 			
+			Prvi test koji smo odradili je dohvaćanje romobila preko njegovog identifikatora. U ovom smo testu testirali servisni sloj naše aplikacije te set test uredno proveo.
+			\begin{figure}[h]
+				\centering
+				\includegraphics[width=0.6\textwidth]{slike/scooter_service_test.jpg}
+				\caption{Testiranje dohvaćanja romobila preko identifikatora}
+				\label{fig:Testiranje dohvaćanja romobila preko identifikatora}
+			\end{figure}
 			
+			U sljedećem testu također smo testirali servisni sloj i to dohvaćanje poruka za dva korisnika. Dakle, u testu definiramo dva korisnika te provjeravamo vraća li nam naša aplikacija tražene poruke.
+			\begin{figure}[h]
+				\centering
+				\includegraphics[width=0.6\textwidth]{slike/message_service_test.jpg}
+				\caption{Testiranje dohvaćanja poruka za zadene korisnike}
+				\label{fig:Testiranje dohvaćanja poruka za zadene korisnike}
+			\end{figure}
+			
+			Sada ćemo prikazati testiranje ListingController. U prvom testu testirali smo dodavanje novog oglasa te je očekivani ishod odgovor poslužitelja sa novim oglasom, dok smo u drugom pokušali dohvatit oglas za nepostojeći romobil. U drugom testu očekuujemo da poslužitelj baci novu NullPointerException iznimku. Oba testa su se izvršila ispravno. \newline
+			
+			  \begin{figure}
+					  	\centering
+					  	\subfigure{\includegraphics[width=0.4\textwidth]{slike/listing_controller_add_test.jpg}} 
+					  	\subfigure{\includegraphics[width=0.4\textwidth]{slike/listing_controller_throw_test.jpg}} 
+					  	\caption{Testiranje ListingController-a}
+					  	\label{fig:Testiranje ListingController-a}
+			  \end{figure}
+			  
+			Korisnik mora moći pregledavati romobile koje je trenutno iznajmio pa smo testirali i RentalController i to metodu koja osigurava dohvaćanje trenutnih najmova. U testu definiramo koje objekte tipa Rental očekujemo te kada primimo odgovor od poslužitelja provjeravamo jesmo li ih uistinu i primili. \newline
+			
+			\begin{figure}[h]
+				\centering
+				\includegraphics[width=0.6\textwidth]{slike/rental_controller_test.jpg}
+				\caption{Testiranje dohvaćanja najmova za korisnika}
+				\label{fig:Testiranje dohvaćanja najmova za korisnika}
+			\end{figure}
+			
+			Na kraju, provjerili smo što će se dogodit ako pokušamo izbrisat ocjenu i komentar. Poslužitelj je prepoznao da ta funkcionalnost nije implementirana te ispravno odgovorio sa statusom 404 Not found.\newline
+			
+			\begin{figure}[h]
+				\centering
+				\includegraphics[width=0.6\textwidth]{slike/rating_controller_test.jpg}
+				\caption{Testiranje brisanja komentara i ocjena}
+				\label{fig:Testiranje brisanja komentara i ocjena}
+			\end{figure}
+			
+			Sljedeća slika prikazuje da su se svi testovi uspješno proveli.
+			\begin{figure}[h]
+				\centering
+				\includegraphics[width=0.6\textwidth]{slike/tests_passed.jpg}
+				\caption{Uspješno provođenje testova}
+				\label{fig:Uspješno provođenje testova}
+			\end{figure}
 			
 			\subsection{Ispitivanje sustava}
 			
