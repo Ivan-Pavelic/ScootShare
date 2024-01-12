@@ -3,14 +3,27 @@
 		
 		\section{Korištene tehnologije i alati}
 		
-			\textbf{\textit{dio 2. revizije}}
+			Komunikacija u timu odvijala se videopozivima putem aplikacije \underline{\href{https://www.microsoft.com/en-us/microsoft-teams/group-chat-software}{Microsoft Teams}}\textsuperscript{1}. Za izradu UML dijagrama korišteni su alati \underline{\href{https://astah.net/products/astah-uml/}{Astah UML}}\textsuperscript{2} i \underline{\href{https://online.visual-paradigm.com/}{Visual Paradigm}}\textsuperscript{3}. \underline{\href{https://git-scm.com/}{Git}}\textsuperscript{4} je korišten kao sustav za upravljanje kodom. Projekt je dostupan na web platformi \underline{\href{https://github.com/}{GitHub}}\textsuperscript{5}
 			
-			 \textit{Detaljno navesti sve tehnologije i alate koji su primijenjeni pri izradi dokumentacije i aplikacije. Ukratko ih opisati, te navesti njihovo značenje i mjesto primjene. Za svaki navedeni alat i tehnologiju je potrebno \textbf{navesti internet poveznicu} gdje se mogu preuzeti ili više saznati o njima}.
+			\indent Za razvoj aplikacije korištena su razvojna okruženja \underline{\href{https://www.jetbrains.com/idea/}{IntelliJ IDE}}\textsuperscript{6} i \newline\underline{\href{https://code.visualstudio.com/}{Visual Studio Code}}\textsuperscript{7}. IntelliJ jedano je od najpopularnijih razvojnih okruženja za razvoj aplikacija u programskom jeziku Java. Izgradila ga je tvrtka JetBrains. Pruža bogatu podršku za razvoj desktop i web aplikacija. Visual Studio Code je također vrlo popularan uređivač za pisanje programskog koda, osobita za razvoj frontend dijela aplikacija jer pruža izrazito dobru podršku za frotend radne okvire. On je pod vlasištvom tvrtke Microsoft.
 			
+			\indent Aplikacija je napisana koristeći radni okvir \underline{\href{https://spring.io/projects/spring-boot/}{Spring Boot}}\textsuperscript{8} i jezik \underline{\href{https://www.oracle.com/java/}{Java}}\textsuperscript{9} za izradu \textit{backenda} te \underline{\href{https://react.dev/}{React}}\textsuperscript{10} i jezik \underline{\href{https://www.javascript.com/}{JavaScript}}\textsuperscript{11} za izradu \textit{frontenda}. React je bilioteka izražena u JavaScriptu koja olakšava izradu korisničkog sučelja. React je održava tvrtka Meta. Radni okvir Spring Boot nadograđuje mogućnosti samog programskog jezika Java te time uvelike olakšava razvoj web aplikacija. Nudi niz gotovih funkcionalnosti koji povećavaju produktivnost i efikasnost programera.
 			
-			\eject 
+			\indent Za bazu podataka korišten je \underline{\href{https://www.postgresql.org/}{PostgreSQL}}\textsuperscript{12}.
+			\noindent\\[1ex]\rule{0.5\linewidth}{0.5pt}\newline
+			\noindent\textsuperscript{1}\url{https://www.microsoft.com/en-us/microsoft-teams/group-chat-software}\newline
+			\noindent\textsuperscript{2}\url{https://astah.net/products/astah-uml/}\newline
+			\noindent\textsuperscript{3}\url{https://online.visual-paradigm.com/}\newline
+			\noindent\textsuperscript{4}\url{https://git-scm.com/}\newline
+			\noindent\textsuperscript{5}\url{https://github.com/}\newline
+			\noindent\textsuperscript{6}\url{https://www.jetbrains.com/idea/}\newline
+			\noindent\textsuperscript{7}\url{https://code.visualstudio.com/}\newline
+			\noindent\textsuperscript{8}\url{https://spring.io/projects/spring-boot/}\newline
+			\noindent\textsuperscript{9}\url{https://www.oracle.com/java/}\newline
+			\noindent\textsuperscript{10}\url{https://react.dev/}\newline
+			\noindent\textsuperscript{11}\url{https://www.javascript.com/}\newline
+			\noindent\textsuperscript{12}\url{https://www.postgresql.org/}\newline
 		
-	
 		\section{Ispitivanje programskog rješenja}
 			
 			\textbf{\textit{dio 2. revizije}}\\
@@ -46,13 +59,46 @@
 			\eject 
 		
 		\section{Upute za puštanje u pogon}
+		\indent Našu aplikaciju odlučili smo pustit u pogon preko platformue Render. U ovom poglavlju objasnit ćemo korake koje smo proveli kako bi uspješno pustili u pogon aplikaciju.\newline
+	
+		\textbf{Konfiguracija baze podataka}\newline
+		Na web stranici Render potrebno je odabrati izradu nove baze podataka te unijeti željeno ime baze te verziju PostgreSQL-a. Sljedeća slika prikazuje izradu baze podataka.
+		\begin{figure}[h]
+			\centering
+			\includegraphics[width=0.8\textwidth]{slike/pustanju_u_pogon_1.jpg}
+			\caption{Izrada baze podataka}
+			\label{fig:baza podataka}
+		\end{figure}
 		
-			\textbf{\textit{dio 2. revizije}}\\
 		
-			 \textit{U ovom poglavlju potrebno je dati upute za puštanje u pogon (engl. deployment) ostvarene aplikacije. Na primjer, za web aplikacije, opisati postupak kojim se od izvornog kôda dolazi do potpuno postavljene baze podataka i poslužitelja koji odgovara na upite korisnika. Za mobilnu aplikaciju, postupak kojim se aplikacija izgradi, te postavi na neku od trgovina. Za stolnu (engl. desktop) aplikaciju, postupak kojim se aplikacija instalira na računalo. Ukoliko mobilne i stolne aplikacije komuniciraju s poslužiteljem i/ili bazom podataka, opisati i postupak njihovog postavljanja. Pri izradi uputa preporučuje se \textbf{naglasiti korake instalacije uporabom natuknica} te koristiti što je više moguće \textbf{slike ekrana} (engl. screenshots) kako bi upute bile jasne i jednostavne za slijediti.}
+		\textbf{Konfiguracija backenda}\newline
+		Kako bi mogli pustit u pogon našu poslužiteljsku stranu potrebno je učiniti određene izmjene. Potrebno je preurediti application.properties file na način da se dodaju globalne varijable koje će se koristit na Render-u. Također, treba dodati i Dockerfile koji sadrži niz instrukcija za izgradnju Docker kontejnera. 
+		
+		\begin{figure}
+			\centering
+			\subfigure{\includegraphics[width=0.24\textwidth]{slike/pustanju_u_pogon_2.jpg}} 
+			\subfigure{\includegraphics[width=0.24\textwidth]{slike/pustanju_u_pogon_3.jpg}} 
+			\caption{Dockerfile i application.properties}
+			\label{fig:dockerfile_application.properties}
+		\end{figure}
+		
+		Nakon što je prvi korak odrađen potrebno je konfigurirati backend na Renderu. Odabiremo novi Web Service, nakon toga povežemo naš github repository s Renderom. 
+		
+		\begin{figure}[h]
+			\centering
+			\includegraphics[width=0.8\textwidth]{slike/pustanju_u_pogon_4.jpg}
+			\caption{Kreiranje backenda na Renderu}
+			\label{fig:backend_render}
+		\end{figure}
+		
+		\textbf{Konfiguracija frontenda}
+		Potrebno je u našoj frontend React applikaciji u datoteci package.json dodati ovisnosti prema http-proxy-middleware, dotenv, express. Zatim treba dodati datoteku /src/setupProxy.js koja služi kao proxy server za lokalni development (redirecta api pozive na localhost:8080), odnosno kad se koristi react-scripts start skripta. Posljednja datoteka koju treba dodati je app.js u kojoj se nalazi express server za produkcijski proxy i posluzivanje frontenda. Jednom kada su sve izmjene napravljene i pohranjene u repozitorij kreirajmo Web Servis na Renderu za frontend. 
 			
-			
-			 \textit{Dovršenu aplikaciju potrebno je pokrenuti na javno dostupnom poslužitelju. Studentima se preporuča korištenje neke od sljedećih besplatnih usluga: \href{https://aws.amazon.com/}{Amazon AWS}, \href{https://azure.microsoft.com/en-us/}{Microsoft Azure} ili \href{https://www.heroku.com/}{Heroku}. Mobilne aplikacije trebaju biti objavljene na F-Droid, Google Play ili Amazon App trgovini.}
-			
-			
-			\eject 
+		\begin{figure}[h]
+			\centering
+			\includegraphics[width=0.8\textwidth]{slike/pustanju_u_pogon_5.jpg}
+			\caption{Kreiranje frontenda na Renderu}
+			\label{fig:frontend_render}
+		\end{figure}
+		
+		Renderu će trebati jedno vrijeme da pokrene aplikacije te kada završi prikazat će URL adresu preko koje možemo pristupiti našoj aplikaciji. S obzirom da je Render nudi besplatno puštanje u pogon za očekivat je da će aplikacija raditi sporije, no za naše potrebe je to bilo sasvim dovoljno.
