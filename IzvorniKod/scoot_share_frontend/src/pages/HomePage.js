@@ -23,7 +23,10 @@ const HomePage = (props) => {
     }, [username]);
 
     const fetchListings = () => {
-        fetch(`/api/listings/getAll/${username}`, {
+        let tmpUsername = "";
+        if (username && username !== undefined)
+            tmpUsername = username;
+        fetch(`/api/listings/getAll/${tmpUsername}`, {
             headers: {
               "Content-Type": "application/json",
             },
