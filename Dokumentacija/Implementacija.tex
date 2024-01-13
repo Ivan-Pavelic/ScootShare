@@ -89,17 +89,48 @@
 			
 			\subsection{Ispitivanje sustava}
 			
-			 \textit{Potrebno je provesti i opisati ispitivanje sustava koristeći radni okvir Selenium\footnote{\url{https://www.seleniumhq.org/}}. Razraditi \textbf{minimalno 4 ispitna slučaja} u kojima će se ispitati redovni slučajevi, rubni uvjeti te poziv funkcionalnosti koja nije implementirana/izaziva pogrešku kako bi se vidjelo na koji način sustav reagira kada nešto nije u potpunosti ostvareno. Ispitni slučaj se treba sastojati od ulaza (npr. korisničko ime i lozinka), očekivanog izlaza ili rezultata, koraka ispitivanja i dobivenog izlaza ili rezultata.\\ }
+			 Za ispitivanje sustava koristili smo alat Selenium WebDriver. Kako bi ga mogli koristit u projekt smo dodali  dependency za Selenium WebDriver. Također, bilo je potrebno i instalirati Chrome WebDriver.\newline
 			 
-			 \textit{Izradu ispitnih slučajeva pomoću radnog okvira Selenium moguće je provesti pomoću jednog od sljedeća dva alata:}
-			 \begin{itemize}
-			 	\item \textit{dodatak za preglednik \textbf{Selenium IDE} - snimanje korisnikovih akcija radi automatskog ponavljanja ispita	}
-			 	\item \textit{\textbf{Selenium WebDriver} - podrška za pisanje ispita u jezicima Java, C\#, PHP koristeći posebno programsko sučelje.}
-			 \end{itemize}
-		 	\textit{Detalji o korištenju alata Selenium bit će prikazani na posebnom predavanju tijekom semestra.}
-			
-			\eject 
+			 \indent U prvom testu testirali smo dvije funkcionalnosti: dodavanje novog romobila i dodavanje oglasa za taj romobil. Korisnik se prvo prijavi u aplikaciju. S obzirom na to da su svi testovi započinjali s prijavom korisnika u aplikaciju, prijavu smo izdvojili u zasebnu funkciju. Koristeći objekt tipa WebDriver provjerili smo je li se korisnik uspješno prijavio u sustav te ako je, pozicionirali smo se na stranicu za pregled romobila. Da bi dodali novi romobil, bilo je potrebno unijeti sliku romobila i to smo učinili metodom sendKeys koju nudi WebDriver. Kliknuli smo na gumb za dodavanje romobila te provjerili je li se romobil uspješno dodao. Zatim smo kliknuli na gumb za dodavanje oglasa, ponovo metodom sendKeys unijeli sve zahtijevane informacije za dodavanje oglasa, dodali oglas i na kraju provjerili je li se oglas uspješno dodao. 
+			 
+			 \newpage
+			 
+			 \begin{figure}[h]
+			 	\centering
+			 	\includegraphics[width=0.6\textwidth]{slike/selenium_test_1.jpg}
+			 	\caption{Testiranje dodavanja romobila i oglasa za romobil}
+			 	\label{fig:Testiranje dodavanja romobila i oglasa za romobil}
+			 \end{figure}
+			 
+			 \begin{figure}[h]
+			 	\centering
+			 	\includegraphics[width=0.6\textwidth]{slike/selenium_login.jpg}
+			 	\caption{Funkcija za prijavu korisnika preko objekta tipa WebDriver}
+			 	\label{fig:Funkcija za prijavu korisnika preko objekta tipa WebDriver}
+			 \end{figure}
+			 
+			 
+			 \indent U sljedećem testu provjerili smo mogućnost unajmljivanja romobila. Prijavili smo se u aplikaciju i odabrali smo prvi oglas na početnoj stranici. Očekivano ponašanje je da nas aplikacija usmjeri na stranicu koja prikazuje detalje o odabrano oglasu te smo to i testirali. Ako je ta provjera uspješno prošla, na stranici smo kliknuli gumb za unajmljivanje romobila. Testirali smo je li nas aplikacija preusmjerila  na stranicu s prikazom trenutno unajmljenih romobila i je li broj trenutno unajmljenih romobila jednak jedan.
+			 
+			 \begin{figure}[h]
+			 	\centering
+			 	\includegraphics[width=0.7\textwidth]{slike/selenium_test_2.jpg}
+			 	\caption{Testiranje unajmljivanja romobila}
+			 	\label{fig:Testiranje unajmljivanja romobila}
+			 \end{figure}
+			 
+			 \indent U posljednjem testu provjerili smo funkcionalnost dopisivanja između dva korisnika. Kreirali smo dva objekta tipa WebDriver, jedan za korisnika Dino i jedan za korisnika Marko. Prijavili smo oba korisnika u aplikaciju te smo ih koristeći njihove WebDriver objekte pozicionirali na stranicu za dopisivanje. Testirali smo je li početni broj poruka između ova dva korisnika jednak nuli. Nakon toga korinik Dino je poslao poruku korisniku Marko. S obzirom na to da je potrebno određeno vrijeme da poruka pristigne do Marka, pozvali smo Thread.sleep(500). Kada se dretva probudila, provjerili smo je li sada broj poruka jednak jedan. Slično smo ponovili još jednom, samo što je sada Marko slao poruku Dini.
+			 
+			 \begin{figure}
+			 	\centering
+			 	\subfigure{\includegraphics[width=0.7\textwidth]{slike/selenium_test_3_1.jpg}} 
+			 	\subfigure{\includegraphics[width=0.7\textwidth]{slike/selenium_test_3_2.jpg}} 
+			 	\caption{Testiranje razmjene poruka između korisnika}
+			 	\label{fig:Testiranje razmjene poruka između korisnika}
+			 \end{figure}
+			 
 		
+		\newpage
 		
 		\section{Dijagram razmještaja}
 			
