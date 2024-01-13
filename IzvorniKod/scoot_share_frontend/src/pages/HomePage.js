@@ -48,7 +48,7 @@ const HomePage = (props) => {
                 <div className='w-5/6 mx-auto grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-4'>
                     {listings.map((listing, index) => {
                         return (
-                            <ListingComponent key={index} listing={listing} canReserveScooter={jwtIsValid && authority === "ROLE_CLIENT"} jwtIsValid={jwtIsValid}/>
+                            <ListingComponent key={index} index={index} listing={listing} canReserveScooter={jwtIsValid && authority === "ROLE_CLIENT"} jwtIsValid={jwtIsValid}/>
                         );
                     })}
                 </div>

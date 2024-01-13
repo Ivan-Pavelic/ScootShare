@@ -292,7 +292,7 @@ const MyRentalsPage = (props) => {
                         listings.filter((listing) => listing.id === rental.listingId).map((listing, index) => {
                             const imageIndex = currentIndexImages.filter((el) => el.id === listing.id)[0].index;
                             return (
-                                <div key={index} className='w-4/6 mx-auto mt-16'>
+                                <div key={index} className='w-4/6 mx-auto mt-16 rental-item'>
                                     <div className='flex flex-row gap-16'>
                                         <div className='flex flex-row gap-6 items-center'>
                                             <FaArrowLeft 

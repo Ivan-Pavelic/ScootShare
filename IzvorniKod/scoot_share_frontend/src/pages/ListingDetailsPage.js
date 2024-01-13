@@ -113,6 +113,7 @@ const ListingDetailsPage = (props) => {
     }
 
     const rentScooter = () => {
+      console.log("here");
       if (!jwtIsValid) {
         navigate("/login");
       }
@@ -181,11 +182,11 @@ const ListingDetailsPage = (props) => {
                   </div>
                   <div className='flex mt-6 gap-16'>
                     <button 
-                      onClick={rentScooter}
-                      className='bg-green-500 text-white font-semibold text-xl rounded-lg py-2 px-3 hover:bg-green-700'>Unajmi romobil</button>
+                      onClick={() => rentScooter()}
+                      className='rent-btn bg-green-500 text-white font-semibold text-xl rounded-lg py-2 px-3 hover:bg-green-700'>Unajmi romobil</button>
                     <button 
                     onClick={() => navigateAndCreateChatRoom()}
-                    className='bg-slate-800 text-white font-semibold text-xl rounded-lg py-2 px-3 hover:bg-slate-700'>Pošalji poruku vlasniku</button>
+                    className='contact-owner-btn bg-slate-800 text-white font-semibold text-xl rounded-lg py-2 px-3 hover:bg-slate-700'>Pošalji poruku vlasniku</button>
                   </div>
                 </div>
               </div>

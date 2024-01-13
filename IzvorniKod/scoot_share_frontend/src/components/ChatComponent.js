@@ -110,7 +110,7 @@ const ChatComponent = (props) => {
                     {chatRooms.map((room, index) => {
                         return (
                             room.users.filter((user) => user != username).map((user, index) => {
-                                return (<div key={index} className='flex items-center gap-4 justify-center cursor-pointer border-b-2 border-b-slate-200 hover:bg-slate-100' onClick={() => setSelectedUser(user)}>
+                                return (<div key={index} className={`room-${user} flex items-center gap-4 justify-center cursor-pointer border-b-2 border-b-slate-200 hover:bg-slate-100`} onClick={() => setSelectedUser(user)}>
                                     <p className='font-semibold h-full py-4'>{user}</p>
                                     <div className={`hidden p-2 bg-green-600 rounded-full ${user}-notification`}></div>
                                 </div>);
@@ -130,7 +130,7 @@ const ChatComponent = (props) => {
                                 const messageId = "m-" + date.getHours().toString().padStart(2, "0") + date.getMinutes().toString().padStart(2, "0") + date.getSeconds().toString().padStart(2, "0");
                                 return (
                                     <div 
-                                        key={index} className={`group cursor-pointer items-center flex flex-col gap-6 justify-between max-w-fit rounded-lg shadow-lg px-6 py-2 ${message.sender === username ? "self-end justify-end" : ""}`}>
+                                        key={index} className={`message group cursor-pointer items-center flex flex-col gap-6 justify-between max-w-fit rounded-lg shadow-lg px-6 py-2 ${message.sender === username ? "self-end justify-end" : ""}`}>
                                         <div className='flex flex-row gap-6 justify-between'>
                                             <p className='text-sm font-semibold max-w-4/5 break-all'>{message.content}</p>
                                             <div className='flex items-center gap-1'>
@@ -146,8 +146,8 @@ const ChatComponent = (props) => {
                                 value={chatMessage.content}
                                 onChange={updateMessage}
                                 type='text'
-                                className='w-full shadow-md rounded-md border-2 border-slate-300 outline-none h-8 py-5 px-4 text-lg'/>
-                            <button type='submit' onClick={sendMessage}>
+                                className='message-content-input w-full shadow-md rounded-md border-2 border-slate-300 outline-none h-8 py-5 px-4 text-lg'/>
+                            <button className='send-message-btn' type='submit' onClick={sendMessage}>
                                 <VscSend className='w-10 h-10 ml-2 text-slate-800 cursor-pointer'/>
                             </button>
                         </form>

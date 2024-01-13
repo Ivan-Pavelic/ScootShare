@@ -74,7 +74,7 @@ const ScooterListComponent = (props) => {
                         </th>
                     </tr>
                 </thead>
-                <tbody>     
+                <tbody className='scooters-list'>     
                     {scooters && scooters.map((scooter, index) => {
                         return (
                             <tr key={index} className="bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-600">
@@ -90,13 +90,13 @@ const ScooterListComponent = (props) => {
                                 <td className="px-6 py-4">
                                     {scooter.hasListing ? 
                                         scooter.listingIsActive ?
-                                            <p className='text-green-500 cursor-pointer' onClick={() => viewListing(index)}>Romobil je već u najmu, pregled oglasa</p>
+                                            <p className='text-green-500 cursor-pointer scooter-rented-label' onClick={() => viewListing(index)}>Romobil je već u najmu, pregled oglasa</p>
                                         :
                                         <div>
                                             <p className='text-green-500'>Romobil je iznajmljen</p>
                                             <p className='cursor-pointer font-semibold' onClick={() => chatWithRenter(index)}>Kontaktiraj unajmitelja</p>
                                         </div>
-                                    : <p className='text-green-500 cursor-pointer' onClick={() => rentScooter(index)}>Spreman za iznajmljivanje</p>}
+                                    : <p className='text-green-500 cursor-pointer ready-to-rent-btn' onClick={() => rentScooter(index)}>Spreman za iznajmljivanje</p>}
                                 </td>
                             </tr>
                         );

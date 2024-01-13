@@ -67,14 +67,14 @@ const AddScooterListingComponent = (props) => {
                 <div className='flex flex-col gap-2'>
                     <label className='text-md font-semibold' htmlFor='location'>Lokacija Preuzimanja</label>
                     <input id='location' type='text' value={listing.location} 
-                        className='w-3/5 rounded-sm shadow-md py-2 px-4 text-xl focus:outline-none'
+                        className='w-3/5 rounded-sm shadow-md py-2 px-4 text-xl focus:outline-none location-input'
                         onChange={(event) => updateListing(event.target.value, "location")} />
                 </div>
 
                 <div className='flex flex-col gap-2'>
                     <label className='text-md font-semibold' htmlFor='return-loaction'>Lokacija Povratka</label>
                     <input id='return-loaction' type='text' value={listing.returnLocation} 
-                        className='w-3/5 rounded-sm shadow-md py-2 px-4 text-xl focus:outline-none'
+                        className='w-3/5 rounded-sm shadow-md py-2 px-4 text-xl focus:outline-none return-location-input'
                         onChange={(event) => updateListing(event.target.value, "returnLocation")} />
                 </div>
 
@@ -88,14 +88,14 @@ const AddScooterListingComponent = (props) => {
                 <div className='flex flex-col gap-2'>
                     <label className='text-md font-semibold' htmlFor='pricePerKilometer'>Cijena po Kilometru (u eurima)</label>
                     <input id='pricePerKilometer' type='text' value={listing.pricePerKilometer} 
-                        className='w-3/5 rounded-sm shadow-md py-2 px-4 text-xl focus:outline-none'
+                        className='w-3/5 rounded-sm shadow-md py-2 px-4 text-xl focus:outline-none price-per-kilometer-input'
                         onChange={(event) => updateListing(event.target.value, "pricePerKilometer")} />
                 </div>
 
                 <div className='flex flex-col gap-2'>
                     <label className='text-md font-semibold' htmlFor='lateReturnPenalty'>Kazna za Kašnjenje (u eurima)</label>
                     <input id='lateReturnPenalty' type='text' value={listing.lateReturnPenalty} 
-                        className='w-3/5 rounded-sm shadow-md py-2 px-4 text-xl focus:outline-none'
+                        className='w-3/5 rounded-sm shadow-md py-2 px-4 text-xl focus:outline-none penalty-input'
                         onChange={(event) => updateListing(event.target.value, "lateReturnPenalty")} />
                 </div>
             </div>
@@ -105,7 +105,7 @@ const AddScooterListingComponent = (props) => {
                 <button 
                     onClick={addListing}
                     type='submit' 
-                    className='rounded-xl bg-blue-500 cursor-pointer text-white font-semibold py-3 px-6'>
+                    className='create-listing-btn rounded-xl bg-blue-500 cursor-pointer text-white font-semibold py-3 px-6'>
                     Dodaj 
                 </button>
                 <button 

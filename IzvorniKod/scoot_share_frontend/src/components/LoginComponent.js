@@ -65,7 +65,7 @@ const LoginComponent = (props) => {
                                 <BsFillPersonFill size={35} />
                         </div>
                         <div className='w-full'>
-                            <input className='w-full h-full pl-4 focus:outline-none text-xl'
+                            <input className='w-full h-full pl-4 focus:outline-none text-xl username-input'
                                     placeholder='Korisničko Ime'
                                     type="text"
                                     value={user.username}
@@ -77,7 +77,7 @@ const LoginComponent = (props) => {
                                 <RiLockPasswordLine size={35} />
                         </div>
                         <div className='w-full'>
-                            <input className='w-full h-full pl-4 focus:outline-none text-xl'
+                            <input className='w-full h-full pl-4 focus:outline-none text-xl password-input'
                                     placeholder='Lozinka'
                                     type="password"
                                     value={user.password}
@@ -88,7 +88,7 @@ const LoginComponent = (props) => {
                     <button type='button' className='text-xl font-semibold px-8 py-3 bg-red-400 text-white rounded-xl' onClick={cancel}>Odustani</button>
                         <button
                             type="submit"
-                            className="text-xl font-semibold px-8 py-3 bg-blue-500 text-white rounded-xl"
+                            className="text-xl font-semibold px-8 py-3 bg-blue-500 text-white rounded-xl submit-login-btn"
                             onClick={loginUser}> 
                             Potvrdi
                         </button>

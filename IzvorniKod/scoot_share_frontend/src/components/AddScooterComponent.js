@@ -57,9 +57,9 @@ const AddScooterComponent = (props) => {
                     <p className='text-center first-letter:text-xl font-semibold'>Dodajte novi Romobil</p>
                 </div>
                 <div className='mb-6'>
-                    <label className='cursor-pointer font-semibold shadow-md rounded-md py-2 px-6 hover:bg-green-200'>Unesite Sliku romobila
+                    <label className='add-scooter-image-btn cursor-pointer font-semibold shadow-md rounded-md py-2 px-6 hover:bg-green-200'>Unesite Sliku romobila
                         <input 
-                            className='hidden'
+                            className='hidden add-scooter-image-input'
                             type="file" 
                             accept='image/*'
                             onChange={(event) => updateScooter(event)} />
@@ -82,7 +82,7 @@ const AddScooterComponent = (props) => {
                     <button 
                         onClick={addScooter}
                         type='submit' 
-                        className='rounded-xl bg-blue-500 cursor-pointer text-white font-semibold py-3 px-6'>
+                        className='rounded-xl bg-blue-500 cursor-pointer text-white font-semibold py-3 px-6 submit-scooter-btn'>
                         Dodaj Romobil
                     </button>
                 </div>

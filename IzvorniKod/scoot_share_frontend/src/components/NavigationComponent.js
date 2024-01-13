@@ -133,7 +133,7 @@ const NavigationComponent = (props) => {
                             {displayHomeButton && <button className='text-white rounded-3xl hover:text-cyan-400' onClick={home}>Početna stranica</button>} 
                             {displayMyRentalsButton && <button className='text-white rounded-3xl hover:text-cyan-400' onClick={myRentals}>Unajmljeni romobili</button>} 
                             {displayRegisterButton && <button className='text-white rounded-3xl hover:text-cyan-400' onClick={register}>Registracija</button>} 
-                            {displayLoginButton && <button className='text-white rounded-3xl hover:text-cyan-400' onClick={login}>Prijava</button>}           
+                            {displayLoginButton && <button id='login-btn-1' className='text-white rounded-3xl hover:text-cyan-400' onClick={login}>Prijava</button>}           
                             {displayRentScooterButton && <button className='text-white rounded-3xl hover:text-cyan-400' onClick={rentScooter}>Iznajmi Romobil</button>}
                             {displayTransactionsButton && <button className='text-white rounded-3xl hover:text-cyan-400' onClick={transactionPage}>Transackije</button>} 
                             {displayProfileButton && <button className='text-white rounded-3xl hover:text-cyan-400' onClick={profilePage}>Profil</button>} 
@@ -173,16 +173,16 @@ const NavigationComponent = (props) => {
                         </div>
                 
                         <div className='relative hamburger-menu-div block xl:hidden'>
-                            <RxHamburgerMenu className='text-white text-4xl cursor-pointer' onClick={changeMenuVisibility}/>
+                            <RxHamburgerMenu className='text-white text-4xl cursor-pointer hamburger-menu-button' onClick={changeMenuVisibility}/>
                             <div className='absolute top-10 -left-20 w-[200px] shda shadow-lg flex-col hidden menu z-40 bg-white'>
                                 {displayHomeButton && <button className='text-slate-800 hover:text-slate-600 border-b-2 py-2' onClick={home}>Početna stranica</button>} 
                                 {displayMyRentalsButton && <button className='text-slate-800 hover:text-slate-600 border-b-2 py-2' onClick={myRentals}>Unajmljeni romobili</button>} 
                                 {displayRegisterButton && <button className='text-slate-800 hover:text-slate-600 border-b-2 py-2' onClick={register}>Registracija</button>} 
-                                {displayLoginButton && <button className='text-slate-800 hover:text-slate-600 border-b-2 py-2' onClick={login}>Prijava</button>}           
-                                {displayRentScooterButton && <button className='text-slate-800 hover:text-slate-600 border-b-2 py-2' onClick={rentScooter}>Iznajmi Romobil</button>}
+                                {displayLoginButton && <button className='login-btn text-slate-800 hover:text-slate-600 border-b-2 py-2' onClick={login}>Prijava</button>}           
+                                {displayRentScooterButton && <button className='rent-scooter-btn text-slate-800 hover:text-slate-600 border-b-2 py-2' onClick={rentScooter}>Iznajmi Romobil</button>}
                                 {displayTransactionsButton && <button className='text-slate-800 hover:text-slate-600 border-b-2 py-2' onClick={transactionPage}>Transackije</button>} 
                                 {displayProfileButton && <button className='text-slate-800 hover:text-slate-600 border-b-2 py-2' onClick={profilePage}>Profil</button>} 
-                                {displayChatButton && <button className='text-slate-800 hover:text-slate-600 border-b-2 py-2' onClick={chatPage}>Razgovori</button>} 
+                                {displayChatButton && <button className='chat-btn text-slate-800 hover:text-slate-600 border-b-2 py-2' onClick={chatPage}>Razgovori</button>} 
                                 {displayAdminPage && <button className='text-slate-800 hover:text-slate-600 border-b-2 py-2' onClick={adminPage}>Admin</button>} 
                                 {displayImageChangeRequestsButton && <button className='text-slate-800 hover:text-slate-600 border-b-2 py-2' onClick={imageChangeRequests}>Pregled zamjena slika</button>} 
                                 {notifications && !displayLoginButton && 
