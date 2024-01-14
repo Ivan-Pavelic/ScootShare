@@ -274,9 +274,23 @@
 		
 		\section{Dijagram stanja}
 			
-			\indent bice \\
+			\indent Dijagrami stanja su ponašajni i dinamički dijagrami, a u odnosu na ostale UMLdijagrame opisuju diskretna stanja sustava i prijelaze između tih stanja temeljene na događajima. Na slici 4.6 prikazan je dijagram stanja za registriranog korisnika. Nakon uspješne prijave, korisniku se otvara izbornik koji omogućuje pregled unajmljenih romobila, razgovora, transakcija, obavijesti i vlastitog profila, te odabir iznajmljivanja romobila. Početna stranica prikazuje sve dostupne oglase romobila, a korisnik može klikom prijeći u bilo koje od prethodno navedenih stanja. 
+			Pritiskom na oglas, korisniku se prikazuju detalji oglasa. 
 			
-			\indent bice \\
+			Iz stanja 'Prikaz oglasa' korisnik može poslati poruku iznajmljivaču i unajmiti romobil. 'Razgovori' omogućuju korisniku komunikaciju s iznajmljivačima, dok stanje 'Unajmljeni romobili' omogućuje pregled unajmljenih romobila i odabir povratka ili zamjene slika koje ne odgovaraju stvarnosti romobila. U stanju 'Profil', korisnik može pregledavati i ažurirati osobne podatke te vidjeti ocjene i komentare iznajmljivača romobila koje je dosad iznajmio.
+			
+			Ulaskom u stanje 'Iznajmi romobil', korisnik pokreće proces dodavanja svog romobila u oglase. Prvo dodaje fotografije romobila, nakon čega je romobil dodan u njegovu kolekciju. Zatim korisnik stvara oglas za odabrani romobil, specificirajući lokaciju, vrijeme povratka cijenu po kilometru i cijenu prekoračenja.
+			
+			Stanje 'Transakcije' omogućuje korisniku pregled svih aktivnih transakcija i ocjenjivanje 
+			klijenta koji je iznajmio njegov romobil. U stanju 'Obavijesti', korisnik može pratiti važne informacije o svojim romobilima, 
+			uključujući obavijesti o iznajmljivanju, povratku, primljenim porukama i transakcijama. 
+			
+			Važno je napomenuti da se u stanja 'Unajmljeni romobili', 'Iznajmi romobil', 'Transakcije', 
+			'Profil', 'Razgovori' i 'Obavijesti' može ući iz svih postojećih stanja. Također, u svakom 
+			stanju je moguće izvršiti odjavu. Ovaj pregledan dijagram omogućuje korisnicima lako 
+			snalaženje kroz različite funkcionalnosti sustava.
+			\\
+			
 		
 			\begin{figure}[H]
 				\centering
