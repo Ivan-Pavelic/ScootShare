@@ -4,6 +4,13 @@
 		
 		\indent Sustav je organiziran kao \textit{\underbar{klijent-poslužitelj}}, pri čemu klijent sadržava korisničko sučelje i logiku za interakciju s korisnikom. S druge strane, poslužitelj obrađuje zahtjeve klijenata, pristupa bazi podataka i upravlja poslovnim logikama. \\
 		
+		\begin{figure}[H]
+			\centering
+			\includegraphics[width=0.8\textwidth]{slike/arhitektura.png}
+			\caption{Arhitektura sustava}
+			\label{fig:your_label}
+		\end{figure}
+		
 		\indent \textit{\underbar{Aplikacija}} je strukturirana na slojevima, gdje frontend koristi React tehnologiju, koja obuhvaća korisničko sučelje i logiku za prikaz podataka korisnicima. Backend, s druge strane, koristi kombinaciju Java, JavaScript i Spring Boot tehnologija, obrađuje poslovnu logiku, upravlja pristupom bazi podataka i komunicira s klijentima. Ova struktura temelji se na \textit{\underbar{Model-View-Controller (MVC)}} arhitekturi, gdje model predstavlja podatke i poslovnu logiku, view je odgovoran za prikazivanje podataka, a controller upravlja korisničkim zahtjevima. \\
 		
 		\indent \textit{\underbar{Klijent}} radi na različitim uređajima, uključujući računala, pametne telefone i tablete, putem web preglednika. Poslužitelj je smješten u lokalnom data centru s potrebnim resursima za podršku poslužiteljskoj logici i bazi podataka. Baza podataka djeluje kao centralno spremište za pohranu podataka, s pristupom koji je kontroliran od strane poslužitelja. \\
