@@ -281,7 +281,7 @@
 		
 		\section{Dijagram stanja}
 			
-			\indent Dijagrami stanja su ponašajni i dinamički dijagrami, a u odnosu na ostale UMLdijagrame opisuju diskretna stanja sustava i prijelaze između tih stanja temeljene na događajima. Na slici 4.6 prikazan je dijagram stanja za registriranog korisnika. Nakon uspješne prijave, korisniku se otvara izbornik koji omogućuje pregled unajmljenih romobila, razgovora, transakcija, obavijesti i vlastitog profila, te odabir iznajmljivanja romobila. Početna stranica prikazuje sve dostupne oglase romobila, a korisnik može klikom prijeći u bilo koje od prethodno navedenih stanja. 
+			\indent Dijagrami stanja su ponašajni i dinamički dijagrami, a u odnosu na ostale UMLdijagrame opisuju diskretna stanja sustava i prijelaze između tih stanja temeljene na događajima. Na slici 4.7 prikazan je dijagram stanja za registriranog korisnika. Nakon uspješne prijave, korisniku se otvara izbornik koji omogućuje pregled unajmljenih romobila, razgovora, transakcija, obavijesti i vlastitog profila, te odabir iznajmljivanja romobila. Početna stranica prikazuje sve dostupne oglase romobila, a korisnik može klikom prijeći u bilo koje od prethodno navedenih stanja. 
 			Pritiskom na oglas, korisniku se prikazuju detalji oglasa. 
 			
 			Iz stanja 'Prikaz oglasa' korisnik može poslati poruku iznajmljivaču i unajmiti romobil. 'Razgovori' omogućuju korisniku komunikaciju s iznajmljivačima, dok stanje 'Unajmljeni romobili' omogućuje pregled unajmljenih romobila i odabir povratka ili zamjene slika koje ne odgovaraju stvarnosti romobila. U stanju 'Profil', korisnik može pregledavati i ažurirati osobne podatke te vidjeti ocjene i komentare iznajmljivača romobila koje je dosad iznajmio.
@@ -313,7 +313,7 @@
 			
 			\indent Dijagram aktivnosti primjenjuje se za modeliranje upravljačkog i podatkovnog toka. Pogodan je za opisivanje sinkronizacije i konkurentnosti. Dijagram aktivnosti ne primjenjuje se za modeliranje događajima poticanog ponašanja. U modeliranju toka upravljanja novi korak se izvršava nakon završenog prethodnog. \\
 			
-			\indent Dijagram aktivnosti 4.7 prikazuje jednostavan proces iznajmljivanja romobila. 
+			\indent Dijagram aktivnosti 4.8 prikazuje jednostavan proces iznajmljivanja romobila. 
 			Korisnik se prijavljuje, odabire romobil, te nakon kontakta s iznajmljivačem, proces iznajmljivanja postaje aktivan. \\
 			
 			\begin{figure}[H]
@@ -326,7 +326,16 @@
 			\eject
 			
 		\section{Dijagram komponenti}
+
+			
+			\indent Dijagram komponenti na slici 4.9 prikazuje vizualizaciju organizacije međuovisnosti između implementacijskih komponenata te odnos programske potpore prema okolini. Frontend dio se sastoji od više Javascript datoteka koje ovise o React biblioteci. Preko sučelja za dohvat CSS i JS datoteka poslužuju se datoteke koje pripadaju frontend dijelu aplikacije, a preko sučelja za dohvat JSON podataka pristupa se REST API komponenti koji poslužuje podatke koji pripadaju backend dijelu aplikacije. EntityFrameworkCore se koristi za dohvaćanje tablica iz baze podataka pomoću SQL upita. Reactview komponenta komunicira s aplikacijom te ovisno o onome što korisnik radi, osvježava prikaz.  \\
+			
+			\begin{figure}[H]
+				\centering
+				\includegraphics[width=0.8\textwidth]{dijagrami/ComponentDiagram.png}
+				\caption{Dijagram komponenti}
+				\label{fig:your_label}
+			\end{figure}
+			
+			\eject
 		
-			\textbf{\textit{dio 2. revizije}}\\
-		
-			 \textit{Potrebno je priložiti dijagram komponenti s pripadajućim opisom. Dijagram komponenti treba prikazivati strukturu cijele aplikacije.}
