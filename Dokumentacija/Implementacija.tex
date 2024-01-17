@@ -5,9 +5,9 @@
 		
 			Komunikacija u timu odvijala se videopozivima putem aplikacije \underline{\href{https://www.microsoft.com/en-us/microsoft-teams/group-chat-software}{Microsoft Teams}}\textsuperscript{1}. Za izradu UML dijagrama korišteni su alati \underline{\href{https://astah.net/products/astah-uml/}{Astah UML}}\textsuperscript{2} i \underline{\href{https://online.visual-paradigm.com/}{Visual Paradigm}}\textsuperscript{3}. \underline{\href{https://git-scm.com/}{Git}}\textsuperscript{4} je korišten kao sustav za upravljanje kodom. Projekt je dostupan na web platformi \underline{\href{https://github.com/}{GitHub}}\textsuperscript{5}
 			
-			\indent Za razvoj aplikacije korištena su razvojna okruženja \underline{\href{https://www.jetbrains.com/idea/}{IntelliJ IDE}}\textsuperscript{6} i \newline\underline{\href{https://code.visualstudio.com/}{Visual Studio Code}}\textsuperscript{7}. IntelliJ jedano je od najpopularnijih razvojnih okruženja za razvoj aplikacija u programskom jeziku Java. Izgradila ga je tvrtka JetBrains. Pruža bogatu podršku za razvoj desktop i web aplikacija. Visual Studio Code je također vrlo popularan uređivač za pisanje programskog koda, osobita za razvoj frontend dijela aplikacija jer pruža izrazito dobru podršku za frotend radne okvire. On je pod vlasištvom tvrtke Microsoft.
+			\indent Za razvoj aplikacije korištena su razvojna okruženja \underline{\href{https://www.jetbrains.com/idea/}{IntelliJ IDE}}\textsuperscript{6} i \newline\underline{\href{https://code.visualstudio.com/}{Visual Studio Code}}\textsuperscript{7}. IntelliJ jedan je od najpopularnijih razvojnih okruženja za razvoj aplikacija u programskom jeziku Java. Izgradila ga je tvrtka JetBrains. Pruža bogatu podršku za razvoj desktop i web aplikacija. Visual Studio Code je također vrlo popularan uređivač za pisanje programskog koda, osobita za razvoj frontend dijela aplikacija jer pruža izrazito dobru podršku za frontend radne okvire. On je pod vlasništvom tvrtke Microsoft.
 			
-			\indent Aplikacija je napisana koristeći radni okvir \underline{\href{https://spring.io/projects/spring-boot/}{Spring Boot}}\textsuperscript{8} i jezik \underline{\href{https://www.oracle.com/java/}{Java}}\textsuperscript{9} za izradu \textit{backenda} te \underline{\href{https://react.dev/}{React}}\textsuperscript{10} i jezik \underline{\href{https://www.javascript.com/}{JavaScript}}\textsuperscript{11} za izradu \textit{frontenda}. React je bilioteka izražena u JavaScriptu koja olakšava izradu korisničkog sučelja. React je održava tvrtka Meta. Radni okvir Spring Boot nadograđuje mogućnosti samog programskog jezika Java te time uvelike olakšava razvoj web aplikacija. Nudi niz gotovih funkcionalnosti koji povećavaju produktivnost i efikasnost programera.
+			\indent Aplikacija je napisana koristeći radni okvir \underline{\href{https://spring.io/projects/spring-boot/}{Spring Boot}}\textsuperscript{8} i jezik \underline{\href{https://www.oracle.com/java/}{Java}}\textsuperscript{9} za izradu \textit{backenda} te \underline{\href{https://react.dev/}{React}}\textsuperscript{10} i jezik \underline{\href{https://www.javascript.com/}{JavaScript}}\textsuperscript{11} za izradu \textit{frontenda}. React je biblioteka izražena u JavaScriptu koja olakšava izradu korisničkog sučelja. React je održava tvrtka Meta. Radni okvir Spring Boot nadograđuje mogućnosti samog programskog jezika Java te time uvelike olakšava razvoj web aplikacija. Nudi niz gotovih funkcionalnosti koji povećavaju produktivnost i efikasnost programera.
 			
 			\indent Za bazu podataka korišten je \underline{\href{https://www.postgresql.org/}{PostgreSQL}}\textsuperscript{12}.
 			\noindent\\[1ex]\rule{0.5\linewidth}{0.5pt}\newline
@@ -28,7 +28,7 @@
 		
 		\section{Ispitivanje programskog rješenja}
 			
-			\indent Za provođenje testiranja naše Spring Boot aplikacije koristili smo biblioteke JUnit i Mockito. One su nam omogućile pouzdano i sustavno testiranje raličitih dijelova aplikacije. Za ispitivanje sustava koristili smo alat Selenium.
+			\indent Za provođenje testiranja naše Spring Boot aplikacije koristili smo biblioteke JUnit i Mockito. One su nam omogućile pouzdano i sustavno testiranje različitih dijelova aplikacije. Za ispitivanje sustava koristili smo alat Selenium.
 			 
 	
 			
@@ -47,11 +47,11 @@
 			\begin{figure}[h]
 				\centering
 				\includegraphics[width=0.6\textwidth]{slike/message_service_test.jpg}
-				\caption{Testiranje dohvaćanja poruka za zadene korisnike}
-				\label{fig:Testiranje dohvaćanja poruka za zadene korisnike}
+				\caption{Testiranje dohvaćanja poruka za zadane korisnike}
+				\label{fig:Testiranje dohvaćanja poruka za zadane korisnike}
 			\end{figure}
 			
-			Sada ćemo prikazati testiranje ListingController. U prvom testu testirali smo dodavanje novog oglasa te je očekivani ishod odgovor poslužitelja sa novim oglasom, dok smo u drugom pokušali dohvatit oglas za nepostojeći romobil. U drugom testu očekuujemo da poslužitelj baci novu NullPointerException iznimku. Oba testa su se izvršila ispravno. \newline
+			Sada ćemo prikazati testiranje ListingController. U prvom testu testirali smo dodavanje novog oglasa te je očekivani ishod odgovor poslužitelja s novim oglasom, dok smo u drugom pokušali dohvatit oglas za nepostojeći romobil. U drugom testu očekujemo da poslužitelj baci novu NullPointerException iznimku. Oba testa su se izvršila ispravno. \newline
 			
 			  \begin{figure}
 					  	\centering
@@ -119,7 +119,7 @@
 			 	\label{fig:Testiranje unajmljivanja romobila}
 			 \end{figure}
 			 
-			 \indent U posljednjem testu provjerili smo funkcionalnost dopisivanja između dva korisnika. Kreirali smo dva objekta tipa WebDriver, jedan za korisnika Dino i jedan za korisnika Marko. Prijavili smo oba korisnika u aplikaciju te smo ih koristeći njihove WebDriver objekte pozicionirali na stranicu za dopisivanje. Testirali smo je li početni broj poruka između ova dva korisnika jednak nuli. Nakon toga korinik Dino je poslao poruku korisniku Marko. S obzirom na to da je potrebno određeno vrijeme da poruka pristigne do Marka, pozvali smo Thread.sleep(500). Kada se dretva probudila, provjerili smo je li sada broj poruka jednak jedan. Slično smo ponovili još jednom, samo što je sada Marko slao poruku Dini.
+			 \indent U posljednjem testu provjerili smo funkcionalnost dopisivanja između dva korisnika. Kreirali smo dva objekta tipa WebDriver, jedan za korisnika Dino i jedan za korisnika Marko. Prijavili smo oba korisnika u aplikaciju te smo ih koristeći njihove WebDriver objekte pozicionirali na stranicu za dopisivanje. Testirali smo je li početni broj poruka između ova dva korisnika jednak nuli. Nakon toga korisnik Dino je poslao poruku korisniku Marko. S obzirom na to da je potrebno određeno vrijeme da poruka pristigne do Marka, pozvali smo Thread.sleep(500). Kada se dretva probudila, provjerili smo je li sada broj poruka jednak jedan. Slično smo ponovili još jednom, samo što je sada Marko slao poruku Dini.
 			 
 			 \begin{figure}
 			 	\centering
@@ -146,7 +146,7 @@
 			\eject 
 		
 		\section{Upute za puštanje u pogon}
-		\indent Našu aplikaciju odlučili smo pustit u pogon preko platformue Render. U ovom poglavlju objasnit ćemo korake koje smo proveli kako bi uspješno pustili u pogon aplikaciju.\newline
+		\indent Našu aplikaciju odlučili smo pustit u pogon preko platforme Render. U ovom poglavlju objasnit ćemo korake koje smo proveli kako bi uspješno pustili u pogon aplikaciju.\newline
 	
 		\textbf{Konfiguracija baze podataka}\newline
 		Na web stranici Render potrebno je odabrati izradu nove baze podataka te unijeti željeno ime baze te verziju PostgreSQL-a. Sljedeća slika prikazuje izradu baze podataka.
@@ -159,7 +159,7 @@
 		
 		
 		\textbf{Konfiguracija backenda}\newline
-		Kako bi mogli pustit u pogon našu poslužiteljsku stranu potrebno je učiniti određene izmjene. Potrebno je preurediti application.properties file na način da se dodaju globalne varijable koje će se koristit na Render-u. Također, treba dodati i Dockerfile koji sadrži niz instrukcija za izgradnju Docker kontejnera. 
+		Kako bi mogli pustit u pogon našu poslužiteljsku stranu potrebno je učiniti određene izmjene. Potrebno je preurediti application.properties file tako da se dodaju globalne varijable koje će se koristit na Renderu. Također, treba dodati i Dockerfile koji sadrži niz instrukcija za izgradnju Docker kontejnera. 
 		
 		\begin{figure}
 			\centering
@@ -179,7 +179,7 @@
 		\end{figure}
 		
 		\textbf{Konfiguracija frontenda}
-		Potrebno je u našoj frontend React applikaciji u datoteci package.json dodati ovisnosti prema http-proxy-middleware, dotenv, express. Zatim treba dodati datoteku /src/setupProxy.js koja služi kao proxy server za lokalni development (redirecta api pozive na localhost:8080), odnosno kad se koristi react-scripts start skripta. Posljednja datoteka koju treba dodati je app.js u kojoj se nalazi express server za produkcijski proxy i posluzivanje frontenda. Jednom kada su sve izmjene napravljene i pohranjene u repozitorij kreirajmo Web Servis na Renderu za frontend. 
+		Potrebno je u našoj frontend React aplikaciji u datoteci package.json dodati ovisnosti prema http-proxy-middleware, dotenv, express. Zatim treba dodati datoteku /src/setupProxy.js koja služi kao proxy server za lokalni development (redirecta api pozive na localhost:8080), odnosno kad se koristi react-scripts start skripta. Posljednja datoteka koju treba dodati je app.js u kojoj se nalazi express server za produkcijski proxy i posluživanje frontenda. Jednom kada su sve izmjene napravljene i pohranjene u repozitorij kreirajmo Web Servis na Renderu za frontend. 
 			
 		\begin{figure}[h]
 			\centering
@@ -188,4 +188,4 @@
 			\label{fig:frontend_render}
 		\end{figure}
 		
-		Renderu će trebati jedno vrijeme da pokrene aplikacije te kada završi prikazat će URL adresu preko koje možemo pristupiti našoj aplikaciji. S obzirom da je Render nudi besplatno puštanje u pogon za očekivat je da će aplikacija raditi sporije, no za naše potrebe je to bilo sasvim dovoljno.
+		Renderu će trebati jedno vrijeme da pokrene aplikacije te kada završi prikazat će URL adresu preko koje možemo pristupiti našoj aplikaciji. S obzirom na to da Render nudi besplatno puštanje u pogon za očekivat je da će aplikacija raditi sporije, no za naše potrebe je to bilo sasvim dovoljno.

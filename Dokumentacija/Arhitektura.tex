@@ -216,12 +216,31 @@
 						width = \textwidth,
 						colspec={|X[10,l]|X[8, l]|X[20, l]|}, 
 						rowhead = 1,
-					} %definicija širine tablice, širine stupaca, poravnanje i broja redaka naslova tablice
-					\hline \SetCell[c=3]{c}{\textbf{ScooterImages}}	 \\ \hline[3pt]
-					\SetCell{LightGreen}imageID & INT	&  	Jedinstveni identifikator fotgrafije romobila	\\ \hline
-					\SetCell{LightBlue}scooterID & INT	&  	Jedinstveni identifikator romobila  \\ \hline
-					image & MEDIUMTEXT & Fotografija romobila  \\ \hline
+					}
+					\hline \SetCell[c=3]{c}{\textbf{ScooterImages}} \\ \hline[3pt]
+					\SetCell{LightGreen}id & INT & Jedinstveni identifikator fotografije \\ \hline
+					\SetCell{LightBlue}scooterID & INT & Identifikator romobila \\ \hline
+					image & MEDIUMTEXT & Fotografija romobila \\ \hline
 				\end{longtblr}
+				
+				\textbf{Notification} entitet sadrži informacije o obavijesti za korisnika. Sadrži atribute: jedinstveni identifikator, korisničko ime korisnika za kojeg je poruka namijenjena, korisničko ime korisnika koji je uzrokovao nastajanje obavijesti te tip notifikacije.
+				
+				
+				\begin{longtblr}[
+					label=none,
+					entry=none
+					]{
+						width = \textwidth,
+						colspec={|X[10,l]|X[8, l]|X[20, l]|}, 
+						rowhead = 1,
+					}
+					\hline \SetCell[c=3]{c}{\textbf{Notification}} \\ \hline[3pt]
+					\SetCell{LightGreen}id & INT & Jedinstveni identifikator notifikacije\\ \hline
+					senderUsername & VARCHAR(255) & Pošiljatelj obavijesti \\ \hline
+					receiverUsername & VARCHAR(255) & Primatelj obavijesti \\ \hline
+					type & VARCHAR(255) & Tip obavijesti \\ \hline
+				\end{longtblr}
+				
 				
 			
 			\subsection{Dijagram baze podataka}
