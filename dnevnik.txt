@@ -51,3 +51,76 @@ Teme sastanka: Dovršavanje prvog dijela dokumentacije, Objava i testiranje web-
 
 – Ažuriranje slika, dijelova teksta, tablica i ostalih stavki prije prve predaje
 – Deploy aplikacije na Redner i testiranje funkcionalnosti prijave, registracije, odobravanje registracija i osnovnih funkcionalnosti web-stranice
+
+//5. SASTANAK
+
+Datum: 20. studenog 2023.
+
+Prisustvovali: Anamarija Jakoubek, Dino Babić, Jan Grbac, Igor Šoštarko, Karemn Korić, 
+Leonarda Pribanić, Ivan Pavelić
+
+Teme sastanka: Implementacija aplikacije
+
+– Ispravljanje grešaka u novim funkcionalnostima
+– Podjela tima po funkcionalnostima koje je još potrebno implementirati
+
+//6. SASTANAK
+
+Datum: 25. studenog 2023.
+
+Prisustvovali: Anamarija Jakoubek, Dino Babić, Jan Grbac, Igor Šoštarko, Karemn Korić, 
+Leonarda Pribanić, Ivan Pavelić
+
+Teme sastanka: Dodavanje dijagrama u dokumentaciju
+
+– Dogovor oko izgleda dijagrama stanja, aktivnosti, razmještaja i komponenti
+– Raspodjela tima za izradu dogovorenih dijagrama
+
+//7. SASTANAK
+
+Datum: 10. prosinca 2023.
+
+Prisustvovali: Anamarija Jakoubek, Dino Babić, Jan Grbac, Igor Šoštarko, Karemn Korić, 
+Leonarda Pribanić, Ivan Pavelić
+
+Teme sastanka: Ispitivanje rada sustava
+
+– Skupno testiranje funkcionalnosti sustava
+– Stvaranje scenarija iz stvarnih primjera korištenja aplikacije
+– Rješavanje problema na koje smo naišli tijekom testiranja
+
+//8. SASTANAK
+
+Datum: 20. prosinca 2023.
+
+Prisustvovali: Anamarija Jakoubek, Dino Babić, Jan Grbac, Igor Šoštarko, Karemn Korić, 
+Leonarda Pribanić, Ivan Pavelić
+
+Teme sastanka: Opisivanje instalacije i korištenja sustava
+
+– Opis instalacije i postavljanje sustava zajedno sa bazom podataka
+– Opis procesa za klijentsko korištenje sustava
+
+//9. SASTANAK
+
+Datum: 15. siječnja 2024.
+
+Prisustvovali: Anamarija Jakoubek, Dino Babić, Jan Grbac, Igor Šoštarko, Karemn Korić, 
+Leonarda Pribanić, Ivan Pavelić
+
+Teme sastanka: Dovršavanje i ispravak dokumentacije
+
+– Dodavanje opisanih procesa u dokumentaciju, pisanje Zaključka i ideje za budući rad
+– Ispravljanje pravopisnih grešaka, ažuriranje slika, dijagrama i tablica
+
+//10. SASTANAK
+
+Datum: 16. siječnja 2024.
+
+Prisustvovali: Anamarija Jakoubek, Dino Babić, Jan Grbac, Igor Šoštarko, Karemn Korić, 
+Leonarda Pribanić, Ivan Pavelić
+
+Teme sastanka: Ažuriranje aplikacije
+
+– Deploy nove verzije aplikacije na Render i testiranje cjelokupne funkcionalnosti sustava 
+(prijava, registracija, iznajmljivanje i korištenje romobila, razmjena poruka, transakcije te ostavljanje ocjene i komentara)
