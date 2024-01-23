@@ -4,7 +4,7 @@ import LoginComponent from '../components/LoginComponent';
 import { useNavigate } from 'react-router-dom';
 
 const LoginPage = (props) => {
-    const {jwtIsValid, setJwt} = {...props};
+    const {jwtIsValid, setJwt, setUsername} = {...props};
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -15,8 +15,8 @@ const LoginPage = (props) => {
 
     return (
         <>
-            <NavigationComponent displayLoginButton={false} displayLogoutButton={false} displayRegisterButton={true} setJwt={setJwt}/>
-            <LoginComponent setJwt={setJwt}/>
+            <NavigationComponent displayHomeButton={true} displayLoginButton={false} displayLogoutButton={false} displayRegisterButton={true} setJwt={setJwt}/>
+            <LoginComponent setJwt={setJwt} setUsername={setUsername}/>
         </>
     )
 };

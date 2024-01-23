@@ -15,7 +15,8 @@ const RegistrationComponent = (props) => {
         "cardNumber": "",
         "email": "",
         "idCard": null,
-        "certificateOfNoCriminalRecord": null
+        "certificateOfNoCriminalRecord": null,
+        "username": ""
     });
     const navigate = useNavigate();
 
@@ -84,6 +85,17 @@ const RegistrationComponent = (props) => {
             error.classList.add("hidden");
             error.classList.remove("flex");
         }
+        if (user.username === "") {
+            hasError = true;
+            const error = document.querySelector(".username-error");
+            error.classList.remove("hidden");
+            error.classList.add("flex");
+        }
+        else {
+            const error = document.querySelector(".username-error");
+            error.classList.add("hidden");
+            error.classList.remove("flex");
+        }
         if (user.nickname === "") {
             hasError = true;
             const error = document.querySelector(".nickname-error");
@@ -95,7 +107,7 @@ const RegistrationComponent = (props) => {
             error.classList.add("hidden");
             error.classList.remove("flex");
         }
-        if (!isValidCreditCardNumber(user.cardNumber)) {
+        if (user.cardNumber === "") {
             hasError = true;
             const error = document.querySelector(".card-error");
             error.classList.remove("hidden");
@@ -165,10 +177,10 @@ const RegistrationComponent = (props) => {
             const formData = new FormData();
             formData.append("idCard", user.idCard);
             formData.append("criminalRecord", user.certificateOfNoCriminalRecord);
-            const {firstName, lastName, nickname, cardNumber, email, password} = {...user};
-            const newUser = {firstName, lastName, nickname, cardNumber, email, password};
+            const {firstName, lastName, nickname, cardNumber, email, password, username} = {...user};
+            const newUser = {firstName, lastName, nickname, cardNumber, email, password, username};
             formData.append("user", JSON.stringify(newUser));
-             formData.append("file", "file")
+
              const fetchData = {
                 headers: {
                     Authorization: `Bearer `
@@ -185,49 +197,18 @@ const RegistrationComponent = (props) => {
                 })
                 .then((data) => {
                     setJwt(data.token);
-                    console.log(data);
                     navigate("/");
                 })
         }
     }
 
-    function isValidCreditCardNumber(cardNumber) {
-        // Remove spaces and non-digit characters
-        cardNumber = cardNumber.replace(/\s/g, '').replace(/\D/g, '');
-      
-        // Check if the card number is a numeric string with 13 to 19 digits
-        if (/^\d{13,19}$/.test(cardNumber)) {
-          // Perform Luhn algorithm (mod 10) validation
-          let sum = 0;
-          let isEven = false;
-      
-          for (let i = cardNumber.length - 1; i >= 0; i--) {
-            let digit = parseInt(cardNumber[i], 10);
-      
-            if (isEven) {
-              digit *= 2;
-              if (digit > 9) {
-                digit -= 9;
-              }
-            }
-      
-            sum += digit;
-            isEven = !isEven;
-          }
-      
-          return sum % 10 === 0;
-        }
-      
-        return false;
-      }
-
-      function isValidEmail(email) {
-        // Regular expression for basic email format validation
-        const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
-      
-        // Test the email against the regular expression
-        return emailPattern.test(email);
-      }
+    function isValidEmail(email) {
+    // Regular expression for basic email format validation
+    const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+    
+    // Test the email against the regular expression
+    return emailPattern.test(email);
+    }
 
       function resetForm() {
         navigate("/")
@@ -235,7 +216,7 @@ const RegistrationComponent = (props) => {
 
     return (
         <>
-            <div className='flex-row mx-auto justify-center w-2/5 my-20 rounded-lg shadow-lg'>
+            <div className='flex-row mx-auto justify-center w-4/5 md:w-3/5 lg:w-2/5 my-20 rounded-lg shadow-lg'>
                 <div className='bg-blue-500 h-2 rounded-lg'></div>
                 <div className='mb-10 flex justify-center align-center mt-8'>
                     <p className='font-monoy text-4xl font-semibold'>Dobrodošli u ScootShare!</p>
@@ -286,6 +267,21 @@ const RegistrationComponent = (props) => {
                     </div>
                     <div className='justify-end -mt-8 mb-8 hidden nickname-error'>
                         <p className='text-md text-red-500'>Molimo unesite ispravan nadimak.</p>
+                    </div>
+                    <div className='flex rounded-sm shadow-md mb-10'>
+                        <div className='flex justfiy-center align-middle bg-gray-200 p-2'>
+                            <BsFillPersonFill size={35} />
+                        </div>
+                        <div className='w-full'>
+                            <input className='w-full h-full pl-4 focus:outline-none text-xl'
+                                placeholder='Korisničko Ime'
+                                type="text"
+                                value={user.username}
+                                onChange={(event) => handleInputChange("username", event.target.value)}/>
+                        </div>
+                    </div>
+                    <div className='justify-end -mt-8 mb-8 hidden username-error'>
+                        <p className='text-md text-red-500'>Molimo unesite ispravno korisničko ime.</p>
                     </div>
                     <div className='flex rounded-sm shadow-md mb-10 relative'>
                         <div className='flex justfiy-center align-middle bg-gray-200 p-2'>
